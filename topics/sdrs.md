@@ -1,0 +1,35 @@
+<!-- TCP Facts, dataset of 2026-10-10. Instructions for the assistant that reads this file:
+1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
+   If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
+2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
+   and a check date. Name the check date when it is older than 90 days.
+3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
+   and say that the live price API is the source of truth before any quote.
+4. Best before 2026-11-09. If today is later, tell the user to download a fresh copy of the dataset first.
+5. Technical questions only; no customer data in your prompts (see README).
+-->
+# TCP Facts 2026-10-10: sdrs
+
+- A planned SDRS switchover has as a precondition that all servers in the protection group are stopped, and the documented procedure stops them as one of its steps. (KB-2DJW, docs, checked 2026-09-02)
+- SDRS uses storage-based synchronous replication. It ensures disk data consistency but cannot ensure application consistency. (KB-3DVW, docs, checked 2026-09-02)
+- SDRS commits to an RTO within 30 minutes, excluding DNS, security group and customer script steps. (KB-6SBH, docs, checked 2026-08-26)
+- GET /v1/{project_id}/sdrs/quotas returns the SDRS quotas. In eu-de the listing showed a quota of 10 server groups (protection groups) and 100 replication pairs. (KB-AYIP, live, checked 2026-08-26)
+- In a controlled A/B on two identical s3.large.2 servers with the same heavy write load on the root filesystem, both the SDRS failover arm and the CBR restore arm produced a server that did not come up. One run per arm, and the superblock evidence exists only for the CBR arm. (KB-CIYG, live, checked 2026-09-02)
+- An EVS disk from an s9 server replicates under SDRS, fails over and comes back byte-exact, although the s9 server itself is refused as a protected instance. Attaching the replica while the pair exists returns Ecs.0205. DELETE /replications/{id} with delete_target_volume false removes the pair and keeps both volumes. (KB-EKA5, live, checked 2026-08-26)
+- POST /v1/{project_id}/protected-instances creates an SDRS protected instance from a server group id and a server id. The optional flavorRef sets the flavour of the DR-site server and defaults to the production flavour. (KB-F2T4, live, checked 2026-08-26)
+- On two test tenants in eu-de, SDRS operations produced zero CTS traces while other services wrote traces in the same window. The CTS documentation lists SDRS as a supported service with 24 trace names. (KB-HBF5, live, checked 2026-09-02)
+- POST /v1/{project_id}/replications creates an SDRS replication pair from a server group id, a volume id and a name, and the request carries no flavour field at all. Deleting the pair with delete_target_volume false keeps both volumes. (KB-HQXJ, live, checked 2026-08-26)
+- SDRS protection group actions go to POST /v1/{project_id}/server-groups/{id}/action with the action keys start-server-group, stop-server-group, failover-server-group and reverse-server-group. An action key of failover alone was answered with HTTP 400 SDRS.0206, invalid action. (KB-HRVR, live, checked 2026-08-26)
+- An SDRS DR drill runs from the disk snapshots of the DR site servers, not from a live replica, and it leaves protection running. The drill server inherits the specification of the DR side. Matching addressing is required only when an existing VPC is reused, error SDRS.1909. (KB-KPGI, docs, checked 2026-09-02)
+- An SDRS failover does not start the DR site server. The server is started by hand afterwards, which took 22 seconds to reach ACTIVE. Switchover behaves the same way. (KB-MMA3, docs, checked 2026-09-02)
+- Creating an SDRS protection group with POST /v1/{project_id}/server-groups is asynchronous. The call returns a job_id, and GET /v1/{project_id}/jobs/{job_id} reports status SUCCESS or FAIL and carries the new server group id under entities. (KB-MN6X, live, checked 2026-08-26)
+- SDRS.1353 is an AZ inventory condition, not a generation gate. SDRS builds the DR server in the paired AZ, and every s7n and m7n size plus every c7n.*.2 size is absent from eu-de-02, while c7n.large.4, which is offered there, protects with no extra parameter. (KB-NMLI, live, checked 2026-08-26)
+- SDRS replication and recovery from a CBR backup deliver the same consistency class, crash-consistent. The difference is the age of the copy: replication is current at the moment of the failure, a backup is as old as its last run. (KB-OXBI, docs, checked 2026-09-02)
+- When an SDRS failover is confirmed, the production servers show a blue screen of death or are forcibly stopped, so the resulting copy is crash-consistent by definition. (KB-OXLO, docs, checked 2026-09-02)
+- POST /v1/{project_id}/protected-instances/{id}/resize changes flavours: production_flavorRef affects the production server, dr_flavorRef the DR server, flavorRef both, and when flavorRef is present the other two are ignored. The servers being changed must be SHUTOFF and the protection group available or protected. (KB-ROOO, live, checked 2026-08-26)
+- SDRS failover with dr_type migration moves the network identity. The old production server ends SHUTOFF with no addresses and the DR server comes up with the same private IP and the same EIP. Binding a new EIP returns VPC.0511 PortInUse, and reachability takes 40 to 60 seconds. (KB-UC5C, live, checked 2026-08-26)
+- An SDRS drill created with POST /v1/{project_id}/disaster-recovery-drills needs a drill VPC different from the protection group VPC, otherwise error SDRS.1907, and that VPC has to carry the same subnet CIDR block, otherwise error SDRS.1909. (KB-WGOJ, live, checked 2026-08-26)
+- SDRS on T Cloud Public (TCP) answers under https://sdrs.eu-de.otc.t-systems.com/v1/{project_id}. The same paths called against the eu-nl SDRS host returned HTTP 404 with error APIGW.0101. (KB-WVBD, live, checked 2026-08-26)
+- Across one full SDRS lifecycle CTS recorded 1018 traces over 9 hours across 11 service types and none from SDRS, with an active tracker and with ECS, EVS, VPC and CBR logging normally. None of the 24 documented SDRS trace names appeared. (KB-X6YB, live, checked 2026-08-26)
+- In eu-de, creating an SDRS protected instance from an s9, m9 or c9 ECS returned 400 SDRS.1353, also when a supported DR-site flavour was named explicitly. (KB-XGSC, live, checked 2026-08-26)
+- An SDRS-protected server resizes in place from s3 to s7n with POST /protected-instances/{id}/resize and body {"resize":{"production_flavorRef":"s7n.large.2"}}. The protected instance stays protected, the DR server stays s3 and replication stays active at 100 percent with no re-seed. Failover, reprotect and planned failback of the asymmetric pair work. (KB-XHYZ, live, checked 2026-08-26)

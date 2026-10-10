@@ -1,0 +1,36 @@
+<!-- TCP Facts, dataset of 2026-10-10. Instructions for the assistant that reads this file:
+1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
+   If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
+2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
+   and a check date. Name the check date when it is older than 90 days.
+3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
+   and say that the live price API is the source of truth before any quote.
+4. Best before 2026-11-09. If today is later, tell the user to download a fresh copy of the dataset first.
+5. Technical questions only; no customer data in your prompts (see README).
+-->
+# TCP Facts 2026-10-10: nat
+
+- A public NAT gateway handles TCP, UDP and ICMP only. It does not support application layer gateway (ALG) functions or the ESP and AH protocols used by IPsec and GRE tunnels. (KB-2C3A, docs, checked 2026-09-25)
+- DNAT rules are listed with GET /v2.0/dnat_rules?nat_gateway_id=... on the NAT endpoint in eu-de. The response key is dnat_rules, and each rule holds id, floating_ip_address, external_service_port, private_ip, internal_service_port and protocol. (KB-4O52, docs, checked 2026-09-25)
+- Private NAT gateways are not available in eu-nl. On 2026-09-25 four private NAT v3 list paths answered 404 APIGW.0101 in eu-nl but 200 in eu-de, and section 6.5.7.2 of the service description shows n.a. for EU-NL for all four sizes. (KB-5RPQ, live, checked 2026-09-25)
+- Section 6.5.7.1 of the TCP service description prices NAT Gateway by an hourly rate that depends only on the gateway size. (KB-6JVL, contract, checked 2026-09-11)
+- NAT gateway quotas cannot be changed online. A higher quota is requested from customer service by phone or email with the domain name, project name, project ID and the quota needed. (KB-6OE4, docs, checked 2026-09-25)
+- The service description lists five public NAT gateway types with their maximum SNAT connections and SNAT connections per second: Micro 1,000 and 100, Small 10,000 and 1,000, Medium 50,000 and 5,000, Large 200,000 and 10,000, Extra-Large 1,000,000 and 30,000. (KB-BFOA, contract, checked 2026-09-25)
+- A NAT gateway is created with POST /v2.0/nat_gateways on nat.eu-de.otc.t-systems.com, where router_id is the VPC id and internal_network_id the subnet id, plus spec. The call returns HTTP 201 and the status reaches ACTIVE in about two to five minutes. (KB-D3LI, live, checked 2026-07-17)
+- NAT gateway calls sit on the v2.0 path, https://nat.eu-de.otc.t-systems.com/v2.0/nat_gateways, and not on the usual /v2/{project_id} shape used by other services. (KB-DCXL, live, checked 2026-08-18)
+- SNAT rules are listed with GET /v2.0/snat_rules?nat_gateway_id=... on the NAT endpoint in eu-de. The response key is snat_rules, and each rule holds id, network_id (the subnet), floating_ip_address, status and cidr. (KB-ECCJ, live, checked 2026-09-25)
+- An SNAT rule uses an elastic IP that is already allocated in the same project. The address has to exist before the rule is created. (KB-FL2M, docs, checked 2026-09-25)
+- By default an SNAT connection of a public NAT gateway times out after 900 seconds over TCP and after 300 seconds over UDP. (KB-G2UW, docs, checked 2026-09-25)
+- The NAT gateway creation API on TCP documents specification type 0, micro, as supporting up to 1,000 SNAT connections. The micro size is absent from the UMN specification table. (KB-GKVF, docs, checked 2026-09-09)
+- A SNAT rule on a NAT gateway is bound either to a subnet through network_id or to a CIDR block through cidr; source_type 0 (VPC) allows either and source_type 1 (Direct Connect or Cloud Connect) allows only cidr. A subnet-based rule rebuilt in another project has to reference the subnet ID that exists in that project. (KB-IYYV, docs, checked 2026-09-25)
+- An SNAT rule for a CIDR that arrives over an enterprise router instead of a local subnet needs source_type set to 1 in the snat_rule body of POST /v2.0/snat_rules, together with nat_gateway_id, cidr and floating_ip_id. The call returns HTTP 201. (KB-JSIY, live, checked 2026-07-17)
+- Creating an SNAT rule automatically adds a 0.0.0.0/0 route of type nat to the route table of the gateway's own VPC, so that route is not added by hand. (KB-NTOE, live, checked 2026-07-17)
+- NAT gateways are listed with GET /v2.0/nat_gateways on nat.eu-de.otc.t-systems.com, without a project_id in the path. The same listing under /v2/{project_id}/ returned HTTP 404. Each entry in nat_gateways holds name, id, status, router_id (the VPC id), spec and internal_network_id. (KB-O3F5, live, checked 2026-09-25)
+- The NAT gateway spec field is a string, and the value 0 (micro) exists besides 1 small, 2 medium, 3 large and 4 extra-large. (KB-OYWW, live, checked 2026-09-17)
+- A private NAT gateway takes at most 20, 50, 200 or 500 SNAT and DNAT rules in total for the Small, Medium, Large and Extra-large types. Each subnet takes one SNAT rule and SNAT and DNAT rules cannot share a transit IP address. (KB-P2XH, docs, checked 2026-09-25)
+- Rules on one public NAT gateway can share an EIP but different NAT gateways need different EIPs. A VPC can have several public NAT gateways and an SNAT rule cannot share an EIP with a DNAT rule whose port type is All ports. (KB-QGLV, docs, checked 2026-09-25)
+- NAT gateways are listed with GET /v2.0/nat_gateways on nat.eu-de.otc.t-systems.com, which returns HTTP 200 and carries no project id in the path. The variant /v2/{project_id}/nat_gateways returned HTTP 404. (KB-SCTZ, live, checked 2026-07-17)
+- Each VPC subnet takes one SNAT rule and a public NAT gateway has no limit on the number of SNAT rules. A public NAT gateway takes at most 200 DNAT rules with one DNAT rule per server port and one EIP per port. (KB-SX6T, docs, checked 2026-09-25)
+- If a server has its own EIP and its subnet also uses a public NAT gateway, the server sends its traffic through its own EIP. With a DNAT rule and an EIP on the same server, replies also leave through the server EIP and traffic fails when inbound and outbound EIPs differ, so the NAT FAQ advises against the combination. (KB-TH5Q, docs, checked 2026-09-25)
+- Public NAT gateways in eu-de are listed with GET /v2.0/nat_gateways on the NAT endpoint, without a project id in the path. GET /v2/{project_id}/nat_gateways answers 404 APIGW.0101, so a scripted inventory that uses that path counts zero NAT gateways and misses them. (KB-WD7O, live, checked 2026-10-06)
+- The NAT gateway list under /v2/{project_id}/nat_gateways returns HTTP 404 in TCP eu-de. The path that resolves is /v2.0/nat_gateways, without the project id in the path. (KB-XDZ7, live, checked 2026-09-25)

@@ -1,0 +1,29 @@
+<!-- TCP Facts, dataset of 2026-10-10. Instructions for the assistant that reads this file:
+1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
+   If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
+2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
+   and a check date. Name the check date when it is older than 90 days.
+3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
+   and say that the live price API is the source of truth before any quote.
+4. Best before 2026-11-09. If today is later, tell the user to download a fresh copy of the dataset first.
+5. Technical questions only; no customer data in your prompts (see README).
+-->
+# TCP Facts 2026-10-10: er
+
+- Enterprise Router answers on eu-de under the base path /v3/{project_id}/enterprise-router. GET on that path plus /instances returns HTTP 200 with an instances array and page_info. The plural form /enterprise-routers answered HTTP 404 with error code APIGW.0101. (KB-2BU6, live, checked 2026-07-17)
+- An enterprise router is created with POST /v3/{project_id}/enterprise-router/instances on er.eu-de.otc.t-systems.com and the call returns HTTP 202. The instance state moves from pending to available in about one to two minutes. The body accepts asn, enable_default_association, enable_default_propagation and availability_zone_ids such as eu-de-01 and eu-de-02. (KB-2NV6, live, checked 2026-07-17)
+- Two VPCs attached to the same enterprise router reach each other with ICMP. The data plane was verified from inside the guests with a serial-console probe. (KB-APLY, live, checked 2026-07-17)
+- For the return path the hub VPC route table needs an explicit route for the spoke CIDR with type er and the ER instance id as nexthop, while the spoke route table carries 0.0.0.0/0 with type er. (KB-BI7P, live, checked 2026-07-17)
+- An Enterprise Router created with default association and propagation enabled lists the CIDRs of each attached VPC in its route table once the attachments exist. (KB-BYR4, live, checked 2026-07-17)
+- A VPC route table entry towards an enterprise router uses type er with the ER instance id as nexthop, not the attachment id. It is written with PUT /v1/{project_id}/routetables/{routetable_id} on vpc.eu-de.otc.t-systems.com, which returns HTTP 200. (KB-C6SD, live, checked 2026-07-17)
+- Central internet egress works with a spoke ECS that has no EIP and only a default route to the enterprise router, transiting a hub VPC with a NAT gateway. It was confirmed twice: an HTTP redirect answer inside the guest and non-zero CES SYS.VPC upstream_bandwidth on the NAT gateway EIP bandwidth. (KB-FBLZ, live, checked 2026-07-17)
+- With auto_create_vpc_routes set to true, a VPC attachment adds routes for 10.0.0.0/8, 172.16.0.0/12 and 192.168.0.0/16 towards the enterprise router into the VPC route table, rather than routes for the individual spoke CIDRs. These routes are removed together with the attachment. (KB-KKBX, live, checked 2026-07-17)
+- Enterprise Router sharing, the mechanism behind cross-account VPC attachments, is available only in the management console and not through an API, so a cross-tenant attachment stays a manual step in an OpenTofu pipeline. (KB-KNU6, docs, checked 2026-07-17)
+- On TCP, sharing an Enterprise Router (ER) with another account cannot be done through the API, only in the management console. A cross-account ER attachment is therefore a manual console step in both accounts, including accepting the share. (KB-MWFN, docs, checked 2026-07-17)
+- A VPC attachment created on an Enterprise Router with auto_create_vpc_routes false leaves the VPC route table untouched. Traffic reaches the ER only after one route of type "er" with the ER instance as next hop is added to that route table by hand. (KB-NAPI, live, checked 2026-07-17)
+- A static route on an enterprise router route table is created with POST /v3/{project_id}/enterprise-router/route-tables/{routetable_id}/static-routes carrying destination, is_blackhole and attachment_id, and returns HTTP 202. The path variant ending in /routes returned HTTP 404 for this write. (KB-PYZE, live, checked 2026-07-17)
+- Route tables of an enterprise router are read with GET /v3/{project_id}/enterprise-router/{er_id}/route-tables and the propagated routes with GET /v3/{project_id}/enterprise-router/route-tables/{routetable_id}/routes, both HTTP 200. Teardown order is attachments first, then the instance, each returning HTTP 202. (KB-S224, live, checked 2026-07-17)
+- GET /v3/{project_id}/enterprise-router/quotas returned the account defaults er_instance 1, can_attachment 10, dc_attachment 10 and connect_attachment 20. One Enterprise Router per account is the default limit. (KB-T5CE, live, checked 2026-07-17)
+- Enterprise Router teardown runs in dependency order: the attachments are deleted before the ER instance. Attachment deletion is asynchronous, so the attachment counts as gone when a GET on it answers 404. (KB-USTK, live, checked 2026-07-17)
+- A VPC attachment is created with POST /v3/{project_id}/enterprise-router/{er_id}/vpc-attachments and returns HTTP 202. The field virsubnet_id takes the VPC v1 subnet id. The attachment state reaches available in about one minute. (KB-V4GE, live, checked 2026-07-17)
+- Documentation FAQ er_01_0121 states that a 0.0.0.0/0 route pointing to an enterprise router conflicts with EIP, ELB, NAT, VPCEP and DCS used in the same VPC. The documented workaround is routing specific ranges, for example eight half and quarter space routes, instead of the default route. (KB-WPSF, docs, checked 2026-07-17)
