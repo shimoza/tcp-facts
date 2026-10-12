@@ -1,19 +1,19 @@
-<!-- TCP Facts, dataset of 2026-10-11. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-12. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-10. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-11. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
 
-# TCP Facts 2026-10-11
+# TCP Facts 2026-10-12
 
-1618 checked facts about T Cloud Public (TCP). One line per fact, grouped by topic. Read the comment at the top before answering.
+1616 checked facts about T Cloud Public (TCP). One line per fact, grouped by topic. Read the comment at the top before answering.
 
-## ecs (165)
+## ecs (163)
 
 - Each ECS flavor exposes info:cpu:name in os_extra_specs, giving CPU microarchitecture and clock, for example Intel Cascade Lake 2.6GHz. The newest s9 and c9 families return masked values such as Intel CPU N.NGHz or General Purpose Processor. (KB-232P, live, checked 2026-07-19)
 - The service description contracts an availability SLA for ECS, EVS and OBS. Periods in which at least one AZ of the region stays up are excluded from the downtime calculation. (KB-23F7, contract, checked 2026-09-16)
@@ -56,7 +56,6 @@
 - In the eu-de ECS flavor catalog, os_extra_specs["cond:operation:az"] carries per-AZ orderability with the values normal, sellout and abandon. The region-wide os_extra_specs["cond:operation:status"] reads abandon on 365 of 372 flavors, 327 of them normal in some AZ, so it does not separate orderable flavors (2026-09-25). (KB-BECR, live, checked 2026-09-25)
 - The private key material of a key pair created through the API is returned once, in the body of the create response. The key pair therefore has to exist before the ECS create that references it. (KB-BFKU, live, checked 2026-08-18)
 - The service description (revision 17.08.2026) lists physical Elastic Cloud Server flavors c9.144xl.2, c9.144xl.4 and m9.144xl.8 with 384 vCPU (c9.144xl.4 with 1536 GiB RAM), against 192 vCPU for the largest c9 and m9 virtual flavors and 208 for the e3 large-memory family. They are expected available from 01.10.2026 and offered on request only. (KB-BJGL, contract, checked 2026-09-25)
-- In the TCP service description price tables a c9 ECS flavor carries a higher open-Linux hourly rate than the s9 flavor of the same size. The checked pair was c9.large.2 against s9.large.2. (KB-BOS5, contract, checked 2026-09-11)
 - The console Get Password section and the API GET /v2.1/{project_id}/servers/{server_id}/os-server-password apply to instances created with a key pair, where Cloudbase-Init generates a random password and encrypts it with the public key. An instance created with adminPass shows no Get Password section. (KB-CBPS, live, checked 2026-06-10)
 - os-getConsoleOutput on an ECS in eu-de that is still in BUILD (task_state spawning) answers HTTP 404 itemNotFound with 'Instance instance-... could not be found'. A few seconds later, still in spawning, the same call returns HTTP 200 with an empty output, and the boot lines follow once the server is ACTIVE. (KB-CF4H, live, checked 2026-10-07)
 - An ECS is created with POST /v1/{project_id}/cloudservers, which returns job_id and serverIds; the ECS jobs endpoint is polled until the server is ACTIVE. In the nics array the field subnet_id is the VPC v1 subnet id, and root_volume size must be at least the image min_disk. (KB-CYMN, live, checked 2026-07-20)
@@ -131,7 +130,6 @@
 - The documented ways to reset a Windows administrator password on an ECS are changing it inside the running OS, or detaching the system disk and attaching it to a temporary ECS. (KB-RIVY, docs, checked 2026-06-10)
 - Each ECS flavor publishes a cond:image condition in os_extra_specs, and all s9 sizes list __support_kvm=true and __support_kvm_hi1822_hiovs=true. The condition refers to the image's KVM tags and virtual_env_type, not to whether the image is public or private. (KB-RK7V, live, checked 2026-07-20)
 - Polling a job_id at another service's jobs endpoint returns a body holding the job_id with status null, and keeps returning that on repeat polls instead of an error. A status appears only when the jobs endpoint belongs to the API that returned the job_id. (KB-RVGO, live, checked 2026-07-30)
-- In eu-de the ECS flavor m9.32xlarge.8 (128 vCPU, 1 TB RAM) shows status sellout in eu-de-01, while m9.16xlarge.8 shows normal in all three availability zones. The m9.3xlarge, m9.6xlarge, m9.12xlarge and m9.24xlarge sizes appear only in eu-de-03, with status abandon. (KB-S22V, live, checked 2026-09-11)
 - Creating an ECS from an image that does not fit the flavor fails with Ecs.0005, flavor does not match image. Images named *_GPU_* fit GPU flavors only, and images with virtual_env_type Ironic fit physical flavors only. (KB-S3RC, live, checked 2026-06-11)
 - The order of the nics array in the ECS create request determines the interface order inside the guest: the first entry becomes port1, the second port2. This decides the role of port1 for appliances that expect a fixed interface convention. (KB-SCHO, live, checked 2026-07-23)
 - A job id returned by an EVS volume create or delete is polled on the EVS service endpoint at /v1/{project_id}/jobs/{job_id}. A job id returned by an ECS operation such as changeos, volume attach or start and stop is polled on the ECS service endpoint at the same path. (KB-SECN, live, checked 2026-09-25)

@@ -1,10 +1,10 @@
-# TCP Facts 2026-10-11
+# TCP Facts 2026-10-12
 
-Build of 2026-10-11 20:53 UTC. A later build of the same day replaces this one under the same name; the manifest carries the build time.
+Build of 2026-10-12 06:47 UTC. A later build of the same day replaces this one under the same name; the manifest carries the build time.
 
-1618 checked facts about T Cloud Public (TCP) with the list of orderable services and the public price list of two regions. Made to be dropped into any AI assistant.
+1616 checked facts about T Cloud Public (TCP) with the list of orderable services and the public price list of two regions. Made to be dropped into any AI assistant.
 
-1031 facts were tested live on a TCP tenant, 433 come from the vendor documentation and 154 from the service description (revision 17.08.2026). No fact from hearsay, no expired fact, no customer, no project, no credential.
+1030 facts were tested live on a TCP tenant, 433 come from the vendor documentation and 153 from the service description (revision 17.08.2026). No fact from hearsay, no expired fact, no customer, no project, no credential.
 
 
 ## Use
@@ -16,6 +16,79 @@ Use the attached TCP Facts. Answer: <your question>
 ```
 
 PROMPT.md has the rest.
+
+
+## What the facts cover
+
+76 of the 76 services orderable per the service description of 17.08.2026 have at least one plain fact that says what the service is and does: a statement that opens with the name of the service. By section of the service description:
+
+- Computing: 5 of 5
+
+- Databases: 9 of 9
+
+- Storage: 5 of 5
+
+- Network: 10 of 10
+
+- Application: 5 of 5
+
+- Management & Deployment: 9 of 9
+
+- Container: 4 of 4
+
+- Data analysis: 6 of 6
+
+- Security: 9 of 9
+
+- Optional services: 8 of 8
+
+- Preview and beta versions: 6 of 6
+
+17 facts state what the platform covers for a requirement area. Each opens with "T Cloud Public (TCP)" and names the services that cover it:
+
+- collects logs centrally (KB-MZQU)
+
+- connects on-premises networks by site-to-site VPN and by dedicated lines (KB-XSZD)
+
+- keeps audit logs of management actions (KB-MF3H)
+
+- manages users, user groups and federation (KB-D64T)
+
+- monitors resources and raises alarms (KB-L4FW)
+
+- offers a private container registry (KB-U7YD)
+
+- offers a web application firewall (KB-KIAP)
+
+- offers key management with customer-managed and customer-supplied keys (KB-KUZK)
+
+- offers load balancing at layer 4 and layer 7 (KB-HZXL)
+
+- offers managed Kubernetes (KB-OOVV)
+
+- offers managed relational databases (KB-33UY)
+
+- offers object storage for archive use (KB-JMBA)
+
+- offers shared file storage over NFS (KB-TX7A)
+
+- provides virtual machines (KB-EPEA)
+
+- runs scheduled backups with a set retention period (KB-ITGL)
+
+- supports infrastructure as code (KB-V42N)
+
+- supports multi-factor authentication (KB-TFIN)
+
+Example: to check whether TCP covers a requirement, attach facts.md and ask:
+
+```
+Use the attached TCP Facts. Answer: is this requirement covered: "TCP collects logs centrally"? Cite the id of every fact that backs the answer.
+```
+
+A good answer quotes the fact and its id, for example (KB-MZQU) for this one, so a reader finds it in facts.md. When no fact covers the requirement it says "no checked fact covers this".
+
+What the dataset does not hold and never will: commitments on certificates and attestations, SLA values, support hours and response times, prices and subcontractors. These are contract matters: check them in the contract. A fact that touches one of them is background from a public source, not a commitment.
 
 
 ## Before you use it with a public model
@@ -65,7 +138,7 @@ facts.md: all facts, grouped by topic. facts.jsonl: the same facts with source, 
 
 ## Dates and licence
 
-Built 2026-10-11. Best before 2026-11-10: facts about availability are re-checked every 30 days. Prices are a snapshot; the live price API is the source of truth before any quote.
+Built 2026-10-12. Best before 2026-11-11: facts about availability are re-checked every 30 days. Prices are a snapshot; the live price API is the source of truth before any quote.
 
 Dataset: TCP Facts, github.com/shimoza/tcp-facts.
 
