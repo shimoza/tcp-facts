@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-10. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-11. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-09. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-10. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-10: elb
+# TCP Facts 2026-10-11: elb
 
 - Creating the pool with listener_id and leaving default_pool_id off the listener makes the pool depend on the listener in Terraform, so destroy removes the pool first and the listener second, matching the order the ELB v3 API accepts. (KB-2BL5, live, checked 2026-09-16)
 - Only a dedicated load balancer can send traffic to servers outside its own VPC. With IP as a backend enabled it adds servers by private IPv4 address in a VPC linked by VPC peering or in an on-premises data centre linked by Direct Connect or VPN. (KB-36IY, docs, checked 2026-09-25)
@@ -30,6 +30,7 @@
 - DELETE /v3/{project_id}/elb/listeners/{listener_id} on a dedicated load balancer answers 409 ELB.8907 'pool <id> is using this listener' while a pool is bound to the listener, also when the pool has no members left. Deleting the pool first frees the listener. In Terraform, bind the pool with listener_id on the pool resource instead of default_pool_id on the listener: then destroy deletes the pool before the listener; with default_pool_id it tries the listener first and stops. (KB-GTIT, live, checked 2026-10-06)
 - A dedicated load balancer binds an existing elastic IP through public_ip { id = ... } and an SNAT rule binds one through floating_ip_id, so addresses allocated in a separate stack keep their ids and their DNS record across destroy and re-apply of the consuming stack. (KB-GZM3, live, checked 2026-09-16)
 - Shared load balancers cannot be created in eu-nl. Only dedicated load balancers can be created there, on the console or through the API. (KB-H34Q, docs, checked 2026-09-25)
+- T Cloud Public (TCP) offers load balancing at layer 4 and layer 7 through Elastic Load Balancer (ELB): network load balancing for TCP and UDP and application load balancing for HTTP and HTTPS, as shared or dedicated load balancers, with dedicated ones spread over up to three availability zones. (KB-HZXL, docs, checked 2026-10-11)
 - L7 rules of a policy are listed with GET /v3/{project_id}/elb/l7policies/{policy_id}/rules. Each rule carries id, type such as PATH, HOST_NAME or HEADER, compare_type such as STARTS_WITH or EQUAL_TO, value, conditions and invert. (KB-ICS6, live, checked 2026-09-25)
 - On 2026-09-25 GET /v3/{project_id}/elb/flavors in eu-de returned 17 dedicated load balancer flavors over five types: L4 (6), L7 (6), L7_elastic (3), L4_elastic_max (1) and L7_elastic_max (1). This is what the listing showed on that date. (KB-J3DZ, live, checked 2026-09-25)
 - A dedicated ELB v3 load balancer create expects vip_subnet_cidr_id to hold the neutron subnet id; with the VPC subnet id the VIP is not placed. The mapping comes from GET /v1/{project_id}/subnets/{vpc_subnet_id}, whose response carries neutron_subnet_id. (KB-KG3S, live, checked 2026-05-26)
@@ -55,3 +56,4 @@
 - The resource opentelekomcloud_lb_loadbalancer_v3 exposes the public address of a dedicated load balancer as public_ip[0].address. (KB-YFA5, live, checked 2026-09-16)
 - For multi-condition L7 rules the v2 rules endpoint returns an empty value string and its response body carries no conditions array, so the match value of such a rule is not present in the v2 response; the v3 response carries it in conditions. (KB-YNV3, live, checked 2026-09-25)
 - Dedicated load balancers and public NAT gateways are offered in eu-nl. On 2026-09-25 the ELB v3 flavor list of eu-nl returned the same 17 dedicated flavors as eu-de, the ELB AZ list returned eu-nl-01, eu-nl-02 and eu-nl-03, and the public NAT API (GET /v2.0/nat_gateways) answered in eu-nl. (KB-ZABN, live, checked 2026-09-25)
+- Elastic Load Balancer (ELB) distributes incoming traffic across several backend servers, checks their health and works with Auto Scaling. It is offered as shared and as dedicated load balancers for application load balancing at layer 7 and network load balancing at layer 4; a dedicated load balancer has its own resources, can span up to three availability zones and comes in fixed and elastic flavors. The documentation states that eu-de offers dedicated and shared load balancers and eu-nl offers dedicated ones. (KB-ZYJM, contract, checked 2026-10-11)

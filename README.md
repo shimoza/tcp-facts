@@ -1,10 +1,10 @@
-# TCP Facts 2026-10-10
+# TCP Facts 2026-10-11
 
-Build of 2026-10-10 14:03 UTC. A later build of the same day replaces this one under the same name; the manifest carries the build time.
+Build of 2026-10-11 20:53 UTC. A later build of the same day replaces this one under the same name; the manifest carries the build time.
 
-1531 checked facts about T Cloud Public (TCP) with the list of orderable services and the public price list of two regions. Made to be dropped into any AI assistant.
+1618 checked facts about T Cloud Public (TCP) with the list of orderable services and the public price list of two regions. Made to be dropped into any AI assistant.
 
-1035 facts were tested live on a TCP tenant, 425 come from the vendor documentation and 71 from the service description (revision 17.08.2026). No fact from hearsay, no expired fact, no customer, no project, no credential.
+1031 facts were tested live on a TCP tenant, 433 come from the vendor documentation and 154 from the service description (revision 17.08.2026). No fact from hearsay, no expired fact, no customer, no project, no credential.
 
 
 ## Use
@@ -65,7 +65,7 @@ facts.md: all facts, grouped by topic. facts.jsonl: the same facts with source, 
 
 ## Dates and licence
 
-Built 2026-10-10. Best before 2026-11-09: facts about availability are re-checked every 30 days. Prices are a snapshot; the live price API is the source of truth before any quote.
+Built 2026-10-11. Best before 2026-11-10: facts about availability are re-checked every 30 days. Prices are a snapshot; the live price API is the source of truth before any quote.
 
 Dataset: TCP Facts, github.com/shimoza/tcp-facts.
 

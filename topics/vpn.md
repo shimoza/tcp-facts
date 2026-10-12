@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-10. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-11. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-09. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-10. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-10: vpn
+# TCP Facts 2026-10-11: vpn
 
 - On T Cloud Public (TCP) in eu-de VPN gateways are listed with GET /v5/{project_id}/vpn-gateways, which returns them under the key vpn_gateways. Per the API reference each entry carries name, id, status, flavor, vpc_id (only for gateways attached to a VPC) and an eip1 object with ip_address and bandwidth_size. (KB-37QB, docs, checked 2026-09-25)
 - In TCP eu-de the Enterprise VPN API on vpn.eu-de serves gateways, customer gateways and connections (GET /v5/{project_id}/vpn-connection answers HTTP 200), and IKE and IPsec policies are part of the connection object with no list path of their own. The Classic VPN paths on vpc.eu-de for connections, IKE and IPsec policies and endpoint groups answer HTTP 404, in line with the end of life of Classic VPN in eu-de on 01.06.2025. (KB-6DLN, live, checked 2026-09-25)
@@ -18,6 +18,7 @@
 - A customer gateway can be recreated with the same settings in another project, as its create call takes only plain values (name, id_type, id_value, bgp_asn and tags). A VPN gateway can be recreated there with the same flavor, attachment type, local subnets and BGP ASN, but its vpc_id or er_id, connect_subnet, access_vpc_id, access_subnet_id and EIP ids must point to resources that exist in the new project. (KB-AI63, docs, checked 2026-09-25)
 - A VPN v5 gateway carries one connection per combination of gateway EIP and customer gateway. A second create on the same pair returned error VPN.0310, VPN connection already exists between that vgw ip and cgw id; the other EIP or another customer gateway takes the next connection. (KB-ASYH, live, checked 2026-08-26)
 - For IPsec to another site TCP has site-to-cloud VPN, where a VPN gateway of the VPC connects to a customer gateway through IKE and IPsec tunnels. If the customer gateway reaches the Internet through a NAT device, NAT traversal has to be enabled on it. (KB-CKVZ, docs, checked 2026-09-25)
+- Enterprise VPN (EV) establishes site-to-site IPsec tunnels, encrypted with IKE and IPsec, between a customer network and a VPC, so the VPC communicates securely with an on-premises data center. Enterprise VPN gateways are exclusive to one tenant and support several connection modes, and a VPN connection links the cloud VPN gateway with the customer gateway device on premises. The Regions and Endpoints page lists the Enterprise VPN API endpoint in eu-de. (KB-CVCM, contract, checked 2026-10-11)
 - A VPN v5 connection built on the standby EIP of an active-standby gateway has to carry an HA role. Without it the create returned error VPN.0001, invalid request, connection haRole is invalid. (KB-E3CC, live, checked 2026-08-26)
 - Enterprise VPN Basic carries a specification ceiling of 10 connection groups. (KB-EI4V, contract, checked 2026-08-27)
 - A peer subnet that collides with a subnet already in the VPC route table is rejected while the VPN v5 connection is created, with error VPN.0219 naming the CIDR block that appears in both the VPC route and the peer subnets. (KB-EZUZ, live, checked 2026-08-26)
@@ -29,4 +30,5 @@
 - An instance reached through an EIP with NAT needs no security group rule for protocol 50: IKE NAT detection payloads move the IPsec tunnel to UDP 4500 encapsulation, so ESP travels inside UDP. (KB-STJH, live, checked 2026-07-29)
 - For an Enterprise Edition VPN on T Cloud Public (TCP), a customer subnet cannot be part of the existing subnets of the VPC and cannot be a destination in the VPC route table. A subnet stretched over an Enterprise Switch L2 connection therefore cannot be used as a VPN customer subnet, only as a local subnet. (KB-TFJA, docs, checked 2026-08-26)
 - Enterprise VPN on TCP is specified at 100 Mbit/s for the Basic edition with a ceiling of 10 connection groups, 300 Mbit/s for Professional 1 and 1 Gbit/s for Professional 2. (KB-VJ4C, docs, checked 2026-09-09)
+- T Cloud Public (TCP) connects on-premises networks by site-to-site VPN and by dedicated lines: Enterprise VPN builds IPsec tunnels between the customer network and a VPC, and Direct Connect provides a dedicated connection through a network provider with dedicated or hosted ports and an optional redundant two-port setup. Telekom also supplies the line as EthernetConnect (layer 2), IntraSelect Cloud Connect (layer 3) or Equinix Cloud Exchange as an optional service. (KB-XSZD, contract, checked 2026-10-11)
 - A route delivered by a VPN Enterprise Edition v5 connection shows up in the VPC route table with type eni and the gateway port as next hop, so a route lookup for it filters on eni. (KB-YYZZ, live, checked 2026-08-26)

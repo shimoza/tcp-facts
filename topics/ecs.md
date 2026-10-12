@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-10. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-11. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-09. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-10. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-10: ecs
+# TCP Facts 2026-10-11: ecs
 
 - Each ECS flavor exposes info:cpu:name in os_extra_specs, giving CPU microarchitecture and clock, for example Intel Cascade Lake 2.6GHz. The newest s9 and c9 families return masked values such as Intel CPU N.NGHz or General Purpose Processor. (KB-232P, live, checked 2026-07-19)
 - The service description contracts an availability SLA for ECS, EVS and OBS. Periods in which at least one AZ of the region stays up are excluded from the downtime calculation. (KB-23F7, contract, checked 2026-09-16)
@@ -61,6 +61,7 @@
 - GET /v1/{project_id}/cloudservers/flavors with availability_zone=eu-de-01 returned 326 flavors, 323 of them carrying os_extra_specs cond:operation:status abandon, among them s2 and s3 families that were orderable at that time. (KB-DXPP, live, checked 2026-08-26)
 - The system disk of a new ECS must be at least the min_disk of its source image. Private images with preinstalled software carried min_disk 200 GB, so a 120 GB system disk required a fresh public image instead. (KB-E6CH, live, checked 2026-06-17)
 - ECS quota increases go through the service hotline or email, per the ECS documentation on quota adjustment, so a large estate needs the request filed well before deployment. (KB-EOFG, docs, checked 2026-08-25)
+- T Cloud Public (TCP) provides virtual machines through Elastic Cloud Server (ECS) with Microsoft Windows Server and Linux operating systems: the public images include Windows Server, SUSE Linux Enterprise Server, Oracle Linux and Red Hat Enterprise Linux, and customers can also bring their own private images. Windows Server 2025 and Ubuntu, RHEL and other public images were listed live in eu-de on 2026-09-25 (KB-M3JR, KB-GP36). (KB-EPEA, contract, checked 2026-10-11)
 - PUT /v1/{project_id}/cloudservers/{server_id}/os-reset-password on the ECS endpoint in eu-de returns 404 with error code APIGW.0101, The API does not exist or has not been published in the environment. The one-click Windows password reset of the upstream API is not published on T Cloud Public (TCP). (KB-F25K, live, checked 2026-08-24)
 - os-getConsoleOutput returned an empty output for public Ubuntu 24.04 guests on s9.large.2 in eu-de, while c7n.large.2 guests returned their kernel log within a minute. (KB-F27E, live, checked 2026-10-01)
 - A noVNC console URL for an ECS is returned by POST /v2.1/{project_id}/servers/{server_id}/action with the body {"os-getVNCConsole": {"type": "novnc"}}, on the host console.otc.t-systems.com (2026-09-25). A test in February found the URL valid for about five minutes. The ECS remote_console paths under v1 and v1.1 return HTTP 404. (KB-F6JF, live, checked 2026-09-25)
@@ -99,6 +100,7 @@
 - The eu-de service description lists the s7n general-purpose ECS family up to size 2xlarge, and lists the s9, s3 and c9 families at 8xlarge.2 with 32 vCPU and 64 GiB. (KB-MQND, contract, checked 2026-09-15)
 - The os-getConsoleOutput action returns HTTP 200 with an empty output string for a guest that writes nothing to ttyS0, because only what the guest sends to the serial port is kept. The same call returns the written lines when user_data writes to /dev/ttyS0. (KB-NDWB, live, checked 2026-07-02)
 - s9 flavors cap at 4 GB RAM per vCPU, so a memory-optimized m4 instance at 8 GB per vCPU matches m9 and would lose half its RAM on a move to s9. (KB-NH6R, docs, checked 2026-07-21)
+- Elastic Cloud Server (ECS) provides virtual and physical compute instances (virtual servers) made of vCPUs, memory, block storage on Elastic Volume Service and a public or private operating system image, chosen from preconfigured flavors. The flavor groups are general purpose, dedicated general purpose, memory optimized, large memory, storage optimized, flexible purpose and GPU accelerated (NVIDIA T4, L4, A40, V100, A100 and H100 cards), plus physical instances; public images include Microsoft Windows Server and the Linux distributions SLES, Oracle Linux and Red Hat Enterprise Linux. The Regions and Endpoints page lists API endpoints for ECS in eu-de and eu-nl. (KB-NHAY, contract, checked 2026-10-11)
 - An existing ECS resizes to a newer-generation flavor in place; the create and resize APIs ignore the flavor cond:image requirement __support_kvm_hi1822_hiovs, so an untagged image resizes fine. The tag only makes the console flavor picker list s9, and for a Windows image the console greys s9 out even with the tag. (KB-NRJ5, live, checked 2026-07-21)
 - Creating a Windows ECS with adminPass in the create body works, but the injected password is flagged "user must change password at first logon", so the first RDP login forces a password change. (KB-NTZM, live, checked 2026-06-10)
 - The platform accepts two ECS instances with the same name in one project, so an ECS name can match more than one instance. (KB-NYRP, live, checked 2026-09-02)

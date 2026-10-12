@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-10. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-11. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-09. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-10. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-10: eip
+# TCP Facts 2026-10-11: eip
 
 - An EIP is ordered with POST /v1/{project_id}/publicips on vpc.eu-de.otc.t-systems.com, with publicip.type 5_bgp and a bandwidth object carrying size, share_type PER and charge_mode traffic. The call returns HTTP 200 and DELETE /v1/{project_id}/publicips/{publicip_id} returns HTTP 204. (KB-3OQ3, live, checked 2026-07-17)
 - In the EIP list GET /v1/{project_id}/publicips an EIP bound to a load balancer shows status ELB with an empty port_id, and a VPN-bound one shows status VPN. Only port-bound EIPs show ACTIVE, and DOWN means unbound. (KB-4T6L, live, checked 2026-09-17)
@@ -18,6 +18,8 @@
 - GET /v1/{project_id}/publicips returns the elastic IPs allocated in a project and is the check for whether a given public address is still held. (KB-CFUN, live, checked 2026-09-16)
 - A RIPE database lookup on 2026-09-25 of all nine EIPs of a test project in eu-de returned inetnum objects maintained by the operator's network information centre: seven with a netname that carries the operator's name and the platform's name as description, two with netnames of the operator's general address space. So the whois of these nine addresses named the operator for all of them and the platform for seven. (KB-DBXO, live, checked 2026-09-25)
 - ECS create returns Ecs.0013 Insufficient EIP quota once the EIP quota is reached. An EIP that is bound to no port still counts against that quota and is still billed. (KB-FHCJ, live, checked 2026-06-17)
+- Elastic IP (EIP) provides static public IP addresses that connect resources such as Elastic Cloud Servers or load balancers with the internet, for inbound and outbound UDP, TCP and ICMP traffic. Outbound SMTP is opened on ports 465 and 587 only towards the Secure Mail Gateway, and the Mail BGP EIP type carries outbound SMTP on port 25. The Regions and Endpoints page lists EIP under the VPC API endpoints in eu-de and eu-nl. (KB-FQSW, contract, checked 2026-10-11)
+- Anti-DDoS (AD) protects the public IP addresses of the Elastic IP service against distributed denial-of-service attacks: it monitors the traffic from the internet to each EIP and restricts attack traffic once the thresholds set in the defense policy are exceeded. The documentation adds cleaning of network-layer and application-layer DDoS traffic, immediate alarms on a detected attack and monitoring reports. The Regions and Endpoints page lists API endpoints for Anti-DDoS in eu-de and eu-nl. (KB-HWYV, contract, checked 2026-10-11)
 - Public IP addresses on TCP register in the operator's address space (AS3320), so WHOIS and traceroute against a backend address show the operator even when a proxy on another provider fronts the service with a custom domain and certificate. (KB-HZEY, docs, checked 2026-05-21)
 - A released EIP returns to the shared address pool and can be allocated to a different tenant. A DNS A record left pointing at that address then resolves to an address under another tenant's control. (KB-L2QZ, docs, checked 2026-09-25)
 - Ordinary 5_bgp elastic IPs cannot be used for email services; the Mail BGP (5_mailbgp) type, assigned after the account administrator grants permission, is for outbound SMTP on port 25. Per the service description of 17.08.2026, ports 465 and 587 pass the central firewall only toward the Secure Mail Gateway Service, although the EIP user guide lists 25, 465 and 587 for Mail BGP. (KB-LU3H, contract, checked 2026-09-25)
