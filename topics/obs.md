@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-10. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-11. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-09. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-10. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-10: obs
+# TCP Facts 2026-10-11: obs
 
 - OBS SDK guides are published for python, java, go, nodejs, dotnet and c. Community OBS SDK sources for python and java are published under the opentelekomcloud-community organisation. (KB-24VK, docs, checked 2026-06-19)
 - The OBS user guide limits a user-defined domain name bound to a bucket to HTTP requests instead of HTTPS, and the domain name points by a CNAME record to the bucket domain name, so a DNS lookup of the own domain returns the OBS bucket host. (KB-252Q, docs, checked 2026-09-25)
@@ -92,9 +92,11 @@
 - OpenTofu 1.12.6 reads a state file written by Terraform 1.16 (state format 4) without error. (KB-I6S4, live, checked 2026-09-17)
 - When a bucket policy lists domain/{domain_id}:root in NotPrincipal, OBS returns that entry as domain/{domain_id} on a GET of the policy. (KB-IF4S, live, checked 2026-09-23)
 - An S3 client that sends an implicit CreateBucket before uploading receives InvalidRequest with the message that header x-amz-bucket-object-lock-enabled must be 'true'. Writing into an already existing bucket succeeds. (KB-ILRB, live, checked 2026-06-15)
+- T Cloud Public (TCP) offers object storage for archive use in Object Storage Service (OBS): the Cold storage class is meant for data accessed about once a year, such as archives and long-term backups, lifecycle rules transition objects to the Warm or Cold class or delete them, and WORM retention in compliance mode keeps object versions from being overwritten or deleted by anyone for a set period. Cold objects are restored before they are read (KB-TA3K). (KB-JMBA, docs, checked 2026-10-11)
 - Versioning is refused on an OBS parallel file system, and Object Lock requires versioning first, so WORM retention does not run on a parallel file system. (KB-JP4L, live, checked 2026-07-29)
 - Restoring a Cold (GLACIER) OBS object with the Standard retrieval tier took about one to five hours in the observed runs. (KB-JRLG, live, checked 2026-02-04)
 - AWS SDKs running the 2025 default checksum mode upload objects to OBS with aws-chunked framing written inside the object body, and the upload reports success. (KB-K4AE, live, checked 2026-09-15)
+- Object Storage Service (OBS) is a cloud-native object storage service in which the customer creates buckets and stores and manages objects in them, through the console, the API or the S3 protocol. It is offered in the storage classes Standard, Warm and Cold, and it stores data redundantly across three availability zones. The Regions and Endpoints page lists API endpoints for OBS in eu-de and eu-nl. (KB-KD7R, contract, checked 2026-10-11)
 - An account including all its IAM users can create at most 100 buckets and parallel file systems together. By default there is no limit on the capacity or on the number of objects in a bucket. (KB-KUBY, docs, checked 2026-09-25)
 - The OBS API reference writes bucket notification events without a prefix, ObjectCreated:Put, Post, Copy, CompleteMultipartUpload or ObjectCreated:*, and ObjectRemoved:Delete, DeleteMarkerCreated or ObjectRemoved:*, and puts only TopicConfiguration elements into NotificationConfiguration. The sample of the S3-compatible PUT Bucket Notification page writes s3:ObjectCreated:* instead. (KB-LIWX, docs, checked 2026-09-25)
 - In an OBS bucket notification configuration only TopicConfiguration is stored. A body with QueueConfiguration returns HTTP 200 while the configuration is not kept, and the notification does not fire. (KB-LP7I, live, checked 2026-08-27)

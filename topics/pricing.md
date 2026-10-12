@@ -1,19 +1,18 @@
-<!-- TCP Facts, dataset of 2026-10-10. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-11. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-09. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-10. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-10: pricing
+# TCP Facts 2026-10-11: pricing
 
 - The price API returns rows for flavors marked sellout in cond:operation:az and for ramped-down services. Orderability follows from the per-AZ state, not from the presence of a price row. (KB-4ABK, live, checked 2026-09-25)
 - No public service description of the Swiss offering (eu-ch2) was found on 2026-10-08: the TCP service description revision 17.08.2026 covers EU-DE and EU-NL only, the Swiss product pages link that same general document, and the operator's Swiss site offers a price calculator in CHF and a technical flyer of 2022 but no service description or price list. What is offered in eu-ch2 has to be confirmed with the Swiss entity before it is quoted. (KB-4FW6, docs, checked 2026-10-08)
 - Answers of the public price API can carry response.cachedAt, the time of a server cache in server time, two hours ahead of UTC on 2026-09-24. That day an unfiltered query answered from a cache of 2026-09-07 and a query for sn=ecs from one of 2026-09-17, so a price read today can come from a cache more than two weeks old. (KB-5LLN, live, checked 2026-09-24)
-- On 2026-09-10 the TCP price API priced the p5s (H100 PCIe) GPU flavors at one per-GPU rate that was the same on every size of the family, for compute and for the Windows licence component. The previous list gave the 4- and 8-GPU sizes a lower per-GPU rate. (KB-5RCL, live, checked 2026-09-10)
 - A price API result for one sn can contain records of another product: the sn=dc result for rn=eu-de carried one stray DAS row, distinguishable by its productName field. (KB-6A7H, live, checked 2026-08-25)
 - In the c9 price table of the TCP service description the flavour name is printed on the Oracle row, and the open Linux row directly above it carries its rate without a flavour name. A search combining a c9 flavour name with the words open Linux matches nothing. (KB-6HHT, contract, checked 2026-09-11)
 - The TCP price API returns rows for services that are no longer offerable. By 2026-09-02 this had been observed for SFS Common I/O, BMS and DIS, so a price-API hit alone does not show that a service can be ordered. (KB-7VPP, live, checked 2026-09-24)
@@ -42,7 +41,6 @@
 - In the public price API the service name sn=dcaas returns HTTP 500, while sn=dc with rn=eu-de returns the full Direct Connect price list including bandwidth tiers and ports. The same service can be served under an abbreviation different from the one used elsewhere. (KB-SEDA, live, checked 2026-08-25)
 - The public price API returns a changing set of ECS records: 502, then 508, then 400 within one month, with the x1 family and the s3 R36 reserved fields disappearing between calls. (KB-SFUF, live, checked 2026-07-01)
 - Reserved price rows can be left out of a pre-announced increase. In the change effective 01.07.2026 the R12, R24 and R36 cells carried no from-date marker and their values did not move. (KB-SUE5, contract, checked 2026-07-05)
-- The TCP price API and the contractual service description can carry different rates for the same flavor family. On 2026-09-10 the API held repriced p5s GPU flavors while section 6.2.1.13 of the service description, revision 17.08.2026, still held the previous table unchanged. (KB-UVSS, live, checked 2026-09-10)
 - The public TCP price API answers at https://calculator.otc-service.com/en/open-telekom-price-api/ with JSON and needs no key. It takes sn for the service name and rn for the region. limitFrom pages through the records and limitMax sets how many come per page: 500 without it, while limitMax=10000 returned each region in one answer on 2026-09-24. (KB-W7ZS, live, checked 2026-09-24)
 - The public price API held these record counts on 2026-09-24: eu-de 3386 records under 100 service names, eu-nl 2638 records under 64 names and eu-ch2 75 records under 14 names. (KB-XEGQ, live, checked 2026-09-24)
 - A record in the public price API does not show that a service can still be ordered: rows stay served for services that have reached end of life, so orderability has to be confirmed against the service catalog. (KB-XELM, live, checked 2026-09-24)

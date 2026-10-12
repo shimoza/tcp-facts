@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-10. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-11. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-09. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-10. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-10: vpc
+# TCP Facts 2026-10-11: vpc
 
 - Once the WAF engine port is gone, the security group and the subnet delete cleanly. A VPC delete can still answer 409 VPC.0104 once while the subnet settles and then succeed on the next attempt. (KB-3TES, live, checked 2026-09-16)
 - The VPC api-ref requires a plain IP address for the ip_address of an allowed address pair under the hardware SDN networking plan, and a dedicated security group for a pair whose mask is shorter than /24. (KB-3YKZ, docs, checked 2026-06-12)
@@ -72,6 +72,7 @@
 - POST /v1/{project_id}/subnets stores primary_dns and secondary_dns as empty when the request omits them. The console prefills both fields, the API does not, so a subnet built by API or Terraform can hand out no resolver at all. The region resolver addresses have to be set explicitly. (KB-Q5W2, live, checked 2026-08-18)
 - In eu-de two subnets deleted with DELETE /v1/{project_id}/vpcs/{vpc_id}/subnets/{subnet_id} were gone within seconds, their dhcp and router-interface ports included, and the VPC could be deleted right after. A GET on the deleted VPC answers 404 VPC.0105 with the Neutron message RouterNotFound, so a VPC is a Neutron router underneath. (KB-RD6U, live, checked 2026-10-05)
 - GET /v2.0/ports?network_id={id} returned 0 ports for a subnet that held three ports, one of them attached to a running VM. The same call without the filter, matched client-side on network_id and on fixed_ips subnet_id, returned all three. (KB-SLWK, live, checked 2026-09-16)
+- Virtual Private Cloud (VPC) provides isolated virtual networks inside a tenant: each VPC carries its own IP address ranges, subnets, virtual routers, security groups and network ACLs, and the customer can create one or more VPCs. VPC flow logs capture the traffic of the network interfaces of generation 7 and generation 9 servers and forward it to Log Tank Service for storage and analysis. The Regions and Endpoints page lists API endpoints for VPC in eu-de and eu-nl. (KB-UTUP, contract, checked 2026-10-11)
 - The resource opentelekomcloud_vpc_secgroup_v3 creates the IPv4 and IPv6 allow-all egress rules by itself. Declaring an additional catch-all egress rule on the same security group returns 409 VPC.9902 "Security group rule already exists" and stops the apply. (KB-VBVB, live, checked 2026-09-16)
 - GET /v1/{project_id}/quotas returns the per-resource quotas of a project, including the VPC quota. On a test tenant in eu-de the call reported the VPC quota at 10 of 10 used. (KB-VCIT, live, checked 2026-08-18)
 - On T Cloud Public (TCP) in eu-de a subnet object returned by the VPC v1 API can carry an optional availability_zone attribute (the AZ specified at creation) and omits the key when none is set (checked 2026-09-25). The value does not limit where the subnet can be used: a subnet is defined by its VPC and its CIDR range and is not bound to a single availability zone. (KB-VLGS, live, checked 2026-09-25)

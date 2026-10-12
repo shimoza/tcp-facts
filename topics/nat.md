@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-10. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-11. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-09. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-10. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-10: nat
+# TCP Facts 2026-10-11: nat
 
 - A public NAT gateway handles TCP, UDP and ICMP only. It does not support application layer gateway (ALG) functions or the ESP and AH protocols used by IPsec and GRE tunnels. (KB-2C3A, docs, checked 2026-09-25)
 - DNAT rules are listed with GET /v2.0/dnat_rules?nat_gateway_id=... on the NAT endpoint in eu-de. The response key is dnat_rules, and each rule holds id, floating_ip_address, external_service_port, private_ip, internal_service_port and protocol. (KB-4O52, docs, checked 2026-09-25)
@@ -24,6 +24,7 @@
 - The NAT gateway creation API on TCP documents specification type 0, micro, as supporting up to 1,000 SNAT connections. The micro size is absent from the UMN specification table. (KB-GKVF, docs, checked 2026-09-09)
 - A SNAT rule on a NAT gateway is bound either to a subnet through network_id or to a CIDR block through cidr; source_type 0 (VPC) allows either and source_type 1 (Direct Connect or Cloud Connect) allows only cidr. A subnet-based rule rebuilt in another project has to reference the subnet ID that exists in that project. (KB-IYYV, docs, checked 2026-09-25)
 - An SNAT rule for a CIDR that arrives over an enterprise router instead of a local subnet needs source_type set to 1 in the snat_rule body of POST /v2.0/snat_rules, together with nat_gateway_id, cidr and floating_ip_id. The call returns HTTP 201. (KB-JSIY, live, checked 2026-07-17)
+- NAT Gateway (NG) provides network address translation for servers in a VPC. A public NAT gateway lets servers in a private subnet reach the internet through a shared Elastic IP without being reachable from the internet (SNAT), and DNAT rules publish chosen ports; it comes in sizes from Micro to Extra-Large. A private NAT gateway connects a subnet with on-premises data centers or other VPCs through a transit IP address. The Regions and Endpoints page lists API endpoints for NAT Gateway in eu-de and eu-nl. (KB-KOA3, contract, checked 2026-10-11)
 - Creating an SNAT rule automatically adds a 0.0.0.0/0 route of type nat to the route table of the gateway's own VPC, so that route is not added by hand. (KB-NTOE, live, checked 2026-07-17)
 - NAT gateways are listed with GET /v2.0/nat_gateways on nat.eu-de.otc.t-systems.com, without a project_id in the path. The same listing under /v2/{project_id}/ returned HTTP 404. Each entry in nat_gateways holds name, id, status, router_id (the VPC id), spec and internal_network_id. (KB-O3F5, live, checked 2026-09-25)
 - The NAT gateway spec field is a string, and the value 0 (micro) exists besides 1 small, 2 medium, 3 large and 4 extra-large. (KB-OYWW, live, checked 2026-09-17)

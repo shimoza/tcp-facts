@@ -1,16 +1,15 @@
-<!-- TCP Facts, dataset of 2026-10-10. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-11. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-09. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-10. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-10: mrs
+# TCP Facts 2026-10-11: mrs
 
-- POST /web/api/v2/clusters/1/services/{name}/commands/start (also stop and restart) with an empty JSON body returns HTTP 202 and a commandId. A second command issued while one is still running is refused with error 08-4000031. (KB-2TO7, live, checked 2026-07-28)
 - The MRS cluster manager API rejects a PUT that modifies the built-in admin account. (KB-2ZYC, live, checked 2026-07-30)
 - The MRS cluster manager API rejects a description field that contains a comma when creating a role or a user. (KB-4AAX, live, checked 2026-07-30)
 - The Trino statement API is asynchronous. A caller that only submits the statement records success at submit time, not at query completion, so the outcome needs a separate polling step. (KB-4CS3, live, checked 2026-07-30)
@@ -20,6 +19,7 @@
 - Impala on MRS reads Iceberg tables, prunes partitions and serves DESCRIBE HISTORY and version time travel. An INSERT into a table holding a timestamptz column returns an error, and Spark writes a TIMESTAMP column as timestamptz. (KB-4JTU, live, checked 2026-07-28)
 - A five node MRS cluster created through POST /v2/{project_id}/clusters in eu-de took about 23 minutes from the create call to a usable cluster. (KB-4Q3W, live, checked 2026-07-29)
 - The request schema of each MRS Manager API endpoint is readable on the Manager node in /opt/Bigdata/om-server/apache-tomcat-*/webapps/web/WEB-INF/validate/validate-rule-*.xml. Those files list, per endpoint and method, every parameter, whether it is required, and its validation regex. (KB-4QC4, live, checked 2026-07-28)
+- MapReduce Service (MRS) is a managed big data platform for building and running big data clusters: core nodes process data and store it in HDFS, and task nodes process data and are added or removed by auto scaling rules. The documentation names the engines ClickHouse, Spark, Flink, Kafka and HBase and compatibility with the open-source components. The Regions and Endpoints page lists the MRS API endpoint in eu-de. (KB-4SRI, contract, checked 2026-10-11)
 - A Ranger obs policy on MRS that grants to a user returns Obs not support User grants, so grants are made to groups. (KB-4VAD, live, checked 2026-07-30)
 - hetu-cli echoes its own java command line, including the --password value in clear text, so the password shows up in the process list and in any captured log. (KB-4VW3, live, checked 2026-07-30)
 - GET /web/api/v2/permission/clusters/1/services/{service}/views/{view}/resources needs resource_type and resource_name beside path; path=root alone returns error 12-5000036. With path=root, resource_type=parentQueue and resource_name=root it returns the child queues with their Submit and Admin permissions. (KB-5DZX, live, checked 2026-07-28)
@@ -46,7 +46,6 @@
 - Creating a HetuEngine compute instance needs a YARN queue permission: a Manager role with Submit and Admin on root.default. The CLI message "user does not belong to the specified tenant" is misleading; the HSBroker log states that the user has no permission on default. (KB-FJ2A, live, checked 2026-07-28)
 - MRS writes Iceberg data over obs:// into an SSE-KMS encrypted parallel file system without checksum or etag errors. All 14 data objects of the test write carried the KMS key; the unencrypted remainder were zero-byte directory markers, since a parallel file system models real directories. (KB-FN3W, live, checked 2026-07-29)
 - The node_size field of POST /v2/{project_id}/clusters takes flavor names ending in .linux.mrs, for example c4.4xlarge.4.linux.mrs. A name ending in .linux.bigdata, the suffix used in documentation examples, returned error 12000048 for an unknown product specification. (KB-FT7O, live, checked 2026-07-28)
-- Spark writes an Iceberg TIMESTAMP column as timestamptz, so tables written by Spark are readable by Impala but not writable by it. (KB-FTWV, live, checked 2026-07-28)
 - A HetuEngine Iceberg data source takes hive.config.resources as absolute paths, and those files have to exist on every node of the cluster. (KB-GFC4, live, checked 2026-07-28)
 - HetuEngine on MRS is a Trino distribution and answers the Trino statement API. A POST to /v1/statement carrying X-Trino-User, X-Trino-Catalog and X-Trino-Schema headers with the SQL as the raw body returns a queued query, and nextUri is polled until the state reaches FINISHED. (KB-GOFP, live, checked 2026-07-30)
 - A registered HetuEngine data source is immutable through the API. Posting an existing name returns HTTP 500 with code 600001 and the text The datasource has exist, and DELETE /datasource/{name} answers 404, so a changed configuration is registered under a new name. (KB-GSXI, live, checked 2026-07-30)

@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-10. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-11. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-09. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-10. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-10: ims
+# TCP Facts 2026-10-11: ims
 
 - A private image is removed with DELETE /v2/images/{image_id} on the Glance-compatible IMS surface in eu-de, which answers HTTP 204. (KB-23TF, live, checked 2026-06-12)
 - Private images of a tenant are listed with GET /v2/cloudimages?__imagetype=private on the IMS endpoint in eu-de, optionally narrowed with a name parameter. The image type parameter carries a double underscore prefix. (KB-2L2B, live, checked 2026-09-25)
@@ -56,6 +56,7 @@
 - An IMS import from an OBS file takes hw_firmware_type uefi in the body of POST /v2/cloudimages/action. The image becomes active with hw_firmware_type uefi. (KB-JLKQ, live, checked 2026-10-01)
 - A Windows, SUSE, Red Hat, Ubuntu or Oracle Linux private image that was created from an external image file can be exported, unlike one built from the matching public image. (KB-JN7G, docs, checked 2026-09-25)
 - TCP has no FreeBSD public image and no FreeBSD price tier in eu-de. (KB-KVBP, live, checked 2026-09-25)
+- Image Management Service (IMS) manages the operating system images from which Elastic Cloud Servers are created: public images provided by Telekom, private images the customer creates from a server or uploads as an image file, and images shared between tenants. The public images named in the service description are SUSE Linux Enterprise Server, Oracle Linux, Red Hat Enterprise Linux and Microsoft Windows Server. The Regions and Endpoints page lists API endpoints for IMS in eu-de and eu-nl. (KB-LC4V, contract, checked 2026-10-11)
 - Windows Server 2025 public images are live in eu-de. A listing of Windows public images in that region returned 22 images, all Standard edition, marked STD or STD-CORE. (KB-M3JR, live, checked 2026-09-25)
 - A private image created from a running ECS inherits the source image's __support_kvm tags and its hw_firmware_type. (KB-MPY3, live, checked 2026-07-20)
 - The image import path is decided per single disk file, not per VM: up to 128 GB the supported formats import directly, from 128 GB to 1 TB only RAW with a bitmap file or ZVHD2, and 1 TB is the documented maximum for one disk file. (KB-MXW6, docs, checked 2026-09-21)
@@ -68,6 +69,7 @@
 - A second load of the same model inside the same instance runs from the OS page cache and took about 50 minutes instead of 2.5 hours. An instance newly created from an IMS image of that system starts with a cold page cache and loads at cold speed again. (KB-P6WA, live, checked 2026-05-07)
 - An ECS created from a system disk image takes its flavor and system disk type from the create step rather than from the image, with a system disk at least as large as the min_disk of the image. When an ECS is created from a full-ECS image, it gets the system and data disks of the image by default and their sizes can grow but not shrink. (KB-PAHE, docs, checked 2026-09-25)
 - An appliance image in qcow2 format that brings its own kernel and drivers is imported into IMS with is_config false, the API default, so the import skips automatic configuration. On Linux that step, among other changes, removes PV drivers, rewrites grub and fstab to UUIDs, deletes VMware Tools services and copies VirtIO drivers into the initrd, which can misconfigure such a guest. (KB-PLD6, docs, checked 2026-09-25)
+- Image Management (IM) in the preview section of the service description offers the public preview image Standard_Ubuntu_20.04_AI_Frameworks_Preview, an Ubuntu 20.04 image with AI frameworks. Like every preview and beta version it is meant for testing, and Telekom advises against using it in live environments. (KB-QEH3, contract, checked 2026-10-11)
 - The Glance-native route for the same cross-tenant image share is POST /v2/images/{id}/members by the owner, followed by PUT /v2/images/{id}/members/{member_id} with status accepted by the recipient. (KB-R46O, docs, checked 2026-09-25)
 - IMS requires VirtIO (KVM guest OS) drivers to be installed in a Windows image file on the source platform before export. Without them, ECSs created from the image fail to start. DHCP must also be configured in the image. (KB-RB2V, docs, checked 2026-10-09)
 - The new image is followed with GET /v2/cloudimages?name={name} and moves through status queued, then saving, then active. For a system disk of about 80 GB, reaching active took minutes. (KB-RI7K, live, checked 2026-06-23)

@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-10. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-11. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-09. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-10. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-10: kms
+# TCP Facts 2026-10-11: kms
 
 - A KMS grant of the default EVS key evs/default to another tenant was rejected, while the same grant on a custom KMS key was accepted. (KB-2RBG, docs, checked 2026-09-25)
 - The console offers RSAES_OAEP_SHA_256 as wrapping algorithm while the get-parameters-for-import API also lists RSAES_PKCS1_V1_5 and RSAES_OAEP_SHA_1. The downloaded wrapping key expires after 24 hours. (KB-4WN4, docs, checked 2026-09-25)
@@ -17,8 +17,10 @@
 - In eu-de the KMS call POST /v1.0/{project_id}/kms/list-key-detail does not exist (HTTP 404 APIGW.0101). POST /v1.0/{project_id}/kms/list-keys with a limit in the body returns both the key ids and key_details, including creation_date in milliseconds, so it serves as the detailed listing. (KB-DMLV, live, checked 2026-10-05)
 - A disabled key or a key pending deletion is not rotated. If such a key is enabled again after one rotation period has passed, KMS rotates it within 24 hours. (KB-FPPV, docs, checked 2026-09-25)
 - The service description charges keys with imported material (BYOK) the same as symmetric, asymmetric and HMAC customer master keys. (KB-HUHI, contract, checked 2026-09-25)
+- Key Management Service (KMS) centrally creates, manages and backs up cryptographic keys for data encryption and protects them in hardware security modules (HSM); it works with keys that KMS generates and with keys the customer imports (bring your own key). KMS is integrated with services such as Object Storage Service, Elastic Volume Service and Relational Database Service, provides AES-256 keys for their encryption, and supports encryption and decryption, signing and verification and granular access control. The Regions and Endpoints page lists API endpoints for KMS in eu-de and eu-nl. (KB-HYWV, contract, checked 2026-10-11)
 - To bring your own material you create a custom key with key material source External (API field origin set to external). You then fetch a wrapping key and an import token, encrypt your material with the wrapping key and import it. (KB-JGGC, docs, checked 2026-09-25)
 - Imported asymmetric material (RSA_2048, RSA_3072, RSA_4096, EC_P256 and EC_P384) is permanently valid. It cannot be deleted by hand or given an expiry time and is removed only by deleting the whole key. (KB-KUNZ, docs, checked 2026-09-25)
+- T Cloud Public (TCP) offers key management with customer-managed and customer-supplied keys in Key Management Service (KMS): customers create their own keys in KMS or import their own key material (bring your own key), for example AES-256 symmetric keys or HMAC keys, and services such as OBS, EVS and RDS encrypt data with these keys. Keys with imported material behave differently from KMS-generated ones, for example in rotation (KB-UTXY, KB-RMY5). (KB-KUZK, contract, checked 2026-10-11)
 - Automatic rotation changes only the key material while key ID, alias, description and permissions stay. Data is not re-encrypted and KMS keeps all versions: it encrypts with the latest and decrypts with the version that encrypted the data. (KB-RJRS, docs, checked 2026-09-25)
 - A key with imported material cannot be rotated. The key stays bound to its material, so after deletion or expiry only the same material can be imported again. (KB-RMY5, docs, checked 2026-09-25)
 - Rotation needs an enabled key whose origin is KMS. Asymmetric keys can only be rotated manually while default keys and keys with imported material cannot be rotated. (KB-SWEF, docs, checked 2026-09-25)
@@ -26,6 +28,7 @@
 - Keys whose material KMS generated differ from keys with imported material: their material cannot be deleted by hand or given an expiry time and the symmetric ones can be rotated. (KB-UTXY, docs, checked 2026-09-25)
 - KMS rotates a custom symmetric key automatically once rotation is enabled for it. Rotation is off by default and the period is 30 to 365 days with 365 as default. (KB-W26T, docs, checked 2026-09-25)
 - Material can be imported for every key spec KMS offers: AES_256, HMAC_256, HMAC_384, HMAC_512, RSA_2048, RSA_3072, RSA_4096, EC_P256 and EC_P384. (KB-WXCI, docs, checked 2026-09-25)
+- Cloud Secret Management Service (CSMS) is a service for managing credentials (secrets): users and applications create, retrieve, update and delete secrets centrally throughout their lifecycle instead of hardcoding them or keeping them in plain-text configuration. The service description of 17.08.2026 announces CSMS as expected to be available from 1 April 2027, and on 2026-09-25 its API was not yet reachable in eu-de (KB-GUHJ). (KB-X6WM, contract, checked 2026-10-11)
 - A disabled custom key is still billable. The KMS user guide says it stops incurring charges if it is deleted. (KB-XC4T, docs, checked 2026-09-25)
 - Rotation is managed with the POST calls enable-key-rotation, disable-key-rotation, update-key-rotation-interval and get-key-rotation-status under /v1.0/{project_id}/kms/. The status call returns key_rotation_enabled, rotation_interval, last_rotation_time and number_of_rotations. (KB-XE5C, docs, checked 2026-09-25)
 - KMS cannot export a customer master key: its FAQ says keys can only be created and used in KMS and the API has no export call, only get-publickey for the public key of an asymmetric key. For imported material the docs tell you to keep your own backup so that it can be imported again after an accidental deletion. (KB-YJ57, docs, checked 2026-09-25)

@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-10. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-11. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-09. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-10. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-10: dataarts
+# TCP Facts 2026-10-11: dataarts
 
 - The CDM API is rate limited to 5 requests per minute and answers APIGW.0308 above that rate. (KB-22H2, live, checked 2026-07-30)
 - Incremental file migration in CDM is the destination option toJobConfig.duplicateFileOpType set to SKIP, not a separate incremental flag. In an OBS to OBS test an empty target copied 28 files, an unchanged rerun copied 0 and a run after one new file copied 1. REPLACE recopies everything. (KB-5HTE, live, checked 2026-07-30)
@@ -24,6 +24,7 @@
 - DataArts Migration skips files that were already transferred when toJobConfig.duplicateFileOpType is set to SKIP, which covers incremental file loads. (KB-O5QK, live, checked 2026-07-30)
 - DataArts Factory job listing honours only the workspace request header. With workspaceId, instance-id or dayu-workspace instead, the call answers HTTP 200 with {"jobs":[],"total":0} for the default scope. (KB-PNCE, live, checked 2026-07-30)
 - DataArts Studio in eu-de is torn down in the console only: read, delete and stop on a single Factory job answer 404 APIGW.0101, and the deletion is a console chain of jobs, data connection, migration clusters and instance. A service the service description lists can have functions without an API, while an API can still answer for a service no longer offered (BMS). (KB-QSZB, live, checked 2026-07-31)
+- DataArts Studio (DS) is a data lifecycle management platform for data integration, data development, data governance and data services, from data ingestion to the delivery of data services. The Starter version covers the initial setup of data lake projects and ETL tasks without governance features; the Enterprise version adds data architecture, data quality, data catalog, data security and data service features. The Regions and Endpoints page lists the DataArts Studio endpoints in eu-de. (KB-R52P, contract, checked 2026-10-11)
 - DataArts Studio provides CDM for batch data movement and Factory for orchestration, and MRS provides Kafka and Flink for streaming pipelines. (KB-SWZZ, docs, checked 2026-09-25)
 - The DataArts CDM job failure "Run fail.Execute rest api job fail." after about 135 seconds points to a missing network route between the CDM agent and the target, for example when the two sit in different VPCs. (KB-TL3G, live, checked 2026-07-30)
 - A minute-level cron in a DataArts Factory job needs both a range and an interval. The expression 0 0-59/2 * * * ? is accepted, 0 0/10 * * * ? returns DLF.1006 and 0 */10 * * * ? returns DLF.3025. (KB-TML3, live, checked 2026-07-30)

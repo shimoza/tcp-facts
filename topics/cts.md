@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-10. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-11. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-09. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-10. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-10: cts
+# TCP Facts 2026-10-11: cts
 
 - PUT /v3/{project_id}/tracker refuses compress_type in upper case with error CTS.0227 'The compress_type must be json or gzip'; the lower-case value gzip is accepted. (KB-2QGH, live, checked 2026-09-23)
 - CTS in eu-de records public NAT gateway operations under service_type VPC (deleteSnatRule, deleteNatGateway, updateFloatingip, deleteEip), not under NAT: a query with service_type=NAT for the same window returned no traces. (KB-3XKX, live, checked 2026-10-06)
@@ -21,10 +21,12 @@
 - An OBS setBucketPolicy call became visible in the CTS trace query about two to three minutes after it happened: the query returned nothing at first and the trace after a little over two minutes of polling every 30 seconds. (KB-FYVH, live, checked 2026-09-23)
 - Cloud Trace Service keeps traces queryable through its API for 7 days in eu-de. An event older than that returns no trace, and is readable later only if an authorized OBS transfer or an enabled LTS forwarding was already active when the event happened. (KB-GJKP, live, checked 2026-07-31)
 - A CTS event notification with operation_type customized requires an explicit operations list naming service_type, resource_type and trace_names, and then publishes matching traces to an SMN topic. (KB-GWL5, live, checked 2026-07-17)
+- Cloud Trace Service (CTS) is a log audit service that records the operations performed on cloud resources through the console, through API calls and by connected services, for security analysis, change tracking, compliance audit and fault finding. Traces of the last seven days are searched in the console, all traces are stored in Object Storage Service and can be downloaded as a report, and the documentation adds transfer to Log Tank Service and key-event notification through Simple Message Notification. The Regions and Endpoints page lists the CTS API endpoint in eu-de. (KB-HWFP, contract, checked 2026-10-11)
 - CTS traces record control-plane API actions. In a review after a suspected guest compromise the CTS record was complete for API actions and clean, while what happened inside the guest operating system was not answerable from it. (KB-JBYB, live, checked 2026-07-29)
 - CTS writes hash-chained digest files only for a tracker that has OBS transfer configured together with the opt-in trace-file verification switch. The digest signature is SHA256withRSA and the file hashes are MD5. (KB-KVR7, docs, checked 2026-09-01)
 - GET /v3/{project_id}/traces?trace_type=system on the CTS endpoint returns the operation vocabulary of a service, including operations that have no published API path. (KB-LYUM, live, checked 2026-09-10)
 - CTS traces can be filtered with trace_type=system plus a from and to millisecond window, and narrowed by resource_id for one resource or by service_type, for example IAM to read the full identity trail of new users, credentials, agency grants and logins. (KB-M4UN, live, checked 2026-07-29)
+- T Cloud Public (TCP) keeps audit logs of management actions in Cloud Trace Service (CTS): operations on the resources of the services connected to CTS, made through the console or the API, are recorded as traces, traces of the last seven days are searched in the console, and a tracker transfers traces to an OBS bucket or an LTS log stream for long-term keeping (KB-ZICC). The 7-day query window was confirmed live in eu-de (KB-GJKP); coverage differs per service, for example SDRS wrote no traces in a live test (KB-HBF5). (KB-MF3H, docs, checked 2026-10-11)
 - A customized CTS key event notification on OBS setBucketPolicy with the advanced filter resource_name = {bucket} delivered a mail through its SMN topic to a confirmed email subscription when that bucket's policy was written. No access policy on the SMN topic was needed for CTS in the same account. (KB-MQNL, live, checked 2026-09-23)
 - The mail of a CTS key event notification states times as GMT+0100 even in German summer time: a trace at 15:14:22 UTC was shown as 16:14:22 GMT+0100. The mail carries the full trace, including the user name, the account and project ids and the source IP. (KB-MV5W, live, checked 2026-09-23)
 - GET /v3/{project_id}/traces?trace_type=system&service_type=VPC on cts.eu-de.otc.t-systems.com returns the system traces for EIP work. The traces createEip, batchUpdateEipTags and deleteEip appeared about 20 seconds after the corresponding API call. (KB-NPWT, live, checked 2026-07-17)

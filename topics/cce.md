@@ -1,15 +1,16 @@
-<!-- TCP Facts, dataset of 2026-10-10. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-11. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-09. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-10. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-10: cce
+# TCP Facts 2026-10-11: cce
 
+- Cloud Container Engine and Cloud Container Engine Turbo (CCE, CCE Turbo) provide managed Kubernetes clusters in which the customer runs, manages and monitors containers, with the compute, storage and network resources reserved on T Cloud Public (TCP). CCE Turbo adds passthrough networking (Cloud Native 2.0) and better scheduling compared with CCE Standard; the preassembled cluster flavors hold up to 50, 200, 1,000 or 2,000 nodes, among them a high-availability flavor. The Regions and Endpoints page lists API endpoints for CCE in eu-de and eu-nl. (KB-22XD, contract, checked 2026-10-11)
 - A new CCE cluster comes with 17 storage classes, among them `csi-disk`, `csi-nas`, `csi-obs`, `csi-sfsturbo` and older flexvolume ones, and none of them carries the `storageclass.kubernetes.io/is-default-class` annotation. A PersistentVolumeClaim that does not name a class stays Pending. (KB-27TG, live, checked 2026-09-16)
 - CCE Turbo clusters (Cloud Native Network 2.0) are documented and orderable on TCP through cluster category Turbo, containerNetwork mode eni and an eniNetwork block in the create-cluster API, and add per-pod security groups and ELB passthrough. (KB-2HZA, docs, checked 2026-09-25)
 - GP SSD v2 (GPSSD2) is valid for CCE persistent volumes through the everest CSI driver on TCP, eu-de, and is set in the StorageClass. (KB-3DQF, docs, checked 2026-09-09)
@@ -34,7 +35,10 @@
 - On CCE, `csi-disk` is the EVS-backed block storage class, and a 10Gi PersistentVolumeClaim naming it bound in about 5 seconds. (KB-JGA2, live, checked 2026-09-16)
 - While no elastic IP is bound to the CCE cluster API, the external_otc endpoint cannot be authenticated against, although it resolves and serves a valid certificate. (KB-KTT2, live, checked 2026-09-16)
 - Pod density on a CCE Turbo node is capped by the node flavor's supplementary network interface quota rather than by the kubelet default. Documentation examples give 128 pods on a 4xlarge class node and 256 on an 8xlarge class node. (KB-NFSU, docs, checked 2026-06-12)
+- Application Service Mesh (ASM) is a managed service mesh compatible with Kubernetes and Istio that manages the lifecycle and traffic of microservices without changes to the application. It provides load balancing, outlier detection and fault injection, and grayscale releases such as canary and blue-green deployment. The Regions and Endpoints page lists the ASM API endpoint in eu-de. (KB-NMSH, contract, checked 2026-10-11)
 - GET /api/v3/projects/{project_id}/clusters on the CCE endpoint answers HTTP 200 with a payload of kind Cluster, apiVersion v3 and an items array. The call is AK/SK signed like other platform APIs. (KB-NOWE, live, checked 2026-07-02)
+- T Cloud Public (TCP) offers managed Kubernetes in Cloud Container Engine (CCE), as CCE Standard and CCE Turbo clusters, with Kubernetes v1.30 to v1.34 in commercial use per the version policy in the documentation mirror of 2026-08-31 (KB-5TID). Clusters use ECS nodes, VPC, ELB and EVS, SFS or OBS storage, and container images come from Software Repository for Containers. (KB-OOVV, docs, checked 2026-10-11)
+- Ubiquitous Cloud Native Service (UCS) is a platform that centrally manages distributed Kubernetes clusters, so cloud-native applications run across regions and clouds, on CCE and CCE Turbo clusters of T Cloud Public (TCP) as well as on Kubernetes clusters of other cloud vendors, with traffic distribution between them. The service description of 17.08.2026 announced it as expected to be available from 1 September 2026. (KB-P3JV, contract, checked 2026-10-11)
 - When concurrent emptyDir-heavy pods fill nodefs on a CCE worker, the node gets `node.kubernetes.io/disk-pressure` and further pods stay Pending with an untolerated taint. `GET /api/v1/nodes/<node>/proxy/stats/summary` can report 5 percent used while the taint is still set, because the kubelet holds the condition for its transition period. (KB-QYGN, live, checked 2026-09-17)
 - On a standard CCE cluster a LoadBalancer ingress registers only Services of type NodePort. With a ClusterIP backend the controller logs `can not found protocol port of pod <ns>/<pod>, skip add member`, the ELB pool stays empty and requests return 502. ClusterIP backends work on a CCE Turbo cluster with a dedicated load balancer. (KB-SH6U, docs, checked 2026-09-16)
 - The public price API carries the CCE cluster charge under sn=cce as one hourly item per cluster flavor: cce.s1.small, cce.s1.medium and, for the HA clusters, cce.s2.small to cce.s2.xlarge, six items in eu-de on 2026-09-24. Worker nodes, EIP, NAT gateway and EVS are priced under their own service names. (KB-SJJV, live, checked 2026-09-24)
