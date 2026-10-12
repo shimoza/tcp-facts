@@ -1,10 +1,12 @@
 # TCP Facts 2026-10-12
 
-Build of 2026-10-12 06:47 UTC. A later build of the same day replaces this one under the same name; the manifest carries the build time.
+Build of 2026-10-12 13:52 UTC. A later build of the same day replaces this one under the same name; the manifest carries the build time.
 
-1616 checked facts about T Cloud Public (TCP) with the list of orderable services and the public price list of two regions. Made to be dropped into any AI assistant.
+1617 checked facts about T Cloud Public (TCP) with the list of orderable services and the public price list of two regions. Made to be dropped into any AI assistant.
 
-1030 facts were tested live on a TCP tenant, 433 come from the vendor documentation and 153 from the service description (revision 17.08.2026). No fact from hearsay, no expired fact, no customer, no project, no credential.
+1031 facts were tested live on a TCP tenant, 433 come from the vendor documentation and 153 from the service description (revision 17.08.2026). No fact from hearsay, no expired fact, no customer, no project, no credential.
+
+379 of the 433 documentation facts come from the open source repositories of the GitHub organisation opentelekomcloud-docs, published under the Apache License 2.0. The public source of each of the others is in facts.jsonl. The documentation website is not crawled, its robots.txt disallows all robots. Sources whose terms forbid automated analysis are not used, so the community portal and internal documentation are left out. The live checks ran on the compiler's own TCP test tenants.
 
 
 ## Use
@@ -128,7 +130,7 @@ VS Code (and GitHub Copilot in it), in .vscode/mcp.json:
 {"servers": {"tcp-facts": {"type": "stdio", "command": "python3", "args": ["/path/to/tcp-facts/tcp_facts_mcp.py"]}}}
 ```
 
-Add "--live" to the arguments for live prices from the public price API (no credentials). On Windows the command is python or py. The rules of "Before you use it with a public model" apply here too: the client sends your questions to its model provider.
+Add "--live" to the arguments for live prices from the public price API (no credentials). Claude Desktop opens its file under Settings, Developer, Edit Config and loads a change only after a full quit and start. Give the path in full, never relative to a folder. On Windows the command is python or py. In the JSON every backslash of a path is written twice. The rules of "Before you use it with a public model" apply here too: the client sends your questions to its model provider.
 
 
 ## Files
@@ -143,5 +145,7 @@ Built 2026-10-12. Best before 2026-11-11: facts about availability are re-checke
 Dataset: TCP Facts, github.com/shimoza/tcp-facts.
 
 Compiled from public sources and live checks. Licence CC BY 4.0: name the dataset and its address when you reuse it. No warranty: the service description and the price list of the provider are the binding documents.
+
+The documentation facts draw on the repositories of github.com/opentelekomcloud-docs, licensed under the Apache License 2.0 (www.apache.org/licenses/LICENSE-2.0).
 
 The full licence text is in LICENSE at github.com/shimoza/tcp-facts.
