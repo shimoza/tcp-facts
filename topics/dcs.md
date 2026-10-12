@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-11. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-12. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-10. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-11. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-11: dcs
+# TCP Facts 2026-10-12: dcs
 
 - After an online migration between DCS Redis 4.0 or later instances, DCS can swap the IP addresses of source and target so clients keep their address, with a rollback of the swap possible. It works for single-node, master/standby, read/write splitting and Proxy Cluster instances with the same port, password and whitelist, while the instances turn read-only for one minute during the swap. (KB-2XZS, docs, checked 2026-09-25)
 - The Redis major version of a DCS instance cannot be changed after creation, for example from 5.0 to 6.0. The documented path is a new instance with the higher version and a data migration into it. (KB-5XW5, docs, checked 2026-09-25)

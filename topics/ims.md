@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-11. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-12. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-10. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-11. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-11: ims
+# TCP Facts 2026-10-12: ims
 
 - A private image is removed with DELETE /v2/images/{image_id} on the Glance-compatible IMS surface in eu-de, which answers HTTP 204. (KB-23TF, live, checked 2026-06-12)
 - Private images of a tenant are listed with GET /v2/cloudimages?__imagetype=private on the IMS endpoint in eu-de, optionally narrowed with a name parameter. The image type parameter carries a double underscore prefix. (KB-2L2B, live, checked 2026-09-25)

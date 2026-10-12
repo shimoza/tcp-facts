@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-11. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-12. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-10. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-11. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-11: lts
+# TCP Facts 2026-10-12: lts
 
 - Log Tank Service (LTS) is a central cloud logging service that stores log data from many sources in one place and forwards it to Object Storage Service or Distributed Message Service for further processing or archiving. The documentation names real-time collection of host and cloud service logs, keyword and fuzzy log search, alarm reporting and a retention period the customer sets, after which logs are deleted unless transferred to OBS for long-term storage. The Regions and Endpoints page lists API endpoints for LTS in eu-de and eu-nl. (KB-3YYI, contract, checked 2026-10-11)
 - GET /v2/{project_id}/groups on the LTS endpoint answers HTTP 200 with a log_groups array. Each entry carries log_group_id, log_group_name and ttl_in_days. (KB-CRKU, live, checked 2026-07-02)
