@@ -3,7 +3,7 @@
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
-3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
+3. Prices come from a snapshot of the public price API taken 2026-10-14 13:11 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
 4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
@@ -26,7 +26,7 @@
 - SDRS.1353 is an AZ inventory condition, not a generation gate. SDRS builds the DR server in the paired AZ, and every s7n and m7n size plus every c7n.*.2 size is absent from eu-de-02, while c7n.large.4, which is offered there, protects with no extra parameter. (KB-NMLI, live, checked 2026-08-26)
 - SDRS replication and recovery from a CBR backup deliver the same consistency class, crash-consistent. The difference is the age of the copy: replication is current at the moment of the failure, a backup is as old as its last run. (KB-OXBI, docs, checked 2026-09-02)
 - When an SDRS failover is confirmed, the production servers show a blue screen of death or are forcibly stopped, so the resulting copy is crash-consistent by definition. (KB-OXLO, docs, checked 2026-09-02)
-- Storage Disaster Recovery Service (SDRS) replicates the block storage data of servers to another availability zone, so that after an outage of one availability zone the servers are started with current data in the other zone. A DR drill function tests the disaster recovery at any time. The Regions and Endpoints page lists the SDRS API endpoint in eu-de. (KB-QJ3S, contract, checked 2026-10-11)
+- Storage Disaster Recovery Service (SDRS) replicates the block storage data of servers to another availability zone, so that after an outage of one availability zone the servers are started with current data in the other zone. A DR drill function tests the disaster recovery at any time. The Regions and Endpoints page lists the SDRS API endpoint in eu-de. (KB-QJ3S, contract, checked 2026-10-14)
 - POST /v1/{project_id}/protected-instances/{id}/resize changes flavours: production_flavorRef affects the production server, dr_flavorRef the DR server, flavorRef both, and when flavorRef is present the other two are ignored. The servers being changed must be SHUTOFF and the protection group available or protected. (KB-ROOO, live, checked 2026-08-26)
 - SDRS failover with dr_type migration moves the network identity. The old production server ends SHUTOFF with no addresses and the DR server comes up with the same private IP and the same EIP. Binding a new EIP returns VPC.0511 PortInUse, and reachability takes 40 to 60 seconds. (KB-UC5C, live, checked 2026-08-26)
 - An SDRS drill created with POST /v1/{project_id}/disaster-recovery-drills needs a drill VPC different from the protection group VPC, otherwise error SDRS.1907, and that VPC has to carry the same subnet CIDR block, otherwise error SDRS.1909. (KB-WGOJ, live, checked 2026-08-26)

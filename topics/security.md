@@ -3,14 +3,14 @@
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
-3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
+3. Prices come from a snapshot of the public price API taken 2026-10-14 13:11 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
 4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
 # TCP Facts 2026-10-14: security
 
-- Section 6.10.6 of the TCP service description (revision 17.08.2026) lists DBSS Basic, Pro and Advanced for EU-DE only (n.a. for EU-NL), while section 6.10.5 (dedicated WAF Professional and Enterprise), section 6.10.7 (HSS Enterprise, Premium, WTP and Container editions) and section 6.10.9 (Cloud Firewall) list both EU-DE and EU-NL. (KB-22YR, contract, checked 2026-09-25)
+- Section 6.10.6 of the TCP service description (revision 09.10.2026) lists DBSS Basic, Pro and Advanced for EU-DE only (n.a. for EU-NL), while section 6.10.5 (dedicated WAF Professional and Enterprise), section 6.10.7 (HSS Enterprise, Premium, WTP and Container editions) and section 6.10.9 (Cloud Firewall) list both EU-DE and EU-NL. (KB-22YR, contract, checked 2026-10-14)
 - Under the ErgB-AV for T Cloud Public of April 2026 the contracting company acts as subprocessor when a customer processes personal data on behalf of its own customers, with the approved subprocessors of the platform listed in Appendix IV. GDPR Article 28(2) lets such a customer engage another processor only with the prior specific or general written authorisation of its controllers and, under a general authorisation, requires it to inform them of any intended addition or replacement of other processors. (KB-3EX6, contract, checked 2026-09-25)
 - GET /v1/resource-manager/policy-definitions returned 87 built-in policy definitions for eu-de on that date, among them required-tag-check, required-all-tags, required-tag-exist, resource-tag-not-empty, ecs-instance-no-public-ip, elb-loadbalancers-no-public-ip, rds-instance-no-public-ip and eip-unbound-check. (KB-5TJI, live, checked 2026-09-25)
 - A Config/RMS run-evaluation call is accepted with HTTP 202 and the per-resource Compliant or NonCompliant results appear in policy-states about one to two minutes later, covering every project in the domain. (KB-6MGX, live, checked 2026-07-17)

@@ -3,7 +3,7 @@
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
-3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
+3. Prices come from a snapshot of the public price API taken 2026-10-14 13:11 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
 4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
@@ -13,7 +13,7 @@
 - RDS for SQL Server supports instances joined to an AD domain, and the documentation marks that setup as not recommended. (KB-4SGC, docs, checked 2026-08-25)
 - In a DRS backup migration the database name is matched case-sensitively against the name stored inside the backup file. The names master, model, msdb, tempdb, rdsadmin and resource are refused as a source name and as a new name. (KB-5VMM, docs, checked 2026-05-20)
 - A create call for RDS for SQL Server takes datastore type SQLServer with a version string such as 2017_SE, 2019_SE, 2022_SE, 2017_EE, 2019_EE or 2022_EE, and a matching flavor_ref, for example rds.mssql.x1.large.2 for a single Standard Edition instance. (KB-5VPL, live, checked 2026-09-25)
-- SQL Server on TCP runs through managed RDS for SQL Server with the licence included, through the customer's own licence on a Dedicated Host or Physical ECS (service description section 3.1.4.2), or through Managed Services, whose eu-de price list carries Custom MSSQL with Standard and Enterprise licence rows as of 2026-09-25. (KB-752O, contract, checked 2026-09-25)
+- SQL Server on TCP runs through managed RDS for SQL Server with the licence included, through the customer's own licence on a Dedicated Host or Physical ECS (service description section 3.1.4.2), or through Managed Services, whose eu-de price list carries Custom MSSQL with Standard and Enterprise licence rows as of 2026-09-25. (KB-752O, contract, checked 2026-10-14)
 - In the RDS for SQL Server create call the collation is validated before the KMS key: a request with a bogus disk_encryption_id UUID returns DBS.200506 when the collation is valid and DBS.200005 when it is not, and the request is rejected before an instance is created. (KB-7IPK, live, checked 2026-05-22)
 - Backup and restore of an RDS for SQL Server instance through SSMS is not available. Backup runs through the managed service. (KB-ATOA, docs, checked 2026-08-25)
 - Backup of an RDS for SQL Server instance on T Cloud Public (TCP) fails once the instance holds more than 500,000 tables. (KB-B54W, docs, checked 2026-08-24)

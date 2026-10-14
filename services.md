@@ -3,14 +3,14 @@
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
-3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
+3. Prices come from a snapshot of the public price API taken 2026-10-14 13:11 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
 4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
 # Services orderable on TCP
 
-From the T Cloud Public service description, revision 17.08.2026. 76 services. A service that is not in this list is not offered, whatever the documentation says.
+From the T Cloud Public service description, revision 09.10.2026. 76 services. A service that is not in this list is not offered, whatever the documentation says.
 
 - 3.1.1 Elastic Cloud Server (ECS)
 - 3.1.2 Dedicated host (DeH, DH)
@@ -82,12 +82,12 @@ From the T Cloud Public service description, revision 17.08.2026. 76 services. A
 - 3.11.6 Cloud Create (former Cloud Topology Designer), optional
 - 3.11.7 Managed Services, optional
 - 3.11.8 Marketplace, optional
-- 3.12.2 Image Management (IM), preview
-- 3.12.3 Cloud Container Instance (CCI), preview
-- 3.12.4 Alert Service, preview
-- 3.12.5 Data Admin Service (DAS), preview
-- 3.12.6 Enterprise Switch (ES), preview
-- 3.12.7 Cloud Connect, preview
+- 3.12.2 Cloud Container Instance (CCI), preview
+- 3.12.3 Alert Service, preview
+- 3.12.4 Data Admin Service (DAS), preview
+- 3.12.5 Enterprise Switch (ES), preview
+- 3.12.6 Cloud Connect, preview
+- 3.12.7 Savings plans (SP), preview
 
 ## Not offered
 

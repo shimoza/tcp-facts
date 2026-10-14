@@ -3,7 +3,7 @@
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
-3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
+3. Prices come from a snapshot of the public price API taken 2026-10-14 13:11 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
 4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
@@ -40,7 +40,7 @@
 - A presigned OBS URL is bound to its object key, its HTTP method and its expiry. Reuse against another key, use after the Expires value, and a DELETE sent to a URL presigned for PUT each return HTTP 403. (KB-6AP2, live, checked 2026-06-26)
 - obsutil stores the multipart uploadId in a checkpoint file under its local `.obsutil_checkpoint/upload` directory and reuses that uploadId when the same copy is retried. (KB-6IAO, live, checked 2026-05-01)
 - An OBS presigned URL in the OBS signature form carries AccessKeyId, Expires (a Unix timestamp) and a Signature over the HTTP method, Content-MD5, Content-Type, Expires, the x-obs-* headers and the bucket and object key with sub-resources such as response-content-type, so it is bound to one method and one object key while the scheme stays outside the signed string. It is signed with an AK/SK pair or with a temporary AK/SK pair plus x-obs-security-token. (KB-6K64, docs, checked 2026-09-25)
-- In the service description §6.4.1 OBS Standard storage is charged per GiB per month in volume tiers with the first 5 GiB free, and outbound traffic is a separate item with its own tiers. (KB-6LWE, contract, checked 2026-09-25)
+- In the service description §6.4.1 OBS Standard storage is charged per GiB per month in volume tiers with the first 5 GiB free, and outbound traffic is a separate item with its own tiers. (KB-6LWE, contract, checked 2026-10-14)
 - Addressing an OBS bucket whose name contains dots in virtual-host style fails TLS SNI validation in eu-de. (KB-737E, live, checked 2026-09-16)
 - SSE-OBS is refused on an OBS parallel file system, both as a bucket default and as a per-object header. (KB-7BI4, live, checked 2026-07-29)
 - Iceberg rewrite_data_files compacts only within a partition, so it leaves a table with one file per partition as it is. Measured on OBS with 1,152,000 rows: a 6-level spec wrote 19,200 files of 2.7 KB in 140 s and compaction rewrote 0 files; a facility, hours(ts) spec wrote 96 files in 3 s. (KB-7KLV, live, checked 2026-07-28)
@@ -55,6 +55,7 @@
 - Three concurrent writers with four append rounds each on one Iceberg table on OBS kept all 1,200 rows and 12 snapshots with both the Hive Metastore catalog and the Hadoop catalog. Three simultaneous row-level UPDATEs on one partition all succeeded. (KB-BRPI, live, checked 2026-07-28)
 - With SSE-KMS the ETag OBS returns for an object differs from the plaintext MD5 and changes between attempts, so a client verifying by MD5 reports a hash mismatch although the stored data is correct. Size comparison still matches. (KB-BTOI, live, checked 2026-06-15)
 - A multipart upload to OBS under default boto3 fails with XAmzContentSHA256Mismatch, while the single-object path returns success and stores the framed body. (KB-BUEP, live, checked 2026-07-28)
+- The contractual service description rev. 09.10.2026 returns zero hits for WORM and zero for object lock, so both CBR vault locking and OBS WORM are documented features outside the service catalog. (KB-BXH5, contract, checked 2026-10-14)
 - An OBS bucket used as an S3 remote-state backend is configured with the backend skip_* flags, skip_s3_checksum among them. (KB-CCSA, live, checked 2026-09-17)
 - In an OBS bucket policy the principal reads domain/{domain_id}:user/{user_id}, with a colon between the domain part and the user part. A slash in that position returns 400 MalformedPolicy with "invalid principal". (KB-CJ4H, live, checked 2026-06-17)
 - A presigned OBS URL is issued on the bucket host, which in eu-de is the bucket name in front of obs.eu-de.otc.t-systems.com, with AccessKeyId, Expires and Signature as query parameters, so a user who gets the link sees the platform domain. (KB-CQHL, docs, checked 2026-09-25)
@@ -96,7 +97,7 @@
 - Versioning is refused on an OBS parallel file system, and Object Lock requires versioning first, so WORM retention does not run on a parallel file system. (KB-JP4L, live, checked 2026-07-29)
 - Restoring a Cold (GLACIER) OBS object with the Standard retrieval tier took about one to five hours in the observed runs. (KB-JRLG, live, checked 2026-02-04)
 - AWS SDKs running the 2025 default checksum mode upload objects to OBS with aws-chunked framing written inside the object body, and the upload reports success. (KB-K4AE, live, checked 2026-09-15)
-- Object Storage Service (OBS) is a cloud-native object storage service in which the customer creates buckets and stores and manages objects in them, through the console, the API or the S3 protocol. It is offered in the storage classes Standard, Warm and Cold, and it stores data redundantly across three availability zones. The Regions and Endpoints page lists API endpoints for OBS in eu-de and eu-nl. (KB-KD7R, contract, checked 2026-10-11)
+- Object Storage Service (OBS) is a cloud-native object storage service in which the customer creates buckets and stores and manages objects in them, through the console, the API or the S3 protocol. It is offered in the storage classes Standard, Warm and Cold, and it stores data redundantly across three availability zones. The Regions and Endpoints page lists API endpoints for OBS in eu-de and eu-nl. (KB-KD7R, contract, checked 2026-10-14)
 - An account including all its IAM users can create at most 100 buckets and parallel file systems together. By default there is no limit on the capacity or on the number of objects in a bucket. (KB-KUBY, docs, checked 2026-09-25)
 - The OBS API reference writes bucket notification events without a prefix, ObjectCreated:Put, Post, Copy, CompleteMultipartUpload or ObjectCreated:*, and ObjectRemoved:Delete, DeleteMarkerCreated or ObjectRemoved:*, and puts only TopicConfiguration elements into NotificationConfiguration. The sample of the S3-compatible PUT Bucket Notification page writes s3:ObjectCreated:* instead. (KB-LIWX, docs, checked 2026-09-25)
 - In an OBS bucket notification configuration only TopicConfiguration is stored. A body with QueueConfiguration returns HTTP 200 while the configuration is not kept, and the notification does not fire. (KB-LP7I, live, checked 2026-08-27)
