@@ -3,7 +3,7 @@
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
-3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
+3. Prices come from a snapshot of the public price API taken 2026-10-14 13:11 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
 4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
@@ -23,11 +23,11 @@
 - No H100 GPU flavor is available in eu-nl. On 2026-09-25 the ECS flavor list of eu-nl held no p5s or p5e flavor and no flavor with an H100 GPU, while eu-de listed four p5s and three p5e flavors, all in eu-de-01. (KB-IWD5, live, checked 2026-09-25)
 - The p5s flavor carries H100 PCIe cards, a different GPU topology from the p5e H100 NVL flavors. (KB-JLBD, live, checked 2026-09-25)
 - p5e.40xlarge.12 provides eight H100 NVL cards of 94 GB, wired as NVLink bridge pairs with no NVSwitch fabric, so cross-pair traffic falls back to PCIe. nvidia-fabricmanager installs but its unit fails to start and leaves a broken systemd unit behind. (KB-JRCC, live, checked 2026-05-07)
-- Reserved terms of 12, 24 and 36 months are offered for the GPU flavor p5e.10xlarge.12 in eu-de, each also as an upfront-payment variant. (KB-KWII, contract, checked 2026-09-25)
+- Reserved terms of 12, 24 and 36 months are offered for the GPU flavor p5e.10xlarge.12 in eu-de, each also as an upfront-payment variant. The service description of 09.10.2026 adds that p5s and p5e flavors are offered only on request. (KB-KWII, contract, checked 2026-10-14)
 - GPU flavors, pi5e included, keep billing compute while the instance is stopped. The pricing-models documentation is the billing-authoritative source; per-family spec notes stating the opposite are unreliable. (KB-MBIY, docs, checked 2026-07-02)
 - In eu-de on 2026-09-25, p2s.16xlarge.8 (eight V100 of 32 GB, 64 vCPU, 512 GB RAM, end announced for 31.12.2026) and pi5e.24xlarge.4 (six L4 of 24 GB, 96 vCPU, 384 GB RAM) are orderable and take Windows Server images, so g7.12xlarge.8 (one A40 of 48 GB) is not the largest Windows-capable GPU flavor. g6.20xlarge.7 still offers two T4, 80 vCPU and 560 GB RAM. (KB-NIV7, live, checked 2026-09-25)
 - DJI Terra is documented as compatible with NVIDIA graphics cards only, with a minimum of 4 GB VRAM and 32 GB RAM and a recommendation of an RTX 2070 with 64 GB RAM. (KB-QATO, docs, checked 2026-06-17)
-- Section 3.1.1.2 of the TCP service description (revision 17.08.2026) marks the H100 flavor families p5s (NVIDIA H100) and p5e (NVIDIA H100 NVL) as only in EU-DE, and section 6.2.1.13 shows n.a. in every EU-NL column of all p5s and p5e rows. (KB-QLMG, contract, checked 2026-09-25)
+- Section 3.1.1.2 of the TCP service description (revision 09.10.2026) marks the H100 flavor families p5s (NVIDIA H100) and p5e (NVIDIA H100 NVL) as only in EU-DE, and section 6.2.1.13 shows n.a. in every EU-NL column of all p5s and p5e rows. (KB-QLMG, contract, checked 2026-10-14)
 - A DJI Terra LiDAR reconstruction on g6.10xlarge.7 peaked at about 127 GB working set (about 135 GB including the OS) and about 3 GB of the 15 GB framebuffer, with GPU utilisation mostly low. The RAM peak is dataset-bound and stayed the same at 1, 3 and 4 computing cores. (KB-TVQH, live, checked 2026-06-23)
 - On 2026-09-25 in eu-de-01 only p5s.20xlarge.12 showed the status normal, while p5s.5xlarge.12, p5s.10xlarge.12, p5s.40xlarge.12 and all three p5e flavors showed sellout. (KB-USSN, live, checked 2026-09-25)
 - On the same dataset and flavor the run took 15.6 h with one computing core, 9.1 h with three and 9.1 h with four, so three cores cut about 40% and a fourth core changed nothing. About 4 h of all-core compute is fixed in every run. (KB-VECE, live, checked 2026-06-23)

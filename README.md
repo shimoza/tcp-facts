@@ -1,10 +1,10 @@
 # TCP Facts 2026-10-14
 
-Build of 2026-10-14 10:39 UTC. A later build of the same day replaces this one under the same name; the manifest carries the build time.
+Build of 2026-10-14 13:38 UTC. A later build of the same day replaces this one under the same name; the manifest carries the build time.
 
-1621 checked facts about T Cloud Public (TCP) with the list of orderable services and the public price list of two regions. Made to be dropped into any AI assistant.
+1624 checked facts about T Cloud Public (TCP) with the list of orderable services and the public price list of two regions. Made to be dropped into any AI assistant.
 
-1035 facts were tested live on a TCP tenant, 433 come from the vendor documentation and 153 from the service description (revision 17.08.2026). No fact from hearsay, no expired fact, no customer, no project, no credential.
+1035 facts were tested live on a TCP tenant, 433 come from the vendor documentation and 156 from the service description (revision 09.10.2026). No fact from hearsay, no expired fact, no customer, no project, no credential.
 
 379 of the 433 documentation facts come from the open source repositories of the GitHub organisation opentelekomcloud-docs, published under the Apache License 2.0. The public source of each of the others is in facts.jsonl. The documentation website is not crawled, its robots.txt disallows all robots. Sources whose terms forbid automated analysis are not used, so the community portal and internal documentation are left out. The live checks ran on the compiler's own TCP test tenants.
 
@@ -22,7 +22,7 @@ PROMPT.md has the rest.
 
 ## What the facts cover
 
-76 of the 76 services orderable per the service description of 17.08.2026 have at least one plain fact that says what the service is and does: a statement that opens with the name of the service. By section of the service description:
+76 of the 76 services orderable per the service description of 09.10.2026 have at least one plain fact that says what the service is and does: a statement that opens with the name of the service. By section of the service description:
 
 - Computing: 5 of 5
 
@@ -137,7 +137,7 @@ Add "--live" to the arguments for live prices from the public price API (no cred
 
 ## Files
 
-facts.md: all facts, grouped by topic. facts.jsonl: the same facts with source, tags, class, expiry and the evidence of negatives, for RAG and tools. topics/<topic>.md: one file per topic. services.md: the 76 services orderable per the service description of 17.08.2026. prices/<region>.csv: eu-de 3315 records, eu-nl 2637 records. tcp_facts_mcp.py: a read-only MCP server over these files for Claude, VS Code or any MCP client; its first lines say how to add it. MANIFEST.json: counts, dates and the sha256 of every file.
+facts.md: all facts, grouped by topic. facts.jsonl: the same facts with source, tags, class, expiry and the evidence of negatives, for RAG and tools. topics/<topic>.md: one file per topic. services.md: the 76 services orderable per the service description of 09.10.2026. prices/<region>.csv: eu-de 3315 records, eu-nl 2637 records. tcp_facts_mcp.py: a read-only MCP server over these files for Claude, VS Code or any MCP client; its first lines say how to add it. MANIFEST.json: counts, dates and the sha256 of every file.
 
 
 ## Dates and licence

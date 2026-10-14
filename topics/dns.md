@@ -3,7 +3,7 @@
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
-3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
+3. Prices come from a snapshot of the public price API taken 2026-10-14 13:11 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
 4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
@@ -18,7 +18,7 @@
 - When DNSSEC is enabled on a TCP-hosted public zone, every NS delegation beneath it stops resolving for validating resolvers, whether the child is on TCP DNS or at another provider. The parent side never returns an authoritative denial of DS, so validators see a broken chain instead of an insecure delegation. (KB-5T6U, live, checked 2026-09-10)
 - Enabling DNSSEC works on a subdomain public zone on TCP, although the console banner says DNSSEC can be enabled only for top-level domains and the UMN says DNSSEC supports only primary domain names. (KB-6PPX, live, checked 2026-09-10)
 - In eu-de the regional service endpoint for OMS has no DNS record, while the DRS endpoint in the same region resolves and its gateway answers HTTP 404 for an unknown path. (KB-7QD4, live, checked 2026-09-25)
-- Domain Name Service (DNS) is an authoritative DNS service in which the customer configures DNS zones and records for internal and external communication. It provides public zones that resolve domain names on the internet, private zones that resolve names to private IP addresses inside VPCs, and reverse resolution of IP addresses to domain names. The Regions and Endpoints page lists API endpoints for DNS in eu-de and eu-nl. (KB-ABGI, contract, checked 2026-10-11)
+- Domain Name Service (DNS) is an authoritative DNS service in which the customer configures DNS zones and records for internal and external communication. It provides public zones that resolve domain names on the internet, private zones that resolve names to private IP addresses inside VPCs, and reverse resolution of IP addresses to domain names. The Regions and Endpoints page lists API endpoints for DNS in eu-de and eu-nl. (KB-ABGI, contract, checked 2026-10-14)
 - TCP DNS rejects DNSKEY as a record set type and refuses both AXFR and IXFR, so a second provider's ZSK cannot be published and a signing secondary cannot be fed. RFC 8901 multi-signer is not possible with TCP DNS as a participant. (KB-CWDY, live, checked 2026-09-10)
 - CTS logs DNSSEC switching as the operations enableDnssecConfig and disableDnssecConfig with resource_type dnssec and trace_type ConsoleAction, while a scripted record-set create appears with trace_type ApiCall. (KB-DR5A, live, checked 2026-09-10)
 - A DNS zone object carries no dnssec field, and a dnssec key in the zone-create body is accepted and ignored. (KB-H2BV, live, checked 2026-09-10)

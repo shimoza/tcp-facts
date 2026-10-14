@@ -3,7 +3,7 @@
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
-3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
+3. Prices come from a snapshot of the public price API taken 2026-10-14 13:11 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
 4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
@@ -19,7 +19,7 @@
 - Impala on MRS reads Iceberg tables, prunes partitions and serves DESCRIBE HISTORY and version time travel. An INSERT into a table holding a timestamptz column returns an error, and Spark writes a TIMESTAMP column as timestamptz. (KB-4JTU, live, checked 2026-07-28)
 - A five node MRS cluster created through POST /v2/{project_id}/clusters in eu-de took about 23 minutes from the create call to a usable cluster. (KB-4Q3W, live, checked 2026-07-29)
 - The request schema of each MRS Manager API endpoint is readable on the Manager node in /opt/Bigdata/om-server/apache-tomcat-*/webapps/web/WEB-INF/validate/validate-rule-*.xml. Those files list, per endpoint and method, every parameter, whether it is required, and its validation regex. (KB-4QC4, live, checked 2026-07-28)
-- MapReduce Service (MRS) is a managed big data platform for building and running big data clusters: core nodes process data and store it in HDFS, and task nodes process data and are added or removed by auto scaling rules. The documentation names the engines ClickHouse, Spark, Flink, Kafka and HBase and compatibility with the open-source components. The Regions and Endpoints page lists the MRS API endpoint in eu-de. (KB-4SRI, contract, checked 2026-10-11)
+- MapReduce Service (MRS) is a managed big data platform for building and running big data clusters: core nodes process data and store it in HDFS, and task nodes process data and are added or removed by auto scaling rules. The documentation names the engines ClickHouse, Spark, Flink, Kafka and HBase and compatibility with the open-source components. The Regions and Endpoints page lists the MRS API endpoint in eu-de. (KB-4SRI, contract, checked 2026-10-14)
 - A Ranger obs policy on MRS that grants to a user returns Obs not support User grants, so grants are made to groups. (KB-4VAD, live, checked 2026-07-30)
 - hetu-cli echoes its own java command line, including the --password value in clear text, so the password shows up in the process list and in any captured log. (KB-4VW3, live, checked 2026-07-30)
 - GET /web/api/v2/permission/clusters/1/services/{service}/views/{view}/resources needs resource_type and resource_name beside path; path=root alone returns error 12-5000036. With path=root, resource_type=parentQueue and resource_name=root it returns the child queues with their Submit and Admin permissions. (KB-5DZX, live, checked 2026-07-28)

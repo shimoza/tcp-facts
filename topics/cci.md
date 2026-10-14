@@ -3,13 +3,13 @@
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
-3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
+3. Prices come from a snapshot of the public price API taken 2026-10-14 13:11 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
 4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
 # TCP Facts 2026-10-14: cci
 
-- A CCI API that answers on eu-de is not proof that CCI can be ordered for production use. The service description, revision 17.08.2026, lists CCI in section 3.12 among the preview and beta versions for testing purposes only, and the CCI user manual still marks it as beta. (KB-KA35, contract, checked 2026-09-25)
-- Cloud Container Instance (CCI) is a serverless container engine in preview that runs containers without creating or managing server clusters; pods get CPU, memory and, depending on the pod type, GPU. As a preview version it is meant for testing and Telekom advises against live use (see KB-KA35). The Regions and Endpoints page lists the CCI API endpoint in eu-de. (KB-SNAP, contract, checked 2026-10-11)
+- A CCI API that answers on eu-de is not proof that CCI can be ordered for production use. The service description, revision 09.10.2026, lists CCI in section 3.12 among the preview and beta versions for testing purposes only, and the CCI user manual still marks it as beta. (KB-KA35, contract, checked 2026-10-14)
+- Cloud Container Instance (CCI) is a serverless container engine in preview that runs containers without creating or managing server clusters; pods get CPU, memory and, depending on the pod type, GPU. As a preview version it is meant for testing and Telekom advises against live use (see KB-KA35). The Regions and Endpoints page lists the CCI API endpoint in eu-de. (KB-SNAP, contract, checked 2026-10-14)
 - On the CCI endpoint the paths / and /healthz answered HTTP 404 with error code APIGW.0101, so only the published API paths are reachable through the gateway. (KB-XNOI, live, checked 2026-07-02)
