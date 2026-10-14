@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-12. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-14. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-11. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-12: evs
+# TCP Facts 2026-10-14: evs
 
 - Elastic Volume Service (EVS) provides block storage volumes that are attached to Elastic Cloud Servers as system or data disks; up to 32 volumes can be attached to one server and a volume can be expanded online when the operating system supports it. The disk types are High I/O, GP SSD, GP SSD V2, Ultra-High I/O and Extreme SSD, and the documentation states that system and data disks support encryption, snapshots and backups. The Regions and Endpoints page lists API endpoints for EVS in eu-de and eu-nl. (KB-2DY5, contract, checked 2026-10-11)
 - On a Linux ECS an attached EVS data disk appears as a virtio block device such as /dev/vdb. A file system is created on the device before it is mounted. (KB-3URW, live, checked 2026-05-01)

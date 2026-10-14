@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-12. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-14. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-11. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-12: terraform
+# TCP Facts 2026-10-14: terraform
 
 - OpenTofu 1.10.3 stores remote state on OBS through the S3 backend with the skip_ flags set. init, apply and state pull complete, and the stored state objects are byte-exact across repeated applies. (KB-23WT, live, checked 2026-07-17)
 - With the opentelekomcloud Terraform provider, an opentelekomcloud_networking_secgroup_v2 resource applies in about one second and destroys in about eight seconds. (KB-2NKA, live, checked 2026-08-18)
@@ -34,6 +34,7 @@
 - The opentelekomcloud Terraform provider authenticates with an access key and secret key together with domain_name, tenant_name and auth_url. (KB-L7RI, docs, checked 2026-09-25)
 - In the opentelekomcloud Terraform provider, enterprise projects are set through the enterprise_project_id argument on about 16 resource types, for example opentelekomcloud_vpc_secgroup_v3, where the argument is ForceNew. (KB-LVIQ, live, checked 2026-06-03)
 - Terraform provider opentelekomcloud version 1.37.7, published 2026-08-27, exposes 331 resources. (KB-LYTV, live, checked 2026-09-02)
+- The schema of the Terraform provider opentelekomcloud 1.37.9 still lists five resource types of VBS and CSBS (opentelekomcloud_vbs_backup_v2, _vbs_backup_policy_v2, _vbs_backup_share_v2, _csbs_backup_v1, _csbs_backup_policy_v1), although both services are no longer available since 01.01.2026. A resource type in the provider schema does not make a service offered. (KB-M6LM, live, checked 2026-10-12)
 - Provider opentelekomcloud covers cbr_vault_v3 and cbr_policy_v3, compute_volume_attach_v2 and the SDRS set sdrs_protectiongroup_v1, sdrs_protected_instance_v1, sdrs_replication_pair_v1 and sdrs_replication_attach_v1. In cbr_policy_v3 consistent_level defaults to crash_consistent, which matches what the CBR API returns. (KB-PGPD, live, checked 2026-09-02)
 - Terraform's indented heredoc <<- strips the smallest indentation found on any non-empty line of the body. A nested heredoc whose interpolation and terminator lines sit at column 0 sets that baseline to 0, so the whole body keeps its indentation and the shebang arrives indented. (KB-PQ4E, live, checked 2026-08-18)
 - State written to OBS by OpenTofu 1.10.3 without skip_s3_checksum carries no aws-chunked or x-amz-checksum framing: Content-Length equals the body and the object reads back as valid JSON. (KB-R5TS, live, checked 2026-07-17)
