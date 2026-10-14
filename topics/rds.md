@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-12. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-14. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-11. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-12: rds
+# TCP Facts 2026-10-14: rds
 
 - GET /v3/{project_id}/flavors/{engine}?version_name={version} returns the flavors for an RDS engine version under the key flavors. On 2026-09-16 in eu-de it returned 138 flavors for mysql 8.4 and 144 for postgresql 18. (KB-2NF7, live, checked 2026-09-16)
 - T Cloud Public (TCP) offers managed relational databases: Relational Database Service (RDS) for MySQL, PostgreSQL and Microsoft SQL Server (Standard and Enterprise Edition) as single or primary/standby instances, TaurusDB as a MySQL-compatible distributed database, and Distributed Database Middleware for sharding MySQL. On 2026-09-16 the RDS engine listing in eu-de returned MySQL 8.4, 8.0 and 5.7 and PostgreSQL 13 to 18 (KB-TMQ5), and on 2026-08-24 it offered SQL Server 2017, 2019 and 2022 (KB-QLJ5). (KB-33UY, contract, checked 2026-10-11)

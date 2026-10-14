@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-12. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-14. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-11. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-12: elb
+# TCP Facts 2026-10-14: elb
 
 - Creating the pool with listener_id and leaving default_pool_id off the listener makes the pool depend on the listener in Terraform, so destroy removes the pool first and the listener second, matching the order the ELB v3 API accepts. (KB-2BL5, live, checked 2026-09-16)
 - Only a dedicated load balancer can send traffic to servers outside its own VPC. With IP as a backend enabled it adds servers by private IPv4 address in a VPC linked by VPC peering or in an on-premises data centre linked by Direct Connect or VPN. (KB-36IY, docs, checked 2026-09-25)
@@ -25,6 +25,8 @@
 - A shared load balancer cannot route traffic to backend servers in another VPC and cannot be used across accounts. The shared ELB API requires each member to sit in a subnet of the VPC of the load balancer. (KB-DVMF, docs, checked 2026-09-25)
 - In the opentelekomcloud provider a changed certificate body on an ELB v3 certificate resource is planned as "updated in-place": the plan carries no replacement marker, and an apply would swap the certificate the listener serves. (KB-DWDN, live, checked 2026-09-17)
 - On 2026-10-05 GET /v3/{project_id}/elb/flavors in eu-de listed six dedicated L7 flavors with their QPS: L7_flavor.elb.s1.small 4,000, s1.medium 16,000, s1.large 80,000, s2.small 8,000, s2.medium 40,000 and s2.large 160,000, plus L4 flavors s1 and s2 in small, medium and large. Terraform's l7_flavor takes the flavor id, which the data source opentelekomcloud_lb_flavor_v3 finds by name. (KB-E2KU, live, checked 2026-10-05)
+- A shared ELB v2.0 in eu-de with an HTTP listener on port 80, a ROUND_ROBIN pool and an HTTP health monitor marked an ECS backend ONLINE within about 20 s of the monitor create, once the web server on the backend answered. The backend security group let port 80 in from the subnet range and from 100.125.0.0/16; which of the two the health checks use was not proven. (KB-EGHR, live, checked 2026-10-12)
+- The shared ELB v2.0 API in eu-de accepts AK/SK calls signed SDK-HMAC-SHA256 without an X-Project-Id header: the creates of load balancer, listener, pool, member and health monitor answered 201, the deletes 204, and a read after the delete answered 404. (KB-ERDD, live, checked 2026-10-12)
 - A backend member of a dedicated load balancer in eu-de that has nothing listening yet shows operating_status OFFLINE with reason_code CONNECT_FAILED in GET /v3/{project_id}/elb/pools/{pool_id}/members, and the HTTPS listener then answers 502. In a run on 2026-10-06 the server was created at 12:43 UTC, cloud-init reached modules:final at 12:44:51, nginx was being installed at about 12:45:06 and the member read ONLINE with the site answering 200 at 12:45:28: about two and a half minutes from terraform creating the server to a working site. (KB-ESMU, live, checked 2026-10-06)
 - The ELB v3 certificate create at POST /v3/{project_id}/elb/certificates accepts both RSA and ECDSA certificates. (KB-FA4K, live, checked 2026-05-26)
 - DELETE /v3/{project_id}/elb/listeners/{listener_id} on a dedicated load balancer answers 409 ELB.8907 'pool <id> is using this listener' while a pool is bound to the listener, also when the pool has no members left. Deleting the pool first frees the listener. In Terraform, bind the pool with listener_id on the pool resource instead of default_pool_id on the listener: then destroy deletes the pool before the listener; with default_pool_id it tries the listener first and stops. (KB-GTIT, live, checked 2026-10-06)

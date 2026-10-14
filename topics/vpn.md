@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-12. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-14. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-11. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-12: vpn
+# TCP Facts 2026-10-14: vpn
 
 - On T Cloud Public (TCP) in eu-de VPN gateways are listed with GET /v5/{project_id}/vpn-gateways, which returns them under the key vpn_gateways. Per the API reference each entry carries name, id, status, flavor, vpc_id (only for gateways attached to a VPC) and an eip1 object with ip_address and bandwidth_size. (KB-37QB, docs, checked 2026-09-25)
 - In TCP eu-de the Enterprise VPN API on vpn.eu-de serves gateways, customer gateways and connections (GET /v5/{project_id}/vpn-connection answers HTTP 200), and IKE and IPsec policies are part of the connection object with no list path of their own. The Classic VPN paths on vpc.eu-de for connections, IKE and IPsec policies and endpoint groups answer HTTP 404, in line with the end of life of Classic VPN in eu-de on 01.06.2025. (KB-6DLN, live, checked 2026-09-25)

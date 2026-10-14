@@ -1,17 +1,17 @@
-<!-- TCP Facts, dataset of 2026-10-12. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-14. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-11. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
 
-# TCP Facts 2026-10-12
+# TCP Facts 2026-10-14
 
-1617 checked facts about T Cloud Public (TCP). One line per fact, grouped by topic. Read the comment at the top before answering.
+1621 checked facts about T Cloud Public (TCP). One line per fact, grouped by topic. Read the comment at the top before answering.
 
 ## ecs (164)
 
@@ -180,7 +180,7 @@
 - os_extra_specs also reports hw:cpu_cores, hw:cpu_threads and hw:cpu_sockets as physical cores, threads per core and sockets. An 8 vCPU flavor of the *.2xlarge.2 size resolves to 4 cores by 2 threads on 1 socket, one NUMA node. (KB-ZYK5, live, checked 2026-07-19)
 - cloud-init skips a user_data script whose #! line is indented. The guest log then shows cc_scripts_user.py[WARNING]: Failed to run module scripts-user and a failed cloud-final.service, while the ECS still reaches status ACTIVE with its security group and EIP bound. (KB-ZYW7, live, checked 2026-08-18)
 
-## obs (149)
+## obs (150)
 
 - OBS SDK guides are published for python, java, go, nodejs, dotnet and c. Community OBS SDK sources for python and java are published under the opentelekomcloud-community organisation. (KB-24VK, docs, checked 2026-06-19)
 - The OBS user guide limits a user-defined domain name bound to a bucket to HTTP requests instead of HTTPS, and the domain name points by a CNAME record to the bucket domain name, so a DNS lookup of the own domain returns the OBS bucket host. (KB-252Q, docs, checked 2026-09-25)
@@ -321,6 +321,7 @@
 - An OBS parallel file system rejects SSE-OBS and accepts SSE-KMS when the request supplies a bucket key and an explicit key id. (KB-WI66, live, checked 2026-07-30)
 - The OBS documentation asks for virtual-hosted-style requests when a request carries a bucket name, and states that virtual-hosted HTTPS fails certificate verification for bucket names containing a dot. Path-style requests still answered HTTP 200 in a live eu-de test. (KB-WQBX, docs, checked 2026-09-15)
 - Bucket default encryption on an OBS parallel file system applies only to objects written after it is set. Data already written stays unencrypted, and a freshly created parallel file system picks up the default cleanly. (KB-WS7V, live, checked 2026-07-29)
+- An OBS bucket policy in eu-de that denies ListBucket to every principal (Principal ID "*") also refuses the owning account: its ListBucket answers 403 AccessDenied. The owner can still delete the bucket (204). (KB-WXLI, live, checked 2026-10-12)
 - If an SMN topic used for OBS event notifications is deleted or loses its authorization for OBS, the OBS user guide warns that its subscribers may stop getting messages and that the event notification rules tied to the topic may be cleared automatically. (KB-WYFA, docs, checked 2026-09-25)
 - A presigned OBS GET URL gives time-limited read access to one object without handing over the secret key, while the URL itself carries the creator's access key ID, the Expires time and the signature. The link stops working when the expiry passes or when the object is deleted. (KB-WZOI, docs, checked 2026-09-25)
 - On TCP in eu-de an OBS multi-object delete request (POST /?delete) accepts at most 1000 object keys. Emptying a bucket with more objects takes one request per batch of that size. (KB-XUBF, live, checked 2026-07-09)
@@ -710,7 +711,7 @@
 - The default VPC route table quota is 200 routes per table, which caps a static-routing pod network on ECS at roughly 200 nodes before a quota increase. (KB-ZKI3, docs, checked 2026-06-12)
 - In the opentelekomcloud Terraform provider 1.37.8, opentelekomcloud_vpc_secgroup_rule_v3 uses the argument names ether_type and multi_port, carries an explicit action field, and takes a port list or a range in one field. The v2 spellings ethertype and multiport are rejected by terraform validate, and port_range_min and port_range_max are absent from the v3 schema. (KB-ZULT, live, checked 2026-09-16)
 
-## elb (47)
+## elb (49)
 
 - Creating the pool with listener_id and leaving default_pool_id off the listener makes the pool depend on the listener in Terraform, so destroy removes the pool first and the listener second, matching the order the ELB v3 API accepts. (KB-2BL5, live, checked 2026-09-16)
 - Only a dedicated load balancer can send traffic to servers outside its own VPC. With IP as a backend enabled it adds servers by private IPv4 address in a VPC linked by VPC peering or in an on-premises data centre linked by Direct Connect or VPN. (KB-36IY, docs, checked 2026-09-25)
@@ -727,6 +728,8 @@
 - A shared load balancer cannot route traffic to backend servers in another VPC and cannot be used across accounts. The shared ELB API requires each member to sit in a subnet of the VPC of the load balancer. (KB-DVMF, docs, checked 2026-09-25)
 - In the opentelekomcloud provider a changed certificate body on an ELB v3 certificate resource is planned as "updated in-place": the plan carries no replacement marker, and an apply would swap the certificate the listener serves. (KB-DWDN, live, checked 2026-09-17)
 - On 2026-10-05 GET /v3/{project_id}/elb/flavors in eu-de listed six dedicated L7 flavors with their QPS: L7_flavor.elb.s1.small 4,000, s1.medium 16,000, s1.large 80,000, s2.small 8,000, s2.medium 40,000 and s2.large 160,000, plus L4 flavors s1 and s2 in small, medium and large. Terraform's l7_flavor takes the flavor id, which the data source opentelekomcloud_lb_flavor_v3 finds by name. (KB-E2KU, live, checked 2026-10-05)
+- A shared ELB v2.0 in eu-de with an HTTP listener on port 80, a ROUND_ROBIN pool and an HTTP health monitor marked an ECS backend ONLINE within about 20 s of the monitor create, once the web server on the backend answered. The backend security group let port 80 in from the subnet range and from 100.125.0.0/16; which of the two the health checks use was not proven. (KB-EGHR, live, checked 2026-10-12)
+- The shared ELB v2.0 API in eu-de accepts AK/SK calls signed SDK-HMAC-SHA256 without an X-Project-Id header: the creates of load balancer, listener, pool, member and health monitor answered 201, the deletes 204, and a read after the delete answered 404. (KB-ERDD, live, checked 2026-10-12)
 - A backend member of a dedicated load balancer in eu-de that has nothing listening yet shows operating_status OFFLINE with reason_code CONNECT_FAILED in GET /v3/{project_id}/elb/pools/{pool_id}/members, and the HTTPS listener then answers 502. In a run on 2026-10-06 the server was created at 12:43 UTC, cloud-init reached modules:final at 12:44:51, nginx was being installed at about 12:45:06 and the member read ONLINE with the site answering 200 at 12:45:28: about two and a half minutes from terraform creating the server to a working site. (KB-ESMU, live, checked 2026-10-06)
 - The ELB v3 certificate create at POST /v3/{project_id}/elb/certificates accepts both RSA and ECDSA certificates. (KB-FA4K, live, checked 2026-05-26)
 - DELETE /v3/{project_id}/elb/listeners/{listener_id} on a dedicated load balancer answers 409 ELB.8907 'pool <id> is using this listener' while a pool is bound to the listener, also when the pool has no members left. Deleting the pool first frees the listener. In Terraform, bind the pool with listener_id on the pool resource instead of default_pool_id on the listener: then destroy deletes the pool before the listener; with default_pool_id it tries the listener first and stops. (KB-GTIT, live, checked 2026-10-06)
@@ -1007,7 +1010,7 @@
 - CTS holds a 7 day trace window for a control plane review. Traces can be read tenant wide, filtered by resource_id for one resource, or by service_type, for example IAM, to see new users, credentials and agency grants. (KB-YXTL, live, checked 2026-07-29)
 - A CTS tracker can deliver traces to an OBS bucket and to an LTS log stream. (KB-ZICC, docs, checked 2026-09-25)
 
-## terraform (35)
+## terraform (36)
 
 - OpenTofu 1.10.3 stores remote state on OBS through the S3 backend with the skip_ flags set. init, apply and state pull complete, and the stored state objects are byte-exact across repeated applies. (KB-23WT, live, checked 2026-07-17)
 - With the opentelekomcloud Terraform provider, an opentelekomcloud_networking_secgroup_v2 resource applies in about one second and destroys in about eight seconds. (KB-2NKA, live, checked 2026-08-18)
@@ -1033,6 +1036,7 @@
 - The opentelekomcloud Terraform provider authenticates with an access key and secret key together with domain_name, tenant_name and auth_url. (KB-L7RI, docs, checked 2026-09-25)
 - In the opentelekomcloud Terraform provider, enterprise projects are set through the enterprise_project_id argument on about 16 resource types, for example opentelekomcloud_vpc_secgroup_v3, where the argument is ForceNew. (KB-LVIQ, live, checked 2026-06-03)
 - Terraform provider opentelekomcloud version 1.37.7, published 2026-08-27, exposes 331 resources. (KB-LYTV, live, checked 2026-09-02)
+- The schema of the Terraform provider opentelekomcloud 1.37.9 still lists five resource types of VBS and CSBS (opentelekomcloud_vbs_backup_v2, _vbs_backup_policy_v2, _vbs_backup_share_v2, _csbs_backup_v1, _csbs_backup_policy_v1), although both services are no longer available since 01.01.2026. A resource type in the provider schema does not make a service offered. (KB-M6LM, live, checked 2026-10-12)
 - Provider opentelekomcloud covers cbr_vault_v3 and cbr_policy_v3, compute_volume_attach_v2 and the SDRS set sdrs_protectiongroup_v1, sdrs_protected_instance_v1, sdrs_replication_pair_v1 and sdrs_replication_attach_v1. In cbr_policy_v3 consistent_level defaults to crash_consistent, which matches what the CBR API returns. (KB-PGPD, live, checked 2026-09-02)
 - Terraform's indented heredoc <<- strips the smallest indentation found on any non-empty line of the body. A nested heredoc whose interpolation and terminator lines sit at column 0 sets that baseline to 0, so the whole body keeps its indentation and the shebang arrives indented. (KB-PQ4E, live, checked 2026-08-18)
 - State written to OBS by OpenTofu 1.10.3 without skip_s3_checksum carries no aws-chunked or x-amz-checksum framing: Content-Length equals the body and the object reads back as valid JSON. (KB-R5TS, live, checked 2026-07-17)

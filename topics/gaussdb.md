@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-12. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-14. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-11. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-12: gaussdb
+# TCP Facts 2026-10-14: gaussdb
 
 - TaurusDB is not available in eu-nl: on 2026-09-25 its API answered HTTP 404 APIGW.0101 on the eu-nl endpoint, while the endpoint list names TaurusDB for eu-de only. (KB-7Y6M, live, checked 2026-09-25)
 - GeminiDB is a managed cloud-native NoSQL database with decoupled compute and storage that is compatible with Apache Cassandra and InfluxDB. GeminiDB for Cassandra supports the Cassandra Query Language (CQL) and the InfluxDB-compatible variant serves time-series data; the documentation describes deployment of nodes across three availability zones, backup and restore, and monitoring with alarms. The Regions and Endpoints page lists the GeminiDB API endpoint in eu-de. (KB-FJQ6, contract, checked 2026-10-11)

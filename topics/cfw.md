@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-12. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-14. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-11. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-12: cfw
+# TCP Facts 2026-10-14: cfw
 
 - A standard postPaid Cloud Firewall protecting the EIP of a hub NAT gateway filters spoke egress at the internet border. A top-priority deny rule on one destination address and port blocked exactly that flow while traffic to other destinations still left through the NAT EIP. (KB-437B, live, checked 2026-07-17)
 - On 2026-09-25 the Cloud Firewall API and the dedicated WAF API answered in eu-nl as in eu-de: GET /v1/{project_id}/firewall/exist (with offset, limit and service_type) returned the CFW service error CFW.00200005 in both regions, and GET /v1/{project_id}/premium-waf/instance and premium-waf/host returned empty lists in both. The public price API had CFW and dedicated WAF records for eu-de but none for eu-nl. (KB-4MR7, live, checked 2026-09-25)

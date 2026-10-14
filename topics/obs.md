@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-12. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-14. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. Prices come from a snapshot of the public price API taken 2026-10-08 10:06 UTC. Give every price with its unit, currency and that date,
    and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-11. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-12: obs
+# TCP Facts 2026-10-14: obs
 
 - OBS SDK guides are published for python, java, go, nodejs, dotnet and c. Community OBS SDK sources for python and java are published under the opentelekomcloud-community organisation. (KB-24VK, docs, checked 2026-06-19)
 - The OBS user guide limits a user-defined domain name bound to a bucket to HTTP requests instead of HTTPS, and the domain name points by a CNAME record to the bucket domain name, so a DNS lookup of the own domain returns the OBS bucket host. (KB-252Q, docs, checked 2026-09-25)
@@ -149,6 +149,7 @@
 - An OBS parallel file system rejects SSE-OBS and accepts SSE-KMS when the request supplies a bucket key and an explicit key id. (KB-WI66, live, checked 2026-07-30)
 - The OBS documentation asks for virtual-hosted-style requests when a request carries a bucket name, and states that virtual-hosted HTTPS fails certificate verification for bucket names containing a dot. Path-style requests still answered HTTP 200 in a live eu-de test. (KB-WQBX, docs, checked 2026-09-15)
 - Bucket default encryption on an OBS parallel file system applies only to objects written after it is set. Data already written stays unencrypted, and a freshly created parallel file system picks up the default cleanly. (KB-WS7V, live, checked 2026-07-29)
+- An OBS bucket policy in eu-de that denies ListBucket to every principal (Principal ID "*") also refuses the owning account: its ListBucket answers 403 AccessDenied. The owner can still delete the bucket (204). (KB-WXLI, live, checked 2026-10-12)
 - If an SMN topic used for OBS event notifications is deleted or loses its authorization for OBS, the OBS user guide warns that its subscribers may stop getting messages and that the event notification rules tied to the topic may be cleared automatically. (KB-WYFA, docs, checked 2026-09-25)
 - A presigned OBS GET URL gives time-limited read access to one object without handing over the secret key, while the URL itself carries the creator's access key ID, the Expires time and the signature. The link stops working when the expiry passes or when the object is deleted. (KB-WZOI, docs, checked 2026-09-25)
 - On TCP in eu-de an OBS multi-object delete request (POST /?delete) accepts at most 1000 object keys. Emptying a bucket with more objects takes one request per batch of that size. (KB-XUBF, live, checked 2026-07-09)
