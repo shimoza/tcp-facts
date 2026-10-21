@@ -2,7 +2,7 @@
 
 Build of 2026-10-14 13:38 UTC. A later build of the same day replaces this one under the same name; the manifest carries the build time.
 
-1624 checked facts about T Cloud Public (TCP) with the list of orderable services and the public price list of two regions. Made to be dropped into any AI assistant.
+1624 checked facts about T Cloud Public (TCP) with the list of orderable services. Made to be dropped into any AI assistant.
 
 1035 facts were tested live on a TCP tenant, 433 come from the vendor documentation and 156 from the service description (revision 09.10.2026). No fact from hearsay, no expired fact, no customer, no project, no credential.
 
@@ -108,7 +108,7 @@ How you use it is your responsibility as the user. The dataset gives you checked
 
 ## MCP clients
 
-tcp_facts_mcp.py is a read-only MCP server over the files beside it: one Python file, standard library only, Python 3.10 or newer, JSON-RPC 2.0 over stdio. It has four tools: tcp_facts_search (facts by words, tag or grade), tcp_service_check (offered or not, from services.md), tcp_price_find (price rows of eu-de or eu-nl from the snapshot) and tcp_calculate (exact arithmetic in hours, a month is 720 h). It reads no file outside its folder, opens no connection without --live and writes nothing.
+tcp_facts_mcp.py is a read-only MCP server over the files beside it: one Python file, standard library only, Python 3.10 or newer, JSON-RPC 2.0 over stdio. It has four tools: tcp_facts_search (facts by words, tag or grade), tcp_service_check (offered or not, from services.md), tcp_price_find (live price rows of eu-de or eu-nl from the public price API, with --live only) and tcp_calculate (exact arithmetic in hours, a month is 720 h). It reads no file outside its folder, opens no connection without --live and writes nothing.
 
 Claude Desktop, one click: download tcp-facts-<date>.mcpb from the latest release at github.com/shimoza/tcp-facts and open it (double click, or drag it into Settings, Extensions). Claude Desktop shows the extension and its four tools; press Install. The file carries the server and the data of that build. It needs Python 3.10 or newer on the machine.
 
@@ -137,12 +137,12 @@ Add "--live" to the arguments for live prices from the public price API (no cred
 
 ## Files
 
-facts.md: all facts, grouped by topic. facts.jsonl: the same facts with source, tags, class, expiry and the evidence of negatives, for RAG and tools. topics/<topic>.md: one file per topic. services.md: the 76 services orderable per the service description of 09.10.2026. prices/<region>.csv: eu-de 3315 records, eu-nl 2637 records. tcp_facts_mcp.py: a read-only MCP server over these files for Claude, VS Code or any MCP client; its first lines say how to add it. MANIFEST.json: counts, dates and the sha256 of every file.
+facts.md: all facts, grouped by topic. facts.jsonl: the same facts with source, tags, class, expiry and the evidence of negatives, for RAG and tools. topics/<topic>.md: one file per topic. services.md: the 76 services orderable per the service description of 09.10.2026. tcp_facts_mcp.py: a read-only MCP server over these files for Claude, VS Code or any MCP client; its first lines say how to add it. MANIFEST.json: counts, dates and the sha256 of every file.
 
 
 ## Dates and licence
 
-Built 2026-10-14. Best before 2026-11-13: facts about availability are re-checked every 30 days. Prices are a snapshot; the live price API is the source of truth before any quote.
+Built 2026-10-14. Best before 2026-11-13: facts about availability are re-checked every 30 days. Prices are not part of the dataset; the public price API is the source before any quote.
 
 Dataset: TCP Facts, github.com/shimoza/tcp-facts.
 
