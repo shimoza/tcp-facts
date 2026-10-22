@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-14. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
-3. Prices come from a snapshot of the public price API taken 2026-10-14 13:11 UTC. Give every price with its unit, currency and that date,
-   and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
+3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
+   and the date of its source, and say that the live price API is the source of truth before any quote.
+4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-14: cce
+# TCP Facts 2026-10-22: cce
 
 - Cloud Container Engine and Cloud Container Engine Turbo (CCE, CCE Turbo) provide managed Kubernetes clusters in which the customer runs, manages and monitors containers, with the compute, storage and network resources reserved on T Cloud Public (TCP). CCE Turbo adds passthrough networking (Cloud Native 2.0) and better scheduling compared with CCE Standard; the preassembled cluster flavors hold up to 50, 200, 1,000 or 2,000 nodes, among them a high-availability flavor. The Regions and Endpoints page lists API endpoints for CCE in eu-de and eu-nl. (KB-22XD, contract, checked 2026-10-14)
 - A new CCE cluster comes with 17 storage classes, among them `csi-disk`, `csi-nas`, `csi-obs`, `csi-sfsturbo` and older flexvolume ones, and none of them carries the `storageclass.kubernetes.io/is-default-class` annotation. A PersistentVolumeClaim that does not name a class stays Pending. (KB-27TG, live, checked 2026-09-16)
@@ -35,6 +35,7 @@
 - On CCE, `csi-disk` is the EVS-backed block storage class, and a 10Gi PersistentVolumeClaim naming it bound in about 5 seconds. (KB-JGA2, live, checked 2026-09-16)
 - While no elastic IP is bound to the CCE cluster API, the external_otc endpoint cannot be authenticated against, although it resolves and serves a valid certificate. (KB-KTT2, live, checked 2026-09-16)
 - Pod density on a CCE Turbo node is capped by the node flavor's supplementary network interface quota rather than by the kubelet default. Documentation examples give 128 pods on a 4xlarge class node and 256 on an 8xlarge class node. (KB-NFSU, docs, checked 2026-06-12)
+- The CCE add-on catalogue on eu-de returned 14 add-ons at the check, and searching that response for KEDA and for Knative matched zero entries. (KB-NHCM, live, checked 2026-10-14)
 - Application Service Mesh (ASM) is a managed service mesh compatible with Kubernetes and Istio that manages the lifecycle and traffic of microservices without changes to the application. It provides load balancing, outlier detection and fault injection, and grayscale releases such as canary and blue-green deployment. The Regions and Endpoints page lists the ASM API endpoint in eu-de. (KB-NMSH, contract, checked 2026-10-14)
 - GET /api/v3/projects/{project_id}/clusters on the CCE endpoint answers HTTP 200 with a payload of kind Cluster, apiVersion v3 and an items array. The call is AK/SK signed like other platform APIs. (KB-NOWE, live, checked 2026-07-02)
 - T Cloud Public (TCP) offers managed Kubernetes in Cloud Container Engine (CCE), as CCE Standard and CCE Turbo clusters, with Kubernetes v1.30 to v1.34 in commercial use per the version policy in the documentation mirror of 2026-08-31 (KB-5TID). Clusters use ECS nodes, VPC, ELB and EVS, SFS or OBS storage, and container images come from Software Repository for Containers. (KB-OOVV, docs, checked 2026-10-11)

@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-14. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
-3. Prices come from a snapshot of the public price API taken 2026-10-14 13:11 UTC. Give every price with its unit, currency and that date,
-   and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
+3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
+   and the date of its source, and say that the live price API is the source of truth before any quote.
+4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-14: eip
+# TCP Facts 2026-10-22: eip
 
 - An EIP is ordered with POST /v1/{project_id}/publicips on vpc.eu-de.otc.t-systems.com, with publicip.type 5_bgp and a bandwidth object carrying size, share_type PER and charge_mode traffic. The call returns HTTP 200 and DELETE /v1/{project_id}/publicips/{publicip_id} returns HTTP 204. (KB-3OQ3, live, checked 2026-07-17)
 - In the EIP list GET /v1/{project_id}/publicips an EIP bound to a load balancer shows status ELB with an empty port_id, and a VPN-bound one shows status VPN. Only port-bound EIPs show ACTIVE, and DOWN means unbound. (KB-4T6L, live, checked 2026-09-17)

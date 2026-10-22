@@ -1,25 +1,28 @@
-<!-- TCP Facts, dataset of 2026-10-14. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
-3. Prices come from a snapshot of the public price API taken 2026-10-14 13:11 UTC. Give every price with its unit, currency and that date,
-   and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
+3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
+   and the date of its source, and say that the live price API is the source of truth before any quote.
+4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-14: rds
+# TCP Facts 2026-10-22: rds
 
-- GET /v3/{project_id}/flavors/{engine}?version_name={version} returns the flavors for an RDS engine version under the key flavors. On 2026-09-16 in eu-de it returned 138 flavors for mysql 8.4 and 144 for postgresql 18. (KB-2NF7, live, checked 2026-09-16)
+- GET /v3/{project_id}/flavors/{engine}?version_name={version} returns the flavors for an RDS engine version under the key flavors. On 2026-09-16 in eu-de it returned 138 flavors for mysql 8.4 and 144 for postgresql 18.
+On 2026-10-19 the state is: 1:flavors.0.spec_code has rds.mysql. (KB-2NF7, live, checked 2026-10-19)
 - T Cloud Public (TCP) offers managed relational databases: Relational Database Service (RDS) for MySQL, PostgreSQL and Microsoft SQL Server (Standard and Enterprise Edition) as single or primary/standby instances, TaurusDB as a MySQL-compatible distributed database, and Distributed Database Middleware for sharding MySQL. On 2026-09-16 the RDS engine listing in eu-de returned MySQL 8.4, 8.0 and 5.7 and PostgreSQL 13 to 18 (KB-TMQ5), and on 2026-08-24 it offered SQL Server 2017, 2019 and 2022 (KB-QLJ5). (KB-33UY, contract, checked 2026-10-14)
 - The RDS API reference documents the storage type change as POST /v3/{project_id}/instances/{instance_id}/action with a change_volume body that names the target volume_code; it lists no disk-type path. (KB-4HOO, docs, checked 2026-09-25)
-- On 2026-09-16 in eu-de the RDS datastore listing returned mariadb 10.5 with HTTP 200, while the flavors call for that engine version returned zero flavors. A datastore listing that shows a version is not proof that the version can be ordered. (KB-6SR2, live, checked 2026-09-16)
+- On 2026-09-16 in eu-de the RDS datastore listing returned mariadb 10.5 with HTTP 200, while the flavors call for that engine version returned zero flavors. A datastore listing that shows a version is not proof that the version can be ordered.
+On 2026-10-19 the state is: 2:flavors.0.spec_code lacks rds. (KB-6SR2, live, checked 2026-10-19)
 - Changing the storage class of an RDS instance from CLOUDSSD to ESSD is an online operation on T Cloud Public (TCP) in eu-de. It took about 90 seconds, caused no failover and did not interrupt a psql session polling every second. (KB-7JAC, live, checked 2026-03-10)
 - Encryption at rest on an RDS instance is selected at create time by passing the UUID of a KMS key in disk_encryption_id. (KB-A3NA, docs, checked 2026-09-25)
 - An RDS flavor resize between the x1 and n1 families took about 9 minutes and triggered a failover. The standby is resized first, then the roles switch, then the former master is resized, and a client polling every second kept its connection. (KB-B6OL, live, checked 2026-03-10)
 - In eu-de RDS instances are listed with GET /v3/{project_id}/instances using limit and offset and come back under the response key instances next to total_count. Each entry carries name, id, status, datastore with type and version, volume with size, private_ips at instance level and nodes with id, name, role, status and availability_zone; a primary/standby entry also carries ha with replication_mode. (KB-BAWG, live, checked 2026-09-25)
 - The public price API accepts sn=rds with rn=eu-de and returns records under response.result.rds; the read on 2026-06-01 returned about 461 records. priceAmount is a string holding an hourly rate, while R12, R24, R36 and the RU12, RU24, RU36 with-upfront fields hold flat monthly reserved rates written with a thousands separator. (KB-BH5O, live, checked 2026-06-01)
-- In eu-de, GET /v3/{project_id}/datastores/mariadb returns HTTP 200 with version 10.5, while GET /v3/{project_id}/flavors/mariadb?version_name=10.5 returns zero flavors. MariaDB 10.5 is listed in the catalogue without being orderable in that region. (KB-FBFG, live, checked 2026-09-16)
+- In eu-de, GET /v3/{project_id}/datastores/mariadb returns HTTP 200 with version 10.5, while GET /v3/{project_id}/flavors/mariadb?version_name=10.5 returns zero flavors. MariaDB 10.5 is listed in the catalogue without being orderable in that region.
+On 2026-10-19 the state is: 2:flavors.0.spec_code lacks rds. (KB-FBFG, live, checked 2026-10-19)
 - GET /v3/{project_id}/datastores/{engine} returns HTTP 400 with error code DBS.280238 for the engine name oracle and for an invented engine name. (KB-G73U, live, checked 2026-09-16)
 - An RDS instance deleted and created again in the same subnet usually gets the same IP address back while that subnet is sparsely used. (KB-GOG6, live, checked 2026-02-04)
 - In an RDS create call the subnet_id must be the VPC subnet ID. Passing the neutron subnet ID makes the call fail with error DBS.200501. (KB-HSF7, docs, checked 2026-09-25)

@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-14. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
-3. Prices come from a snapshot of the public price API taken 2026-10-14 13:11 UTC. Give every price with its unit, currency and that date,
-   and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
+3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
+   and the date of its source, and say that the live price API is the source of truth before any quote.
+4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-14: security
+# TCP Facts 2026-10-22: security
 
 - Section 6.10.6 of the TCP service description (revision 09.10.2026) lists DBSS Basic, Pro and Advanced for EU-DE only (n.a. for EU-NL), while section 6.10.5 (dedicated WAF Professional and Enterprise), section 6.10.7 (HSS Enterprise, Premium, WTP and Container editions) and section 6.10.9 (Cloud Firewall) list both EU-DE and EU-NL. (KB-22YR, contract, checked 2026-10-14)
 - Under the ErgB-AV for T Cloud Public of April 2026 the contracting company acts as subprocessor when a customer processes personal data on behalf of its own customers, with the approved subprocessors of the platform listed in Appendix IV. GDPR Article 28(2) lets such a customer engage another processor only with the prior specific or general written authorisation of its controllers and, under a general authorisation, requires it to inform them of any intended addition or replacement of other processors. (KB-3EX6, contract, checked 2026-09-25)
@@ -17,7 +17,7 @@
 - A Config policy assignment is written with PUT /v1/resource-manager/domains/{domain_id}/policy-assignments and requires the resource recorder to be enabled, otherwise the call returns 400 RMS.00010091. POST on the assignment's policy-states/run-evaluation returns HTTP 202 and per-resource Compliant or NonCompliant states appear after one to two minutes. (KB-AXSS, live, checked 2026-07-17)
 - The built-in Config/RMS policy resource-tag-not-empty takes no parameters, while required-tag-check requires both a tag key and a tag value. An assignment is scoped by provider, resource type and region. (KB-FVUY, live, checked 2026-07-17)
 - BSI C5:2020 Type 2 attestation is held for the platform and re-attested at least every 12 months. (KB-GEDK, docs, checked 2026-09-25)
-- In TCP eu-de, GET /v1/{project_id}/secrets on kms.eu-de.otc.t-systems.com answers HTTP 404 APIGW.0101 like an unknown path and a host csms.eu-de has no DNS record, although the service description of 17.08.2026 lists Cloud Secret Management Service (CSMS) in section 3.9.9, with an eu-de entry in section 6.10.8. (KB-GUHJ, live, checked 2026-09-25)
+- Cloud Secret Management Service (CSMS) has no reachable API endpoint in eu-de: GET /v1/{project_id}/secrets on the KMS host answers HTTP 404 APIGW.0101 and no csms host name resolves. Ask the operator how to reach CSMS in eu-de. (KB-GUHJ, live, checked 2026-09-25)
 - Config/RMS in eu-de provides 87 built-in policies, among them required-tag and no-public-ip rules. A resource recorder plus a policy assignment returns per-resource compliance verdicts. (KB-HGAP, docs, checked 2026-09-25)
 - DBSS is not offered in eu-nl. On 2026-09-25 the DBSS audit API answered 404 APIGW.0101 in eu-nl but reached the service in eu-de (403 for a user without DBSS rights), and the public price API had DBSS records only for eu-de. (KB-JM53, live, checked 2026-09-25)
 - BSI IT-Grundschutz certification is still in progress on 2026-09-25: filed 2025-07-28, on the BSI list of ongoing procedures as BSI-IGZ-0757, audit phase planned from January 2026, certificate expected in Q4 2026. The listing is a pending procedure, not a certificate, and the BSI list says nothing about tenders. (KB-NZRC, docs, checked 2026-09-25)

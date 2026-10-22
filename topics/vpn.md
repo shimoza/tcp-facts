@@ -1,16 +1,17 @@
-<!-- TCP Facts, dataset of 2026-10-14. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
-3. Prices come from a snapshot of the public price API taken 2026-10-14 13:11 UTC. Give every price with its unit, currency and that date,
-   and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
+3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
+   and the date of its source, and say that the live price API is the source of truth before any quote.
+4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-14: vpn
+# TCP Facts 2026-10-22: vpn
 
 - On T Cloud Public (TCP) in eu-de VPN gateways are listed with GET /v5/{project_id}/vpn-gateways, which returns them under the key vpn_gateways. Per the API reference each entry carries name, id, status, flavor, vpc_id (only for gateways attached to a VPC) and an eip1 object with ip_address and bandwidth_size. (KB-37QB, docs, checked 2026-09-25)
+- Classic VPN reached end of life in eu-de on 2025-06-01 but stays current for eu-nl, so its rate remains listed in the current price list. (KB-6AR3, contract, checked 2026-10-14)
 - In TCP eu-de the Enterprise VPN API on vpn.eu-de serves gateways, customer gateways and connections (GET /v5/{project_id}/vpn-connection answers HTTP 200), and IKE and IPsec policies are part of the connection object with no list path of their own. The Classic VPN paths on vpc.eu-de for connections, IKE and IPsec policies and endpoint groups answer HTTP 404, in line with the end of life of Classic VPN in eu-de on 01.06.2025. (KB-6DLN, live, checked 2026-09-25)
 - On T Cloud Public (TCP) in eu-de customer gateways are listed with GET /v5/{project_id}/customer-gateways. The response returns them under the key customer_gateways with total_count and page_info, each entry carrying name, id, id_type and id_value; the older field ip, the peer address of the remote side, is kept for compatibility but marked deprecated. (KB-6P6T, docs, checked 2026-09-25)
 - Creating a VPN connection whose peer subnet matches an existing VPC subnet is blocked with VPN.0219, the following subnet appears in both VPC route and peer subnet. (KB-6UE4, live, checked 2026-08-26)
@@ -23,9 +24,11 @@
 - Enterprise VPN Basic carries a specification ceiling of 10 connection groups. (KB-EI4V, contract, checked 2026-08-27)
 - A peer subnet that collides with a subnet already in the VPC route table is rejected while the VPN v5 connection is created, with error VPN.0219 naming the CIDR block that appears in both the VPC route and the peer subnets. (KB-EZUZ, live, checked 2026-08-26)
 - In a VPN Enterprise Edition v5 connection the field vgw_ip takes the resource id of the gateway EIP rather than the address itself. (KB-G773, live, checked 2026-08-26)
+- The contractual price row sn=vpn, named Virtual Private Cloud VPN, is Classic VPN. Classic VPN reached end of life in eu-de on 2025-06-01 and stays current for eu-nl, which is why the row is still in the live document. (KB-JJEO, contract, checked 2026-10-14)
 - The VPN v5 connection path is singular. POST /v5/{project_id}/vpn-connection creates the connection and PUT /v5/{project_id}/vpn-connection/{connection_id} updates peer_subnets in place. Customer gateways use the plural path /v5/{project_id}/customer-gateways and answer 201 on create. (KB-KUEP, live, checked 2026-08-26)
 - When a VPN gateway on T Cloud Public (TCP) is associated with an Enterprise Router and uses BGP or a policy-based configuration, configuring customer subnets is optional. (KB-NQRJ, docs, checked 2026-08-26)
 - In eu-de GET /v5/{project_id}/vpn-connections (plural) on vpn.eu-de.otc.t-systems.com answers HTTP 404 APIGW.0101 with and without a vgw_id query parameter, and so do /v2.0/{project_id}/vpn/ipsec-site-connections and /v2.0/{project_id}/vpn/vpnservices on vpc.eu-de.otc.t-systems.com. The documented connection list is GET /v5/{project_id}/vpn-connection (singular), which answers HTTP 200. (KB-Q3BZ, live, checked 2026-09-25)
+- Enterprise VPN comes in three sizes: Basic at 100 Mbit/s, Professional 1 at 300 Mbit/s and Professional 2 at 1 Gbit/s. (KB-RNFZ, contract, checked 2026-10-14)
 - A VPN Enterprise Edition v5 gateway is created with POST /v5/{project_id}/vpn-gateways on the eu-de VPN endpoint. connect_subnet, the interconnection subnet, is mandatory and needs at least four free IP addresses. The gateway takes about three to five minutes to reach ACTIVE. (KB-SDV3, live, checked 2026-08-26)
 - An instance reached through an EIP with NAT needs no security group rule for protocol 50: IKE NAT detection payloads move the IPsec tunnel to UDP 4500 encapsulation, so ESP travels inside UDP. (KB-STJH, live, checked 2026-07-29)
 - For an Enterprise Edition VPN on T Cloud Public (TCP), a customer subnet cannot be part of the existing subnets of the VPC and cannot be a destination in the VPC route table. A subnet stretched over an Enterprise Switch L2 connection therefore cannot be used as a VPN customer subnet, only as a local subnet. (KB-TFJA, docs, checked 2026-08-26)

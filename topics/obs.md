@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-14. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
-3. Prices come from a snapshot of the public price API taken 2026-10-14 13:11 UTC. Give every price with its unit, currency and that date,
-   and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
+3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
+   and the date of its source, and say that the live price API is the source of truth before any quote.
+4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-14: obs
+# TCP Facts 2026-10-22: obs
 
 - OBS SDK guides are published for python, java, go, nodejs, dotnet and c. Community OBS SDK sources for python and java are published under the opentelekomcloud-community organisation. (KB-24VK, docs, checked 2026-06-19)
 - The OBS user guide limits a user-defined domain name bound to a bucket to HTTP requests instead of HTTPS, and the domain name points by a CNAME record to the bucket domain name, so a DNS lookup of the own domain returns the OBS bucket host. (KB-252Q, docs, checked 2026-09-25)
@@ -136,7 +136,7 @@
 - Object Storage is billed with a cumulative graduated price: the price scales are filled one after another and each part of the used quantity is billed at its own scale. Taking the single tier a volume lands in and multiplying the whole volume by that rate over-states the bill. (KB-TPA7, contract, checked 2026-08-27)
 - An IAM user reaches one OBS state bucket through a bucket policy naming the principal as domain/<domain_id>:user/<user_id>, with no OBS role assigned at all. A second bucket in the same account stayed denied for that user. (KB-TQIX, live, checked 2026-09-17)
 - OBS Bucket is a resource type supported by enterprise projects. Buckets can be placed in an enterprise project and a user group authorized with an OBS role scoped to that enterprise project. (KB-UGXP, docs, checked 2026-07-09)
-- OBS ignores the conditional If-None-Match header on PUT through its S3-compatible API, so a write that should fail when the object already exists overwrites it instead. (KB-UHIV, live, checked 2026-07-17)
+- The S3-compatible API of OBS does not honour the conditional If-None-Match header on PUT, so a PUT overwrites an existing object. For create-only writes, check with HEAD first or turn on versioning so an earlier version is kept. (KB-UHIV, live, checked 2026-07-17)
 - Throughput between an ECS and OBS is bound by the EVS volume when another heavy job uses the same disk: a copy sharing one volume ran at 0.37 MiB/s, while the same OBS path on an idle instance ran at about 237 MiB/s. More EIP bandwidth does not change this. (KB-UKAC, live, checked 2026-06-19)
 - OBS accepts the native V2 signature for object keys with spaces, brackets and umlauts when the key is percent-encoded the same way in the request path and in the canonical resource of the string to sign. (KB-UPS3, live, checked 2026-09-24)
 - To pin a specific custom CMK as the bucket default encryption on OBS, the PUT ?encryption body carries KMSMasterKeyID inside ApplyServerSideEncryptionByDefault next to SSEAlgorithm kms. Without that element the default key obs/default is used, and the documented success response is HTTP 200. (KB-VOUX, docs, checked 2026-09-25)

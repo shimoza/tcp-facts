@@ -1,21 +1,21 @@
-<!-- TCP Facts, dataset of 2026-10-14. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
-3. Prices come from a snapshot of the public price API taken 2026-10-14 13:11 UTC. Give every price with its unit, currency and that date,
-   and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
+3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
+   and the date of its source, and say that the live price API is the source of truth before any quote.
+4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-14: dns
+# TCP Facts 2026-10-22: dns
 
 - A signed parent zone's denial of DS stays in resolver caches after a DS is published. Measured caps on the public resolvers: Google 1800 s, Quad9 about 3600 s, Cloudflare honours the parent SOA MINIMUM in full. (KB-34BU, live, checked 2026-09-10)
 - Private DNS zones on TCP resolve the cloud-internal namespace. (KB-3DUD, docs, checked 2026-07-17)
 - GET /v2/zones/{zone_id}/dnssec on the eu-de DNS endpoint returns 200 with status DISABLE, or the key object with flag 257, key_tag, digest, digest_algorithm SHA256, digest_type 2, signature ECDSAP256SHA256, signature_type 13, ksk_public_key, ds_record, created_at, updated_at and status ENABLE. (KB-4KAY, live, checked 2026-09-10)
 - In eu-de on 2026-09-25, GET /v2/zones/{zone_id}/nameservers returned ns1.open-telekom-cloud.com and ns2.open-telekom-cloud.com for all four public zones of a test project, and a domain hosted in the TCP DNS service is delegated to these two name servers at its registrar. An NS lookup of such a domain names the platform. (KB-5KZD, live, checked 2026-09-25)
 - DNSSEC is absent from the DNS api-ref, and the opentelekomcloud Terraform provider 1.37.8 ships no DNSSEC resource. (KB-5SWB, docs, checked 2026-09-10)
-- When DNSSEC is enabled on a TCP-hosted public zone, every NS delegation beneath it stops resolving for validating resolvers, whether the child is on TCP DNS or at another provider. The parent side never returns an authoritative denial of DS, so validators see a broken chain instead of an insecure delegation. (KB-5T6U, live, checked 2026-09-10)
+- On a TCP public zone with DNSSEC enabled, the parent side returns no authenticated denial of DS for a delegated child zone, so validating resolvers cannot resolve names below such a delegation, wherever the child is hosted. Keep child names in the parent zone, or leave DNSSEC off while a delegation is needed. (KB-5T6U, live, checked 2026-09-10)
 - Enabling DNSSEC works on a subdomain public zone on TCP, although the console banner says DNSSEC can be enabled only for top-level domains and the UMN says DNSSEC supports only primary domain names. (KB-6PPX, live, checked 2026-09-10)
 - In eu-de the regional service endpoint for OMS has no DNS record, while the DRS endpoint in the same region resolves and its gateway answers HTTP 404 for an unknown path. (KB-7QD4, live, checked 2026-09-25)
 - Domain Name Service (DNS) is an authoritative DNS service in which the customer configures DNS zones and records for internal and external communication. It provides public zones that resolve domain names on the internet, private zones that resolve names to private IP addresses inside VPCs, and reverse resolution of IP addresses to domain names. The Regions and Endpoints page lists API endpoints for DNS in eu-de and eu-nl. (KB-ABGI, contract, checked 2026-10-14)

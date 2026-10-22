@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-14. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
-3. Prices come from a snapshot of the public price API taken 2026-10-14 13:11 UTC. Give every price with its unit, currency and that date,
-   and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
+3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
+   and the date of its source, and say that the live price API is the source of truth before any quote.
+4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-14: er
+# TCP Facts 2026-10-22: er
 
 - Enterprise Router answers on eu-de under the base path /v3/{project_id}/enterprise-router. GET on that path plus /instances returns HTTP 200 with an instances array and page_info. The plural form /enterprise-routers answered HTTP 404 with error code APIGW.0101. (KB-2BU6, live, checked 2026-07-17)
 - An enterprise router is created with POST /v3/{project_id}/enterprise-router/instances on er.eu-de.otc.t-systems.com and the call returns HTTP 202. The instance state moves from pending to available in about one to two minutes. The body accepts asn, enable_default_association, enable_default_propagation and availability_zone_ids such as eu-de-01 and eu-de-02. (KB-2NV6, live, checked 2026-07-17)
@@ -26,6 +26,7 @@
 - Route tables of an enterprise router are read with GET /v3/{project_id}/enterprise-router/{er_id}/route-tables and the propagated routes with GET /v3/{project_id}/enterprise-router/route-tables/{routetable_id}/routes, both HTTP 200. Teardown order is attachments first, then the instance, each returning HTTP 202. (KB-S224, live, checked 2026-07-17)
 - GET /v3/{project_id}/enterprise-router/quotas returned the account defaults er_instance 1, can_attachment 10, dc_attachment 10 and connect_attachment 20. One Enterprise Router per account is the default limit. (KB-T5CE, live, checked 2026-07-17)
 - Enterprise Router (ER) connects several VPCs and on-premises networks attached through Direct Connect or VPN into one central hub network, and uses BGP to learn routes and to select or switch between connections dynamically. VPCs attached to one enterprise router share its Direct Connect or VPN connection instead of each VPC needing its own. The Regions and Endpoints page lists API endpoints for ER in eu-de and eu-nl. (KB-TKYD, contract, checked 2026-10-14)
+- GET /v3/{project_id}/enterprise-router/availability-zones in eu-de returned eu-de-01 and eu-de-02 both available on 2026-10-14, after eu-de-02 had read unavailable on 2026-08-27 and available on 2026-07-17, so the AZ state of Enterprise Router in eu-de changes over time. (KB-TNVA, live, checked 2026-10-14)
 - Enterprise Router teardown runs in dependency order: the attachments are deleted before the ER instance. Attachment deletion is asynchronous, so the attachment counts as gone when a GET on it answers 404. (KB-USTK, live, checked 2026-07-17)
 - A VPC attachment is created with POST /v3/{project_id}/enterprise-router/{er_id}/vpc-attachments and returns HTTP 202. The field virsubnet_id takes the VPC v1 subnet id. The attachment state reaches available in about one minute. (KB-V4GE, live, checked 2026-07-17)
 - Documentation FAQ er_01_0121 states that a 0.0.0.0/0 route pointing to an enterprise router conflicts with EIP, ELB, NAT, VPCEP and DCS used in the same VPC. The documented workaround is routing specific ranges, for example eight half and quarter space routes, instead of the default route. (KB-WPSF, docs, checked 2026-07-17)

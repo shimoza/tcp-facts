@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-14. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
-3. Prices come from a snapshot of the public price API taken 2026-10-14 13:11 UTC. Give every price with its unit, currency and that date,
-   and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
+3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
+   and the date of its source, and say that the live price API is the source of truth before any quote.
+4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-14: waf
+# TCP Facts 2026-10-22: waf
 
 - The CloudWAF release note of 20 March 2025 says it only works with a dedicated load balancer created on or after 27 January 2025. (KB-2MGI, docs, checked 2026-09-25)
 - Dedicated WAF has resources dedicated per instance, can be spread over up to three availability zones and is reached through an internet-facing ELB. It comes as Professional WI-100 with 100 Mbit/s and 2,000 QPS or Enterprise WI-500 with 500 Mbit/s and 10,000 QPS, each with 60,000 WAF-to-server connections. (KB-2SIL, contract, checked 2026-10-14)

@@ -1,12 +1,24 @@
-# TCP Facts 2026-10-14
+<h1 align="center">TCP Facts</h1>
 
-Build of 2026-10-14 13:38 UTC. A later build of the same day replaces this one under the same name; the manifest carries the build time.
+<p align="center"><b>Checked facts about T Cloud Public (TCP) for any AI assistant, dataset of 2026-10-22</b></p>
 
-1624 checked facts about T Cloud Public (TCP) with the list of orderable services. Made to be dropped into any AI assistant.
+> **Unofficial and independent.** Not a product of, and not endorsed by, T-Systems or Deutsche Telekom; it speaks for nobody but its author. Built only from public sources (the public documentation, the public service description, the public price API), with respect for robots.txt and the terms of those sources. No customer data and no confidential information. No warranty: the provider's contract documents are binding.
 
-1035 facts were tested live on a TCP tenant, 433 come from the vendor documentation and 156 from the service description (revision 09.10.2026). No fact from hearsay, no expired fact, no customer, no project, no credential.
+<p align="center">
+  <img alt="Unofficial" src="https://img.shields.io/badge/Status-Unofficial-c64a3d">
+  <img alt="Facts: 1715" src="https://img.shields.io/badge/Facts-1715-2f6fd1">
+  <img alt="Best before: 2026-11-21" src="https://img.shields.io/badge/Best_before-2026--11--21-e0b43a">
+  <img alt="License: CC BY 4.0" src="https://img.shields.io/badge/License-CC_BY_4.0-3f9d5a">
+  <a href="#mcp-clients"><img alt="MCP server" src="https://img.shields.io/badge/MCP-server-8a63b8"></a>
+</p>
 
-379 of the 433 documentation facts come from the open source repositories of the GitHub organisation opentelekomcloud-docs, published under the Apache License 2.0. The public source of each of the others is in facts.jsonl. The documentation website is not crawled, its robots.txt disallows all robots. Sources whose terms forbid automated analysis are not used, so the community portal and internal documentation are left out. The live checks ran on the compiler's own TCP test tenants.
+Build of 2026-10-22 10:19 UTC. A later build of the same day replaces this one under the same name; the manifest carries the build time.
+
+1715 checked facts about T Cloud Public (TCP) with the list of orderable services. Made to be dropped into any AI assistant. Prices are not part of the dataset: they come live from the public price API with --live.
+
+1094 facts were tested live on a TCP tenant, 459 come from the vendor documentation and 162 from the service description (revision 09.10.2026). No fact from hearsay, no expired fact, no customer, no project, no credential.
+
+387 of the 459 documentation facts come from the open source repositories of the GitHub organisation opentelekomcloud-docs, published under the Apache License 2.0. The public source of each of the others is in facts.jsonl. The documentation website is not crawled, its robots.txt disallows all robots. Sources whose terms forbid automated analysis are not used, so the community portal and internal documentation are left out. The live checks ran on the compiler's own TCP test tenants.
 
 
 ## Use
@@ -108,7 +120,7 @@ How you use it is your responsibility as the user. The dataset gives you checked
 
 ## MCP clients
 
-tcp_facts_mcp.py is a read-only MCP server over the files beside it: one Python file, standard library only, Python 3.10 or newer, JSON-RPC 2.0 over stdio. It has four tools: tcp_facts_search (facts by words, tag or grade), tcp_service_check (offered or not, from services.md), tcp_price_find (live price rows of eu-de or eu-nl from the public price API, with --live only) and tcp_calculate (exact arithmetic in hours, a month is 720 h). It reads no file outside its folder, opens no connection without --live and writes nothing.
+tcp_facts_mcp.py is a read-only MCP server over the files beside it: one Python file, standard library only, Python 3.10 or newer, JSON-RPC 2.0 over stdio. It has four tools: tcp_facts_search (facts by words, tag or grade), tcp_service_check (offered or not, from services.md), tcp_price_find (live price rows of eu-de or eu-nl, only with --live) and tcp_calculate (exact arithmetic in hours, a month is 720 h). It reads no file outside its folder, opens no connection without --live and writes nothing.
 
 Claude Desktop, one click: download tcp-facts-<date>.mcpb from the latest release at github.com/shimoza/tcp-facts and open it (double click, or drag it into Settings, Extensions). Claude Desktop shows the extension and its four tools; press Install. The file carries the server and the data of that build. It needs Python 3.10 or newer on the machine.
 
@@ -132,7 +144,7 @@ VS Code (and GitHub Copilot in it), in .vscode/mcp.json:
 {"servers": {"tcp-facts": {"type": "stdio", "command": "python3", "args": ["/path/to/tcp-facts/tcp_facts_mcp.py"]}}}
 ```
 
-Add "--live" to the arguments for live prices from the public price API (no credentials). Claude Desktop opens its file under Settings, Developer, Edit Config and loads a change only after a full quit and start. Give the path in full, never relative to a folder. On Windows the command is python or py. In the JSON every backslash of a path is written twice. The rules of "Before you use it with a public model" apply here too: the client sends your questions to its model provider.
+Add "--live" to the arguments for prices: they come live from the public price API (no credentials) and are not part of the dataset; without it tcp_price_find says so. Claude Desktop opens its file under Settings, Developer, Edit Config and loads a change only after a full quit and start. Give the path in full, never relative to a folder. On Windows the command is python or py. In the JSON every backslash of a path is written twice. The rules of "Before you use it with a public model" apply here too: the client sends your questions to its model provider.
 
 
 ## Files
@@ -142,7 +154,7 @@ facts.md: all facts, grouped by topic. facts.jsonl: the same facts with source, 
 
 ## Dates and licence
 
-Built 2026-10-14. Best before 2026-11-13: facts about availability are re-checked every 30 days. Prices are not part of the dataset; the public price API is the source before any quote.
+Built 2026-10-22. Best before 2026-11-21: facts about availability are re-checked every 30 days. Prices are not part of the dataset: the live price API is the source of truth before any quote.
 
 Dataset: TCP Facts, github.com/shimoza/tcp-facts.
 

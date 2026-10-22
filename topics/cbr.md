@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-14. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
-3. Prices come from a snapshot of the public price API taken 2026-10-14 13:11 UTC. Give every price with its unit, currency and that date,
-   and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-13. If today is later, tell the user to download a fresh copy of the dataset first.
+3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
+   and the date of its source, and say that the live price API is the source of truth before any quote.
+4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-14: cbr
+# TCP Facts 2026-10-22: cbr
 
 - A crash-consistent restore of a Windows ECS backed up during continuous writes contained one truncated file out of 37, while a comparison run with writes stopped and the volume cache flushed before the backup contained zero damaged files out of 57. (KB-3PZR, live, checked 2026-09-02)
 - Creating a CBR vault with consistent_level app_consistent returns HTTP 400 with error code BackupService.6126, while crash_consistent returns 200. The API enum accepts both values. Checked on a vault with object_type server. (KB-3T3I, live, checked 2026-09-02)
@@ -29,14 +29,11 @@
 - The restore point of a CBR backup sits at the start of the backup run. A source counter that moved from 220 to 412 during a 304 s backup came back at 234 on the restored disk, so RPO counts from the backup start. (KB-E435, live, checked 2026-09-02)
 - A CBR vault keeps its resource binding after the bound ECS is deleted: on 2026-10-05 a server vault and a disk vault in eu-de still listed the server (OS::Nova::Server) and its volume (OS::Cinder::Volume) with protect_status available, while the ECS server listing no longer returned that server. A cleanup by resource therefore has to look at the vaults as well. (KB-EBMP, live, checked 2026-10-05)
 - In a CBR vault, size is the configured capacity in GB, billing.allocated is the sum of the sizes of the protected resources rather than the vault capacity, and billing.used is in MB. (KB-EQOS, live, checked 2026-09-17)
-- CBR vault backup locking keeps automatic backups locked until their retention period ends. It is described in the documentation mirror under Cloud Backup and Recovery vault management and is not named in the service description. (KB-HVJS, docs, checked 2026-09-16)
 - CBR vault backup locking keeps automatic backups undeletable by any user for the whole retention period, stays enabled once switched on, leaves manual backups deletable, and still allows cross-region replication of the locked vault. (KB-I63S, docs, checked 2026-09-01)
 - CBR vault creation documents crash_consistent as the consistency level value, and the CBR service overview describes CBR backups as crash-consistent. (KB-IJTE, docs, checked 2026-09-02)
 - T Cloud Public (TCP) runs scheduled backups with a set retention period: a Cloud Backup and Recovery (CBR) backup policy runs on chosen weekdays or every 1 to 30 days at a set time and keeps backups by count or for one month, three months, six months, one year or a custom period of 2 to 99,999 days, with optional weekly, monthly and yearly long-term rules. RDS databases are backed up automatically every day by default and kept for 1 to 732 days. (KB-ITGL, docs, checked 2026-10-11)
-- CBR vault backup locking keeps automatic backups locked until their retention period ends, giving a second native WORM option next to OBS Object Lock. It is documented in the CBR user guide under vault management, enabling backup locking. (KB-J2C5, docs, checked 2026-09-16)
 - Restoring a CBR server backup stops the server and starts it again when the restore ends unless Start the server immediately after restoration is deselected, and the backup overwrites the current disks, by default the original ones or another disk of at least the same size. (KB-K6HK, docs, checked 2026-09-25)
 - In a CBR vault object the billing.size field is the capacity in GB, while billing.used is the used capacity in MB (API reference: 'Used capacity, in MB'). A disk vault of size 10 with used 3084 holds about 3 GB, not more than its capacity. (KB-LGK7, docs, checked 2026-10-05)
-- The TCP service description, as checked on 2026-09-16, names neither CBR backup locking nor OBS WORM. (KB-MC6B, contract, checked 2026-09-16)
 - CBR backup deletion is asynchronous: delete calls return success while the backups move to state `deleting`, and a list call issued right after still counts all of them. They drain to zero in about 60 seconds. A resource removed from a vault sits at `protect_status: removing` for the same window. (KB-MYLM, live, checked 2026-09-16)
 - A CBR vault created with POST /v3/{project_id}/vaults protects disks when billing.object_type is disk and the resource entries use type OS::Cinder::Volume. Whole-server protection uses the resource type OS::Nova::Server instead. (KB-PP2P, live, checked 2026-08-26)
 - Encryption of a volume created from a CBR backup is decided when the volume is created, since per the EVS documentation the encryption attribute of a disk cannot be changed afterwards. For an encrypted backup shared into another tenant the CBR documentation also requires the key to be shared with the recipient. (KB-Q6ES, docs, checked 2026-09-25)
