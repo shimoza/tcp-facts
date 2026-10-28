@@ -10,4 +10,5 @@
 -->
 # TCP Facts 2026-10-28: tender
 
+- TCP is listed as certified for ISO/IEC 27001, 27017, 27018 and 27701, plus ISO 9001, 14001, 20000-1, 22301, 50001, 45001 and 22237. (KB-R3TV, docs, checked 2026-09-25, recheck due)
 - KRITIS status for TCP is a registration with the German federal office for information security, not an issued certificate. (KB-TQFH, docs, checked 2026-10-08)

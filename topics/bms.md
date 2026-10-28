@@ -10,6 +10,8 @@
 -->
 # TCP Facts 2026-10-28: bms
 
+- Bare Metal Server (BMS) is ramped down on TCP. Its user guide and API reference remain in the documentation mirror, so documentation presence is no proof that a service is orderable. (KB-DBAV, live, checked 2026-09-25, recheck due)
+- Bare Metal Server (BMS) is ramped down and no longer orderable in eu-de, while its user guide and API reference remain in the documentation: on 2026-09-25 its three flavors were abandon or sellout in every AZ. The six rows under the bms key of the price API are the Physical ECS row BM General Purpose c7t.28xl and five EVS rows, not BMS flavors. (KB-PYYO, live, checked 2026-09-25, recheck due)
 - BMS bare metal is not orderable in eu-de. The service description revision 09.10.2026 carries no BMS entry and offers bare metal as Physical ECS c7t, with physical c9 and m9 announced from 01.10.2026 on request; on 2026-09-25 the BMS flavor listing marked every AZ of the three returned flavors as abandon or sellout. (KB-UEVJ, contract, checked 2026-10-14)
 - The service description revision 09.10.2026 offers bare metal as Physical ECS: BM General Purpose c7t.28xl, EU-DE only (section 3.1.1.2 and section 6.2.1.19), and the ECS flavor c7t.28xlarge.4.physical reported eu-de-03(normal) on 2026-09-25. Physical c9 and m9 flavors are announced from 01.10.2026 and offered only on request. (KB-WD2H, contract, checked 2026-10-14)
 - The opentelekomcloud provider 1.37.8 ships 330 resources. Compared with 1.36.64 it adds 15 resources and drops the two BMS resources compute_bms_server_v2 and compute_bms_tags_v2. (KB-WMZI, live, checked 2026-09-16)

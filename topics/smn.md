@@ -12,6 +12,7 @@
 
 - An SMN subscription is added with POST /v2/{project_id}/notifications/topics/{topic_urn}/subscriptions on smn.eu-de.otc.t-systems.com, taking protocol, endpoint and remark. The recorded call used protocol email. (KB-2KS5, live, checked 2026-09-23)
 - An SMN email subscription answers 201 and lists status 0 until the recipient clicks the link in the confirmation mail; after the click the subscription list shows status 1. (KB-2UVH, live, checked 2026-09-23)
+- An SMN topic can invoke a FunctionGraph function, either as a subscription with the FunctionGraph protocol or through an SMN trigger on the function. A function with VPC access reaches the resources in the VPC bound to it. (KB-4WDK, docs, checked 2026-09-25, recheck due)
 - SMN creates a topic with POST /v2/{project_id}/notifications/topics on smn.eu-de.otc.t-systems.com, taking name and display_name. The response carries the key topic_urn, which the subscription call then uses in its path. (KB-6ZWH, live, checked 2026-09-23)
 - SMN HTTP and HTTPS subscriptions accept only public network URLs and public IP addresses, so SMN cannot call a webhook on a private VPC address directly. Besides HTTP and HTTPS the user guide lists email, SMS and FunctionGraph (function) as protocols. (KB-ACTM, docs, checked 2026-09-25)
 - Deleting an SMN subscription and creating it again sets its confirmation state back to unconfirmed. (KB-D6RJ, docs, checked 2026-09-25)

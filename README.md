@@ -6,19 +6,19 @@
 
 <p align="center">
   <img alt="Unofficial" src="https://img.shields.io/badge/Status-Unofficial-c64a3d">
-  <img alt="Facts: 1663" src="https://img.shields.io/badge/Facts-1663-2f6fd1">
+  <img alt="Facts: 1819" src="https://img.shields.io/badge/Facts-1819-2f6fd1">
   <img alt="Best before: 2026-11-27" src="https://img.shields.io/badge/Best_before-2026--11--27-e0b43a">
   <img alt="License: CC BY 4.0" src="https://img.shields.io/badge/License-CC_BY_4.0-3f9d5a">
   <a href="#mcp-clients"><img alt="MCP server" src="https://img.shields.io/badge/MCP-server-8a63b8"></a>
 </p>
 
-Build of 2026-10-28 16:16 UTC. A later build of the same day replaces this one under the same name; the manifest carries the build time.
+Build of 2026-10-28 18:01 UTC. A later build of the same day replaces this one under the same name; the manifest carries the build time.
 
-1663 checked facts about T Cloud Public (TCP) with the list of orderable services. Made to be dropped into any AI assistant. Prices are not part of the dataset: they come live from the public price API with --live.
+1819 checked facts about T Cloud Public (TCP) with the list of orderable services. Made to be dropped into any AI assistant. Prices are not part of the dataset: they come live from the public price API with --live.
 
-1071 facts were tested live on a TCP tenant, 430 come from the vendor documentation and 162 from the service description (revision 09.10.2026). No fact from hearsay, no expired fact, no customer, no project, no credential.
+1178 facts were tested live on a TCP tenant, 475 come from the vendor documentation and 166 from the service description (revision 09.10.2026). No fact from hearsay, no expired fact, no customer, no project, no credential.
 
-361 of the 430 documentation facts come from the open source repositories of the GitHub organisation opentelekomcloud-docs, published under the Apache License 2.0. The public source of each of the others is in facts.jsonl. The documentation website is not crawled, its robots.txt disallows all robots. Sources whose terms forbid automated analysis are not used, so the community portal and internal documentation are left out. The live checks ran on the compiler's own TCP test tenants.
+391 of the 475 documentation facts come from the open source repositories of the GitHub organisation opentelekomcloud-docs, published under the Apache License 2.0. The public source of each of the others is in facts.jsonl. The documentation website is not crawled, its robots.txt disallows all robots. Sources whose terms forbid automated analysis are not used, so the community portal and internal documentation are left out. The live checks ran on the compiler's own TCP test tenants.
 
 
 ## Use
@@ -103,6 +103,170 @@ Use the attached TCP Facts. Answer: is this requirement covered: "TCP collects l
 A good answer quotes the fact and its id, for example (KB-MZQU) for this one, so a reader finds it in facts.md. When no fact covers the requirement it says "no checked fact covers this".
 
 What the dataset does not hold and never will: commitments on certificates and attestations, SLA values, support hours and response times, prices and subcontractors. These are contract matters: check them in the contract. A fact that touches one of them is background from a public source, not a commitment.
+
+
+## Facts with a recheck due
+
+156 facts are past their expiry date and wait for their weekly recheck. They stay in the dataset until something invalidates them: a recheck that refutes them, a newer fact that replaces them or a change of the service description. Name the check date when you use one.
+
+| fact | grade | checked | state |
+|---|---|---|---|
+| KB-37RS | live | 2026-02-04 | recheck due |
+| KB-46C6 | live | 2026-02-04 | recheck due |
+| KB-6FEI | live | 2026-02-04 | recheck due |
+| KB-BS7A | live | 2026-02-04 | recheck due |
+| KB-DOPL | live | 2026-02-04 | recheck due |
+| KB-E5HH | live | 2026-02-04 | recheck due |
+| KB-GBEV | live | 2026-02-04 | recheck due |
+| KB-LWS5 | live | 2026-02-04 | recheck due |
+| KB-N72X | live | 2026-02-04 | recheck due |
+| KB-P6FC | live | 2026-02-04 | recheck due |
+| KB-PAUD | live | 2026-02-04 | recheck due |
+| KB-RGV4 | live | 2026-02-04 | recheck due |
+| KB-RY24 | live | 2026-02-04 | recheck due |
+| KB-XKBA | live | 2026-02-04 | recheck due |
+| KB-XXAD | live | 2026-02-04 | recheck due |
+| KB-YPPS | live | 2026-03-04 | recheck due |
+| KB-LJFS | live | 2026-03-07 | recheck due |
+| KB-H7UG | live | 2026-03-10 | recheck due |
+| KB-EDXJ | live | 2026-05-06 | recheck due |
+| KB-MJ5A | docs | 2026-06-12 | recheck due |
+| KB-HT72 | live | 2026-07-17 | recheck due |
+| KB-MQ2H | live | 2026-07-17 | recheck due |
+| KB-BUI2 | live | 2026-07-21 | recheck due |
+| KB-22JC | live | 2026-07-28 | recheck due |
+| KB-2X6J | live | 2026-07-28 | recheck due |
+| KB-BJMP | live | 2026-07-28 | recheck due |
+| KB-ECWX | live | 2026-07-28 | recheck due |
+| KB-HQC7 | live | 2026-07-28 | recheck due |
+| KB-NSFM | live | 2026-07-28 | recheck due |
+| KB-XIWQ | live | 2026-07-28 | recheck due |
+| KB-Z3UG | live | 2026-07-28 | recheck due |
+| KB-2XCG | live | 2026-07-30 | recheck due |
+| KB-46JJ | live | 2026-07-30 | recheck due |
+| KB-GA5U | live | 2026-07-30 | recheck due |
+| KB-HYY7 | live | 2026-07-30 | recheck due |
+| KB-62LJ | docs | 2026-08-19 | recheck due |
+| KB-T7WI | docs | 2026-08-21 | recheck due |
+| KB-WTCR | docs | 2026-08-21 | recheck due |
+| KB-L5JU | docs | 2026-08-25 | recheck due |
+| KB-PASA | docs | 2026-08-25 | recheck due |
+| KB-QMAT | docs | 2026-08-25 | recheck due |
+| KB-W6A3 | docs | 2026-08-25 | recheck due |
+| KB-VUL6 | live | 2026-08-27 | recheck due |
+| KB-DIDW | live | 2026-09-01 | recheck due |
+| KB-IP74 | live | 2026-09-02 | recheck due |
+| KB-MQND | contract | 2026-09-15 | recheck due |
+| KB-SRKV | contract | 2026-09-15 | recheck due |
+| KB-HVJS | docs | 2026-09-16 | recheck due |
+| KB-J2C5 | docs | 2026-09-16 | recheck due |
+| KB-MC6B | contract | 2026-09-16 | recheck due |
+| KB-YHSH | contract | 2026-09-16 | recheck due |
+| KB-356T | live | 2026-09-17 | recheck due |
+| KB-NX4L | live | 2026-09-17 | recheck due |
+| KB-3UFL | live | 2026-09-24 | recheck due |
+| KB-FIBF | live | 2026-09-24 | recheck due |
+| KB-SJJV | live | 2026-09-24 | recheck due |
+| KB-WFB7 | live | 2026-09-24 | recheck due |
+| KB-XELM | live | 2026-09-24 | recheck due |
+| KB-2FA3 | docs | 2026-09-25 | recheck due |
+| KB-2HZA | docs | 2026-09-25 | recheck due |
+| KB-2MGI | docs | 2026-09-25 | recheck due |
+| KB-2MWY | live | 2026-09-25 | recheck due |
+| KB-2XZS | docs | 2026-09-25 | recheck due |
+| KB-3744 | live | 2026-09-25 | recheck due |
+| KB-3JIJ | live | 2026-09-25 | recheck due |
+| KB-3TBJ | live | 2026-09-25 | recheck due |
+| KB-4MR7 | live | 2026-09-25 | recheck due |
+| KB-4V3I | docs | 2026-09-25 | recheck due |
+| KB-4WDK | docs | 2026-09-25 | recheck due |
+| KB-5BJH | live | 2026-09-25 | recheck due |
+| KB-5RPQ | live | 2026-09-25 | recheck due |
+| KB-5TID | docs | 2026-09-25 | recheck due |
+| KB-5TJI | live | 2026-09-25 | recheck due |
+| KB-5VPL | live | 2026-09-25 | recheck due |
+| KB-5XW5 | docs | 2026-09-25 | recheck due |
+| KB-66D6 | docs | 2026-09-25 | recheck due |
+| KB-6EFK | docs | 2026-09-25 | recheck due |
+| KB-74US | docs | 2026-09-25 | recheck due |
+| KB-7QD4 | live | 2026-09-25 | recheck due |
+| KB-7Y6M | live | 2026-09-25 | recheck due |
+| KB-B4SW | live | 2026-09-25 | recheck due |
+| KB-BB4E | live | 2026-09-25 | recheck due |
+| KB-BCY3 | live | 2026-09-25 | recheck due |
+| KB-BGBR | live | 2026-09-25 | recheck due |
+| KB-BICR | docs | 2026-09-25 | recheck due |
+| KB-C2YH | live | 2026-09-25 | recheck due |
+| KB-CKVZ | docs | 2026-09-25 | recheck due |
+| KB-COAJ | live | 2026-09-25 | recheck due |
+| KB-CQ2S | live | 2026-09-25 | recheck due |
+| KB-DBAV | live | 2026-09-25 | recheck due |
+| KB-ESW2 | live | 2026-09-25 | recheck due |
+| KB-FJ6E | live | 2026-09-25 | recheck due |
+| KB-FVXP | live | 2026-09-25 | recheck due |
+| KB-G6SH | live | 2026-09-25 | recheck due |
+| KB-GEDK | docs | 2026-09-25 | recheck due |
+| KB-GMRI | docs | 2026-09-25 | recheck due |
+| KB-GP36 | live | 2026-09-25 | recheck due |
+| KB-H34Q | docs | 2026-09-25 | recheck due |
+| KB-HGAP | docs | 2026-09-25 | recheck due |
+| KB-HIYO | live | 2026-09-25 | recheck due |
+| KB-HSTO | live | 2026-09-25 | recheck due |
+| KB-HULX | docs | 2026-09-25 | recheck due |
+| KB-I4YA | live | 2026-09-25 | recheck due |
+| KB-IWD5 | live | 2026-09-25 | recheck due |
+| KB-J3DZ | live | 2026-09-25 | recheck due |
+| KB-JM53 | live | 2026-09-25 | recheck due |
+| KB-JYO7 | live | 2026-09-25 | recheck due |
+| KB-KFC4 | docs | 2026-09-25 | recheck due |
+| KB-KVBP | live | 2026-09-25 | recheck due |
+| KB-L4MM | docs | 2026-09-25 | recheck due |
+| KB-LD5O | docs | 2026-09-25 | recheck due |
+| KB-M3JR | live | 2026-09-25 | recheck due |
+| KB-M42H | live | 2026-09-25 | recheck due |
+| KB-MNIA | docs | 2026-09-25 | recheck due |
+| KB-MWNP | live | 2026-09-25 | recheck due |
+| KB-NIV7 | live | 2026-09-25 | recheck due |
+| KB-NU75 | docs | 2026-09-25 | recheck due |
+| KB-NZRC | docs | 2026-09-25 | recheck due |
+| KB-OK4D | live | 2026-09-25 | recheck due |
+| KB-OKUT | live | 2026-09-25 | recheck due |
+| KB-OVOE | live | 2026-09-25 | recheck due |
+| KB-P2MX | docs | 2026-09-25 | recheck due |
+| KB-PBIU | live | 2026-09-25 | recheck due |
+| KB-PYYO | live | 2026-09-25 | recheck due |
+| KB-QLJ5 | live | 2026-09-25 | recheck due |
+| KB-QQFN | docs | 2026-09-25 | recheck due |
+| KB-R3TV | docs | 2026-09-25 | recheck due |
+| KB-RBRL | live | 2026-09-25 | recheck due |
+| KB-RUHF | live | 2026-09-25 | recheck due |
+| KB-RY3G | docs | 2026-09-25 | recheck due |
+| KB-SBUW | live | 2026-09-25 | recheck due |
+| KB-SOBS | live | 2026-09-25 | recheck due |
+| KB-SWZZ | docs | 2026-09-25 | recheck due |
+| KB-SZLC | live | 2026-09-25 | recheck due |
+| KB-TOS5 | live | 2026-09-25 | recheck due |
+| KB-TP5W | live | 2026-09-25 | recheck due |
+| KB-TUIU | live | 2026-09-25 | recheck due |
+| KB-UB44 | live | 2026-09-25 | recheck due |
+| KB-UGZC | live | 2026-09-25 | recheck due |
+| KB-ULTQ | docs | 2026-09-25 | recheck due |
+| KB-UN55 | live | 2026-09-25 | recheck due |
+| KB-USSN | live | 2026-09-25 | recheck due |
+| KB-VP4J | docs | 2026-09-25 | recheck due |
+| KB-VZW3 | live | 2026-09-25 | recheck due |
+| KB-WCSR | live | 2026-09-25 | recheck due |
+| KB-WESI | live | 2026-09-25 | recheck due |
+| KB-WMZT | live | 2026-09-25 | recheck due |
+| KB-X52S | live | 2026-09-25 | recheck due |
+| KB-XC4T | docs | 2026-09-25 | recheck due |
+| KB-XI6O | live | 2026-09-25 | recheck due |
+| KB-XRV5 | docs | 2026-09-25 | recheck due |
+| KB-XVNK | docs | 2026-09-25 | recheck due |
+| KB-YL3W | docs | 2026-09-25 | recheck due |
+| KB-ZABN | live | 2026-09-25 | recheck due |
+| KB-ZH7A | live | 2026-09-25 | recheck due |
+| KB-ZHA4 | live | 2026-09-25 | recheck due |
 
 
 ## Before you use it with a public model

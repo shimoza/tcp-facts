@@ -82,5 +82,6 @@
 - A VPC create in a project that has reached its VPC quota fails with a quota error, not with a syntax or validation error. (KB-Y72H, live, checked 2026-08-18)
 - The description of a security group rule is free text and has no effect on filtering. A rule described "Deny all traffic" with protocol All, port range 0 to 0 and remote_ip_prefix 0.0.0.0/0 is an ordinary allow-all rule. (KB-YGSM, docs, checked 2026-09-02)
 - A VPC route table on T Cloud Public (TCP) cannot hold two routes with the same destination, even when the next hop types differ, and the system route created for a VPC subnet CIDR cannot be modified or deleted. (KB-YHLQ, docs, checked 2026-08-26)
+- VPC peering is not billed. (KB-YHSH, contract, checked 2026-09-16, recheck due)
 - The default VPC route table quota is 200 routes per table, which caps a static-routing pod network on ECS at roughly 200 nodes before a quota increase. (KB-ZKI3, docs, checked 2026-06-12)
 - In the opentelekomcloud Terraform provider 1.37.8, opentelekomcloud_vpc_secgroup_rule_v3 uses the argument names ether_type and multi_port, carries an explicit action field, and takes a port list or a range in one field. The v2 spellings ethertype and multiport are rejected by terraform validate, and port_range_min and port_range_max are absent from the v3 schema. (KB-ZULT, live, checked 2026-09-16)
