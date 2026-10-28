@@ -1,18 +1,16 @@
-<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-22: aom
+# TCP Facts 2026-10-28: aom
 
 - The APM service on eu-de is reached under the endpoint label apm2, not apm. A DNS check on 2026-07-02 showed apm2.eu-de resolving while apm.eu-de did not resolve. (KB-6GFP, live, checked 2026-07-02)
-- AOM keeps Prometheus metric data for 30 days: every Prometheus instance listed in eu-de and eu-nl on 2026-09-25 carried compactor_blocks_retention_period 720h and the AOM 2.0 restrictions give a metric storage duration of up to 30 days. This holds although the remote write page says the data can be stored for long. (KB-FVXP, live, checked 2026-09-25)
-- AOM 2.0 accepts data from self-built Prometheus servers through remote write into a Prometheus instance: the common instance type is meant for this and the preset default instance also serves it. The setup is an access code under Global Settings, Authentication (at most two per project), then the remote_write block from the instance Settings, Service Addresses appended to prometheus.yml and a restart of Prometheus. (KB-HULX, docs, checked 2026-09-25)
 - AOM 2.0 is orderable on TCP in eu-de and eu-nl: the service description, revision 09.10.2026, section 6.6.4 lists AOM 2 items. Its user guide is in the docs mirror as of 2026-09-07 while its API reference is still an empty index stub. (KB-I4EH, contract, checked 2026-10-14)
 - Application Performance Management (APM) monitors the performance of distributed cloud applications in real time and helps operators find faults and performance bottlenecks. An APM agent is deployed with the application without code changes, and APM then collects application metrics, draws the call topology between services, traces requests and finds error or slow URLs; the documentation names Java applications as supported. The service description lists the editions APM Free and APM Enterprise. (KB-P3X6, contract, checked 2026-10-14)
 - Application Operations Management (AOM) is an operations platform for cloud applications that monitors applications and their cloud resources: the service description names resource monitoring and logging for Cloud Container Engine clusters with log search, event-driven alerts and a visual display of resource utilization, with logs saved in Object Storage Service. The documentation adds association of applications with their resources, metric and alarm analysis and log search filtered by application, host or instance. The Regions and Endpoints page lists API endpoints for AOM in eu-de and eu-nl. (KB-SA7V, contract, checked 2026-10-14)

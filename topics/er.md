@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-22: er
+# TCP Facts 2026-10-28: er
 
 - Enterprise Router answers on eu-de under the base path /v3/{project_id}/enterprise-router. GET on that path plus /instances returns HTTP 200 with an instances array and page_info. The plural form /enterprise-routers answered HTTP 404 with error code APIGW.0101. (KB-2BU6, live, checked 2026-07-17)
 - An enterprise router is created with POST /v3/{project_id}/enterprise-router/instances on er.eu-de.otc.t-systems.com and the call returns HTTP 202. The instance state moves from pending to available in about one to two minutes. The body accepts asn, enable_default_association, enable_default_propagation and availability_zone_ids such as eu-de-01 and eu-de-02. (KB-2NV6, live, checked 2026-07-17)

@@ -1,24 +1,24 @@
 <h1 align="center">TCP Facts</h1>
 
-<p align="center"><b>Checked facts about T Cloud Public (TCP) for any AI assistant, dataset of 2026-10-22</b></p>
+<p align="center"><b>Checked facts about T Cloud Public (TCP) for any AI assistant, dataset of 2026-10-28</b></p>
 
 > **Unofficial and independent.** Not a product of, and not endorsed by, T-Systems or Deutsche Telekom; it speaks for nobody but its author. Built only from public sources (the public documentation, the public service description, the public price API), with respect for robots.txt and the terms of those sources. No customer data and no confidential information. No warranty: the provider's contract documents are binding.
 
 <p align="center">
   <img alt="Unofficial" src="https://img.shields.io/badge/Status-Unofficial-c64a3d">
-  <img alt="Facts: 1715" src="https://img.shields.io/badge/Facts-1715-2f6fd1">
-  <img alt="Best before: 2026-11-21" src="https://img.shields.io/badge/Best_before-2026--11--21-e0b43a">
+  <img alt="Facts: 1663" src="https://img.shields.io/badge/Facts-1663-2f6fd1">
+  <img alt="Best before: 2026-11-27" src="https://img.shields.io/badge/Best_before-2026--11--27-e0b43a">
   <img alt="License: CC BY 4.0" src="https://img.shields.io/badge/License-CC_BY_4.0-3f9d5a">
   <a href="#mcp-clients"><img alt="MCP server" src="https://img.shields.io/badge/MCP-server-8a63b8"></a>
 </p>
 
-Build of 2026-10-22 10:19 UTC. A later build of the same day replaces this one under the same name; the manifest carries the build time.
+Build of 2026-10-28 16:16 UTC. A later build of the same day replaces this one under the same name; the manifest carries the build time.
 
-1715 checked facts about T Cloud Public (TCP) with the list of orderable services. Made to be dropped into any AI assistant. Prices are not part of the dataset: they come live from the public price API with --live.
+1663 checked facts about T Cloud Public (TCP) with the list of orderable services. Made to be dropped into any AI assistant. Prices are not part of the dataset: they come live from the public price API with --live.
 
-1094 facts were tested live on a TCP tenant, 459 come from the vendor documentation and 162 from the service description (revision 09.10.2026). No fact from hearsay, no expired fact, no customer, no project, no credential.
+1071 facts were tested live on a TCP tenant, 430 come from the vendor documentation and 162 from the service description (revision 09.10.2026). No fact from hearsay, no expired fact, no customer, no project, no credential.
 
-387 of the 459 documentation facts come from the open source repositories of the GitHub organisation opentelekomcloud-docs, published under the Apache License 2.0. The public source of each of the others is in facts.jsonl. The documentation website is not crawled, its robots.txt disallows all robots. Sources whose terms forbid automated analysis are not used, so the community portal and internal documentation are left out. The live checks ran on the compiler's own TCP test tenants.
+361 of the 430 documentation facts come from the open source repositories of the GitHub organisation opentelekomcloud-docs, published under the Apache License 2.0. The public source of each of the others is in facts.jsonl. The documentation website is not crawled, its robots.txt disallows all robots. Sources whose terms forbid automated analysis are not used, so the community portal and internal documentation are left out. The live checks ran on the compiler's own TCP test tenants.
 
 
 ## Use
@@ -154,7 +154,7 @@ facts.md: all facts, grouped by topic. facts.jsonl: the same facts with source, 
 
 ## Dates and licence
 
-Built 2026-10-22. Best before 2026-11-21: facts about availability are re-checked every 30 days. Prices are not part of the dataset: the live price API is the source of truth before any quote.
+Built 2026-10-28. Best before 2026-11-27: facts about availability are re-checked every 30 days. Prices are not part of the dataset: the live price API is the source of truth before any quote.
 
 Dataset: TCP Facts, github.com/shimoza/tcp-facts.
 

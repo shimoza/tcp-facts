@@ -1,18 +1,17 @@
-<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-22: smn
+# TCP Facts 2026-10-28: smn
 
 - An SMN subscription is added with POST /v2/{project_id}/notifications/topics/{topic_urn}/subscriptions on smn.eu-de.otc.t-systems.com, taking protocol, endpoint and remark. The recorded call used protocol email. (KB-2KS5, live, checked 2026-09-23)
 - An SMN email subscription answers 201 and lists status 0 until the recipient clicks the link in the confirmation mail; after the click the subscription list shows status 1. (KB-2UVH, live, checked 2026-09-23)
-- An SMN topic can invoke a FunctionGraph function, either as a subscription with the FunctionGraph protocol or through an SMN trigger on the function. A function with VPC access reaches the resources in the VPC bound to it. (KB-4WDK, docs, checked 2026-09-25)
 - SMN creates a topic with POST /v2/{project_id}/notifications/topics on smn.eu-de.otc.t-systems.com, taking name and display_name. The response carries the key topic_urn, which the subscription call then uses in its path. (KB-6ZWH, live, checked 2026-09-23)
 - SMN HTTP and HTTPS subscriptions accept only public network URLs and public IP addresses, so SMN cannot call a webhook on a private VPC address directly. Besides HTTP and HTTPS the user guide lists email, SMS and FunctionGraph (function) as protocols. (KB-ACTM, docs, checked 2026-09-25)
 - Deleting an SMN subscription and creating it again sets its confirmation state back to unconfirmed. (KB-D6RJ, docs, checked 2026-09-25)

@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-22: pricing
+# TCP Facts 2026-10-28: pricing
 
 - The price API returns rows for flavors marked sellout in cond:operation:az and for ramped-down services. Orderability follows from the per-AZ state, not from the presence of a price row. (KB-4ABK, live, checked 2026-09-25)
 - No public service description of the Swiss offering (eu-ch2) was found on 2026-10-08: the TCP service description revision 17.08.2026 covers EU-DE and EU-NL only, the Swiss product pages link that same general document, and the operator's Swiss site offers a price calculator in CHF and a technical flyer of 2022 but no service description or price list. What is offered in eu-ch2 has to be confirmed with the Swiss entity before it is quoted. (KB-4FW6, docs, checked 2026-10-08)
@@ -23,12 +23,10 @@
 - A query of the price API that matches nothing answers HTTP 200 with stats.count 0 and result as an empty list, while a query that matches answers result as an object keyed by service name. A service name the API does not know answers HTTP 500 with code Error, so an empty answer and a refused query can be told apart. (KB-BVUH, live, checked 2026-09-24)
 - A price change is pre-announced inside the current revision of the service description. A section 6 price row can carry a "from DD.MM.YYYY:" subline: the value under the marker is the new hourly price, the value on the row above is the one in force until that date. (KB-FBVR, contract, checked 2026-07-05)
 - Money values returned by the public price API use English number formatting: comma as thousands separator, dot as decimal separator, six decimal places, and the currency code appended after the value. (KB-FE6O, live, checked 2026-06-11)
-- Windows ECS are priced in a separate, higher tier per flavor than the Open Linux tier: on 2026-09-24 the Windows rate was higher on all 306 flavors of the six ECS service names in eu-de that carry both. The OS of every VM decides which price row applies. (KB-FIBF, live, checked 2026-09-24)
 - Price rows in the service description can carry a "from <date>:" subline that announces a future value, so a parser reading only the main row returns the superseded value. (KB-FZRN, contract, checked 2026-07-01)
 - The en variant of the price API writes every amount as a number with a decimal point, a comma as thousands separator and the currency code after it, while the de variant writes a decimal comma. A reader has to know which variant it reads, because a comma followed by three digits is ambiguous on its own. (KB-H5VQ, live, checked 2026-09-24)
 - A pre-announced price change can move different rows by different ratios. In the change effective 01.07.2026, 81 of 90 affected ECS price points moved by factor 1.2500 and the nine s9 Windows rows by 1.1103, the compute and the Windows license component moving separately. (KB-HOSK, contract, checked 2026-07-05)
 - A query to the TCP price API with sn=ucs returned HTTP 500 rather than an empty result set. (KB-HSN2, live, checked 2026-09-01)
-- Reserved terms and discount depth are family-dependent: the 36-month term is offered for part of the ECS families. (KB-HSTO, live, checked 2026-09-25)
 - The unit field of the price API is free text with about 20 values, among them h, GB/month, Item/month, h/month and an empty unit. isMRC is true on some records whose unit is h, so neither field alone tells an hourly rate from a monthly one. (KB-HYBW, live, checked 2026-09-24)
 - The service description lists flavor x1e.slarge.2 with 3 vCPU and 6 GB RAM, a specification the flavor name does not reflect. (KB-IDKJ, contract, checked 2026-07-01)
 - The Financial Dashboard has a consumption view by tag with hourly and daily granularity and key/value selection, backed by the Business.tag_daily and Business.tag_hourly tables. Tagged resource costs appear in the invoice CSV. The invoice document stays per tenant and not every product is taggable. (KB-JDBN, docs, checked 2026-07-17)
@@ -47,7 +45,6 @@
 - A Reserved or Reserved Upfront booking on TCP is a billing contingent for a flavor type: it allocates no resources in the customer tenant and holds no capacity for a stopped instance. (KB-VCXP, contract, checked 2026-10-21)
 - The public TCP price API answers at https://calculator.otc-service.com/en/open-telekom-price-api/ with JSON and needs no key. It takes sn for the service name and rn for the region. limitFrom pages through the records and limitMax sets how many come per page: 500 without it, while limitMax=10000 returned each region in one answer on 2026-09-24. (KB-W7ZS, live, checked 2026-09-24)
 - The public price API held these record counts on 2026-09-24: eu-de 3386 records under 100 service names, eu-nl 2638 records under 64 names and eu-ch2 75 records under 14 names. (KB-XEGQ, live, checked 2026-09-24)
-- A record in the public price API does not show that a service can still be ordered: rows stay served for services that have reached end of life, so orderability has to be confirmed against the service catalog. (KB-XELM, live, checked 2026-09-24)
 - Record ids of the price API are specific to a region: on 2026-09-24 none of the 6099 ids of eu-de, eu-nl and eu-ch2 appeared in two regions, so an id also fixes the region. (KB-XJDA, live, checked 2026-09-24)
 - SKU ids seen in the price API for network and object items include OTC_OBST_SP_2 (OBS Standard storage), OTC_OBST_REQ (OBS requests per 1000), OTC_LBV3_B_2AZ_20 (dedicated ELB, 2 AZ, 20 LCU), OTC_ELASTIC_IP and OTC_VPC_UP_S_2 (egress tier). (KB-YAT6, live, checked 2026-09-24)
 - In eu-de on 2026-09-24 the price API held the x1 family under sn=ecsflex in the size ratios 2, 3 and 4 only, 18 flavors, and held no m3 flavor under any of the six ECS service names. (KB-YUVN, live, checked 2026-09-24)

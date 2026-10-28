@@ -1,17 +1,16 @@
-<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-22: migration
+# TCP Facts 2026-10-28: migration
 
 - After a failed or forcibly stopped DRS PostgreSQL task (DELETE /v3/{project_id}/jobs/batch-jobs with delete_type terminate or force_terminate) its logical replication slot can stay on the source. The DRS docs drop it with SELECT pg_drop_replication_slot('<slot>') as the task's own source database user; on RDS for PostgreSQL root also has the Replication attribute. (KB-5WJI, docs, checked 2026-09-25)
-- MRS 3.3.0-LTS.1 and 3.5.0-LTS ship Spark 3.3.1, the same Spark 3.3 line that AWS Glue 4.0 uses, so porting Glue 4.0 PySpark code to MRS needs no Spark version jump. (KB-74US, docs, checked 2026-09-25)
 - In POST /v3/{project_id}/jobs/batch-connection each entry of the jobs array tests one endpoint of a task, with end_point_type "so" for the source and "ta" for the target. The examples in the API reference send one endpoint per request. (KB-BSBV, docs, checked 2026-09-25)
 - The DRS job list, POST /v3/{project_id}/jobs, returns the total number of jobs in total_record. On 2026-09-25 the answer carried no count field at all (in February count came back as 0), so paging has to use total_record. (KB-BSE2, live, checked 2026-09-25)
 - Per the DRS API reference the incremental replication delay incre_trans_delay is read with POST /v3/{project_id}/jobs/batch-progress, a call separate from batch-detail and batch-status. The error fields error_code and error_message come back from POST /v3/{project_id}/jobs/batch-status and also in each batch-detail result. (KB-BZUP, docs, checked 2026-09-25)

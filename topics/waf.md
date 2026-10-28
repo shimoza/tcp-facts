@@ -1,16 +1,15 @@
-<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-22: waf
+# TCP Facts 2026-10-28: waf
 
-- The CloudWAF release note of 20 March 2025 says it only works with a dedicated load balancer created on or after 27 January 2025. (KB-2MGI, docs, checked 2026-09-25)
 - Dedicated WAF has resources dedicated per instance, can be spread over up to three availability zones and is reached through an internet-facing ELB. It comes as Professional WI-100 with 100 Mbit/s and 2,000 QPS or Enterprise WI-500 with 500 Mbit/s and 10,000 QPS, each with 60,000 WAF-to-server connections. (KB-2SIL, contract, checked 2026-10-14)
 - When a protected domain is added in Cloud WAF with POST /v1/{project_id}/waf/instance, the certificate is referenced by the field certificate_id in snake_case. The spellings certid, cert_id and certificateid each returned WAF.1001 "invalid request". (KB-5A7O, live, checked 2026-05-26)
 - From 1 October 2026 Classic Mode gets no regular updates, patches or bug fixes. Technical support continues on a best-effort basis without any obligation to provide bug fixes or security patches and continued operation is at the customer's own risk. (KB-BKQH, contract, checked 2026-10-14)
@@ -21,7 +20,6 @@
 - Dedicated WAF accepts POST /v1/{project_id}/waf/policy without a WAF instance in eu-de (HTTP 200) and deletes such a policy with HTTP 204. A global protection whitelist rule on such a policy was refused with WAF.1001 on 2026-09-25, even with the documented example body. (KB-GA75, live, checked 2026-09-25)
 - A WAF ignore rule for a false alarm needs the event_id field in the request body next to the path; the API reference marks both as mandatory and gives the rule back only in the response. A body sent without event_id was answered with HTTP 400 Bad request in a live test on 2026-02-04. (KB-JADS, docs, checked 2026-09-25)
 - Web Application Firewall (Cloud Mode) (WAF) monitors, filters and blocks HTTP and HTTPS traffic to web servers; the customer creates, configures and monitors it, activates protection policies and logs their activity. The documentation names protection against SQL injection, cross-site scripting, web shells, command and code injection, file inclusion, CC attacks, malicious crawlers and CSRF, and a Cloud Mode instance provides the ELB access mode, in which WAF inspects traffic inside the gateway of a dedicated application load balancer (KB-TJGQ). Cloud Mode is generally available in eu-de and eu-nl since 3 March 2026 (KB-KFC4). (KB-K346, contract, checked 2026-10-14)
-- Cloud Mode (CloudWAF) is generally available in EU-DE and EU-NL without whitelisting since 3 March 2026. Cloud Mode and Dedicated Mode are both created and managed in the console under Web Application Firewall. (KB-KFC4, docs, checked 2026-09-25)
 - T Cloud Public (TCP) offers a web application firewall as Web Application Firewall in Cloud Mode and in Dedicated Mode: it monitors, filters and blocks HTTP and HTTPS traffic to web servers with customer-set protection policies and logs its activity. Dedicated Mode has its own resources per instance across up to three availability zones and is reached through an internet-facing load balancer. (KB-KIAP, contract, checked 2026-10-14)
 - DELETE /v1/{project_id}/waf/instance/{domain_id}?keepPolicy=false returns 204 and removes the WAF domain together with its bound policy. A separate delete of that policy afterwards answers 404 WAF.3001. (KB-KJ6E, live, checked 2026-09-16)
 - POST /v1/{project_id}/waf/certificate on waf.eu-de.otc.t-systems.com returns WAF.1605 "invalid certificate content format" for a well-formed multi-line PEM. With every newline removed from the certificate content and from the private key, the same request returns 200 and a certificate id. (KB-KYXU, live, checked 2026-05-26)

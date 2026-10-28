@@ -1,16 +1,15 @@
-<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-22: backup
+# TCP Facts 2026-10-28: backup
 
-- Veeam Backup & Replication ships no hypervisor plug-in for the OpenStack/KVM platform that TCP runs on, so nothing that needs hypervisor integration can be delivered through it there. (KB-2FA3, docs, checked 2026-09-25)
 - The Veeam 13 Plug-in for Universal Hypervisor API supports only VergeOS and Platform9, whose vendors built the integration. Platform9 is OpenStack based, so Veeam can cover an OpenStack platform this way, but no such plug-in exists for TCP. (KB-2IMZ, docs, checked 2026-10-09)
 - Veeam sizing guidance for an object-storage repository is roughly 250 TB per bucket, so a 2 PB repository on OBS is laid out over about eight buckets. (KB-2T3L, docs, checked 2026-09-02)
 - Veeam Backup & Replication 13 exports disks from VMware vSphere and Hyper-V VM backups and from Veeam Agent backups to VMDK, VHD or VHDX, and it can write them to any server added to its backup infrastructure. (KB-6ACV, docs, checked 2026-10-09)

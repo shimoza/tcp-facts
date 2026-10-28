@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-22: cbr
+# TCP Facts 2026-10-28: cbr
 
 - A crash-consistent restore of a Windows ECS backed up during continuous writes contained one truncated file out of 37, while a comparison run with writes stopped and the volume cache flushed before the backup contained zero damaged files out of 57. (KB-3PZR, live, checked 2026-09-02)
 - Creating a CBR vault with consistent_level app_consistent returns HTTP 400 with error code BackupService.6126, while crash_consistent returns 200. The API enum accepts both values. Checked on a vault with object_type server. (KB-3T3I, live, checked 2026-09-02)
@@ -16,6 +16,7 @@
 - Removing a protected resource from a CBR vault lowers the vault's `allocated` value on its own. One vault went from 190 GB to 140 GB after a resource was removed, with only the removal call. (KB-4HSQ, live, checked 2026-09-16)
 - A Linux ext4 root filesystem captured while the server was running failed to boot after restore: the clone superblock read clean with errors and ext4_orphan_get reported EFSCORRUPTED. Restored from a backup of the same server taken while stopped, it booted in 66 seconds with a clean superblock. (KB-6CUR, live, checked 2026-09-02)
 - A Linux server restored from an enhanced CBR backup reached service in 31 to 33 seconds independent of data volume: disk handed over in 6 to 7 seconds by Instant Restore, standby start 11 seconds, attach 12 seconds, mount 3 to 5 seconds. Instant Restore requires an enhanced backup, readable as support_lld. (KB-6DKR, live, checked 2026-09-02)
+- The CBR documentation describes no deduplication and no calculator for storage per backup frequency. CBR stores block-level incremental-forever backups that reference unchanged blocks, and the guide says backup sizes cannot be estimated from file sizes. (KB-6EHO, docs, checked 2026-10-22)
 - The units in a CBR vault payload are mixed: `billing.size` and `billing.allocated` are GB, while `billing.used` is MB. Reading `billing.used` as GB turns 155588 MB into an apparent 155 TB. (KB-6IRS, live, checked 2026-09-16)
 - After a CBR server restore a logical volume group has to be attached again, and the CBR FAQ covers a login password that became random after a restore or after creating a server from an image and points to the ECS password reset. (KB-73MN, docs, checked 2026-09-25)
 - A cold rebuild from backup to a working service measured 111 s with a Debian guest and 149 to 168 s with Windows Server 2022. The Debian figure holds only for a backup taken from a stopped machine. Different phases and disk sizes, so an order of magnitude, not a controlled comparison. (KB-7DCC, live, checked 2026-09-02)
@@ -29,6 +30,7 @@
 - The restore point of a CBR backup sits at the start of the backup run. A source counter that moved from 220 to 412 during a 304 s backup came back at 234 on the restored disk, so RPO counts from the backup start. (KB-E435, live, checked 2026-09-02)
 - A CBR vault keeps its resource binding after the bound ECS is deleted: on 2026-10-05 a server vault and a disk vault in eu-de still listed the server (OS::Nova::Server) and its volume (OS::Cinder::Volume) with protect_status available, while the ECS server listing no longer returned that server. A cleanup by resource therefore has to look at the vaults as well. (KB-EBMP, live, checked 2026-10-05)
 - In a CBR vault, size is the configured capacity in GB, billing.allocated is the sum of the sizes of the protected resources rather than the vault capacity, and billing.used is in MB. (KB-EQOS, live, checked 2026-09-17)
+- A CBR backup policy accepts several execution times per day, on or off the hour. With a day-based retention rule CBR keeps only the latest backup of each day, and a backup that runs past the next execution time makes CBR skip that time. (KB-GG7D, docs, checked 2026-10-22)
 - CBR vault backup locking keeps automatic backups undeletable by any user for the whole retention period, stays enabled once switched on, leaves manual backups deletable, and still allows cross-region replication of the locked vault. (KB-I63S, docs, checked 2026-09-01)
 - CBR vault creation documents crash_consistent as the consistency level value, and the CBR service overview describes CBR backups as crash-consistent. (KB-IJTE, docs, checked 2026-09-02)
 - T Cloud Public (TCP) runs scheduled backups with a set retention period: a Cloud Backup and Recovery (CBR) backup policy runs on chosen weekdays or every 1 to 30 days at a set time and keeps backups by count or for one month, three months, six months, one year or a custom period of 2 to 99,999 days, with optional weekly, monthly and yearly long-term rules. RDS databases are backed up automatically every day by default and kept for 1 to 732 days. (KB-ITGL, docs, checked 2026-10-11)

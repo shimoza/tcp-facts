@@ -1,43 +1,37 @@
-<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-22: rds-mssql
+# TCP Facts 2026-10-28: rds-mssql
 
 - RDS for SQL Server supports instances joined to an AD domain, and the documentation marks that setup as not recommended. (KB-4SGC, docs, checked 2026-08-25)
 - In a DRS backup migration the database name is matched case-sensitively against the name stored inside the backup file. The names master, model, msdb, tempdb, rdsadmin and resource are refused as a source name and as a new name. (KB-5VMM, docs, checked 2026-05-20)
-- A create call for RDS for SQL Server takes datastore type SQLServer with a version string such as 2017_SE, 2019_SE, 2022_SE, 2017_EE, 2019_EE or 2022_EE, and a matching flavor_ref, for example rds.mssql.x1.large.2 for a single Standard Edition instance. (KB-5VPL, live, checked 2026-09-25)
 - SQL Server on TCP runs through managed RDS for SQL Server with the licence included, through the customer's own licence on a Dedicated Host or Physical ECS (service description section 3.1.4.2), or through Managed Services, whose eu-de price list carries Custom MSSQL with Standard and Enterprise licence rows as of 2026-09-25. (KB-752O, contract, checked 2026-10-14)
 - In the RDS for SQL Server create call the collation is validated before the KMS key: a request with a bogus disk_encryption_id UUID returns DBS.200506 when the collation is valid and DBS.200005 when it is not, and the request is rejected before an instance is created. (KB-7IPK, live, checked 2026-05-22)
 - Backup and restore of an RDS for SQL Server instance through SSMS is not available. Backup runs through the managed service. (KB-ATOA, docs, checked 2026-08-25)
 - Backup of an RDS for SQL Server instance on T Cloud Public (TCP) fails once the instance holds more than 500,000 tables. (KB-B54W, docs, checked 2026-08-24)
-- RDS for SQL Server on TCP offers engine versions up to SQL Server 2022. (KB-BCY3, live, checked 2026-09-25)
 - DRS backup migration expects the destination engine version to match the source or be newer. An Enterprise Edition source can fail against a Standard Edition destination, depending on which Enterprise-only features the source database used. (KB-BETZ, docs, checked 2026-05-20)
 - RDS for SQL Server grants no super administrator (sysadmin) permission to any user, and the documentation directs applications to connect with a lower role. (KB-DQ7I, docs, checked 2026-08-25)
 - A primary/standby switchover on the destination RDS instance during a DRS backup migration fails the task permanently, and the task has to be created again from the start. (KB-FP7M, docs, checked 2026-05-20)
 - The advertised collation listing (GET /v3/{project_id}/collations) is the instance-level list offered at create time and is narrower than the accept-list of POST /v3/{project_id}/instances. On 2026-10-14 the listing held 8 values without Latin1_General_100_CI_AS, and a SQL Server 2019 SE create with that collation was accepted and the instance became ACTIVE with it. On 2026-08-24 9 values worked against 8 advertised. (KB-I4TR, live, checked 2026-10-14)
 - In the RDS price listing the license and storage rows carry an empty opiFlavour, so they are selected by osUnit, which holds the edition such as Standard or Enterprise, and by productCategory, which is MSSQL for SQL Server rows. (KB-IVQL, live, checked 2026-06-01)
-- On 2026-07-06 the RDS datastore listing for sqlserver in eu-de returned six versions: 2017_SE, 2017_EE, 2019_SE, 2019_EE, 2022_SE and 2022_EE. The newest edition in that listing was 2022. (KB-JYO7, live, checked 2026-09-25)
 - Pre-verification in a DRS backup migration is on by default. It reads the backup file header from OBS and checks validity, integrity, continuity and engine version compatibility before the restore starts, taking one to two minutes. (KB-LE6N, docs, checked 2026-05-20)
 - On eu-de the DRS backup migration task type is driven from the console only; the public DRS API exposes no backup_migration job type. (KB-MEQU, live, checked 2026-05-20)
-- The RDS for SQL Server create call validates fields in a fixed order and stops at the first error: availability zone DBS.280244, flavor_ref DBS.280434, port DBS.280364, volume size DBS.280266, name DBS.280234, password DBS.280203, collation DBS.200005, then disk_encryption_id DBS.200506. (KB-MGFM, live, checked 2026-05-22)
 - The volume size of an RDS for SQL Server instance has to be a multiple of 10 GB; another value fails the create call with DBS.280266. (KB-NEKR, live, checked 2026-05-22)
 - Overwrite Data set to Yes in a DRS backup migration disables HA on the destination RDS instance for the duration of the task and restores HA when the task ends. (KB-NGJR, docs, checked 2026-05-20)
 - A source database with TDE enabled has to have database-level TDE turned off before DRS backup migration accepts it. (KB-NKEB, docs, checked 2026-05-20)
 - Latin1_General_100_CI_AS is accepted by the RDS for SQL Server create call although the /collations listing endpoint leaves it out of its result. (KB-OI2G, live, checked 2026-05-22)
 - After a DRS backup migration the restored .mdf occupies its allocated size, not the used size. One restore produced a 163 GB file from 73 GB of user data, so destination storage has to cover the allocated size, around 1.5 times the backup database size. (KB-P5SX, live, checked 2026-05-20)
 - A native SQL Server backup file restored by DRS carries database-level content only. Logins, server permissions, linked servers, SQL Agent jobs and DB Mail stay on the source side, and non-clustered indexes arrive in an invalid state. (KB-PRHV, docs, checked 2026-05-20)
-- On 2026-08-24 RDS for SQL Server in eu-de offered the versions 2017, 2019 and 2022, each in Standard and Enterprise edition. (KB-QLJ5, live, checked 2026-09-25)
 - In the RDS for SQL Server create call the storage type is validated before the collation. A flavour whose AZ status in eu-de-01 is other than normal returns DBS.280241 Invalid storage type and reports nothing about the collation. (KB-QPF3, live, checked 2026-08-24)
 - The api-ref for the SQL Server collation query gives the URI as /v3/{project_id}/collations while its own example shows /v3/{project_id}/instances/{instance_id}/collations, and its sample response values are generic filler rather than the eu-de list. (KB-RKCX, docs, checked 2026-08-24)
 - The RDS SQL Server collation list is read with GET /v3/{project_id}/collations, a project-scoped path with no instance id, and the values arrive under the response key charSets. (KB-RSU3, live, checked 2026-08-24)
-- RDS for SQL Server offers engine versions 2017, 2019 and 2022, each in Standard and Enterprise edition. SQL Server 2025 (engine 17.00) is not offered in the API, the console or the service description. (KB-RUHF, live, checked 2026-09-25)
 - Documented RDS for SQL Server limits: database names up to 64 characters from [a-zA-Z0-9_-], at most 100 databases per instance, and backup fails above 500000 tables. (KB-RYBN, docs, checked 2026-08-25)
 - RDS for SQL Server accepts eight collations at create time: Chinese_PRC_CI_AS, Chinese_PRC_CI_AI, Chinese_PRC_90_CI_AI, SQL_Latin1_General_CP1_CI_AS, SQL_Latin1_General_CP850_BIN2, Cyrillic_General_CI_AS, Latin1_General_100_CI_AS_KS and Latin1_General_100_CI_AS. Any other value, including legacy Latin1_General_* variants without _100_ and other European locales, returns DBS.200005 Server failure. (KB-SCS5, live, checked 2026-05-22)
 - DRS backup migration reads the .bak from an OBS bucket in the same region as the target RDS instance and only from the bucket root. The file picker lists .bak files only, and the file name is limited to 200 characters of letters, digits, hyphen and underscore. (KB-SDB5, docs, checked 2026-05-20)
@@ -45,9 +39,6 @@
 - RDS for SQL Server in eu-de does not accept the instance collation Latin1_General_CI_AS_KS or German_PhoneBook_CI_AS. The create answers HTTP 500 DBS.200005 Server failure, the same answer as an invented collation, while the same body with Latin1_General_100_CI_AS is accepted. Of the _CI_AS_KS variants only Latin1_General_100_CI_AS_KS is in the advertised list. (KB-TAXN, live, checked 2026-10-14)
 - RDS for SQL Server on T Cloud Public (TCP) allows a maximum of 100 databases per instance. (KB-TQJT, docs, checked 2026-08-24)
 - A DRS Backup Migration restore onto RDS for SQL Server keeps the collation of the source user database. In a 162 GiB restore the database arrived as Latin1_General_CI_AS on an instance whose server collation was Latin1_General_100_CI_AS_KS. (KB-TTWD, live, checked 2026-05-01)
-- RDS for SQL Server in eu-de offers Latin1_General_CI_AS as an instance collation: on 2026-08-24 it was both in the collation listing and accepted by the create call. (KB-UGZC, live, checked 2026-09-25)
 - DRS backup migration requires each backup file to hold exactly one database. A database whose backup is spread over several files is outside what the task accepts. (KB-W72N, docs, checked 2026-05-20)
-- On 2026-08-24 the collation listing in eu-de returned 8 values: Chinese_PRC_CI_AS, Chinese_PRC_CI_AI, Chinese_PRC_90_CI_AI, Cyrillic_General_CI_AS, SQL_Latin1_General_CP1_CI_AS, SQL_Latin1_General_CP850_BIN2, Latin1_General_100_CI_AS_KS and Latin1_General_CI_AS. The same listing returned 7 on 2026-05-22, with Latin1_General_CI_AS added since. (KB-WESI, live, checked 2026-09-25)
 - On RDS for SQL Server the server collation is fixed at instance creation, so tempdb, model, msdb and the system catalogs keep it while a restored user database keeps its own. Statements crossing the two, such as a join to a #temp table, fail with Msg 468. (KB-YF25, live, checked 2026-05-01)
-- On 2026-09-25 the eu-de storage-type listing for RDS for SQL Server offered CLOUDSSD, ESSD and GPSSD2 for Enterprise and Standard versions alike and marked ULTRAHIGH unsupported in every AZ. The create API documents CLOUDSSD, ESSD and GPSSD2 as volume types. (KB-ZHA4, live, checked 2026-09-25)
 - An RDS for SQL Server instance can be stopped for up to 15 days; while stopped its VM is not billed, but EIPs, storage and backups are; it starts again in the next maintenance window after 15 days, and each start triggers a full backup. (KB-ZZJS, docs, checked 2026-10-22)

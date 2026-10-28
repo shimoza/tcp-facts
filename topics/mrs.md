@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-22: mrs
+# TCP Facts 2026-10-28: mrs
 
 - POST /web/api/v2/clusters/1/services/{name}/commands/start (also stop and restart) with an empty JSON body returns HTTP 202 and a commandId. A second command issued while one is still running is refused with error code (08-4000031). (KB-2TO7, live, checked 2026-07-28)
 - The MRS cluster manager API rejects a PUT that modifies the built-in admin account. (KB-2ZYC, live, checked 2026-07-30)
@@ -69,7 +69,6 @@
 - When creating a user through the MRS cluster manager API the field userType must be HM. (KB-KM3X, live, checked 2026-07-30)
 - POST /web/api/v2/permission/users creates a Manager user on MRS and returns HTTP 204. Repeating the call for a user that already exists returns HTTP 500 with error 12-5000048. (KB-KPR2, live, checked 2026-07-28)
 - MRS rejects job submission when the IAM user name contains spaces, with the message "This operation cannot be performed because your username contains spaces." The message is written only to the job log in the service-owned OBS bucket. (KB-KXYS, live, checked 2026-07-30)
-- MRS 3.3.0-LTS.1 and MRS 3.5.0-LTS ship Spark 3.3.1, the Spark version DLI also runs, so a jar built against Spark 3.3.1 needs no Spark version change to run as an MRS spark-submit job. MRS 3.6.0-LTS moves to Spark 3.5.6. (KB-L4MM, docs, checked 2026-09-25)
 - MRS wrote to an SSE-KMS encrypted parallel file system over the obs:// scheme with the default MRS ECS agency end to end: HDFS put and cat, a partitioned Iceberg table, insert, row-level UPDATE and kept snapshot history, with all 14 data objects carrying the customer KMS key. (KB-L6IL, live, checked 2026-07-30)
 - The HetuEngine CLI creates its compute instance itself on the first connection. (KB-LRZR, live, checked 2026-07-28)
 - Iceberg on TCP runs on three catalogs: the MRS Hive Metastore, which HetuEngine reads, a JDBC catalog on RDS for PostgreSQL where no MRS cluster exists, and a HadoopCatalog on OBS, which upstream treats as single-writer because S3-compatible storage gives no atomic compare-and-set. (KB-M63N, live, checked 2026-07-28)
@@ -90,7 +89,6 @@
 - On the MRS Manager API, GET /web/api/v2/clusters/1/tenants returned HTTP 405 on the bare collection. The tenant list is read from /web/api/v2/clusters/1/tenants/queue_config/super_scheduler, and /tenants/calc_resource/scheduler_mode returns SUPER or CAPACITY, which is needed to build a tenant creation body. (KB-RMRE, live, checked 2026-07-28)
 - On an MRS cluster with HetuEngine the HSConsole REST API listens on port 29880, bound to the business IP of the HSBroker node. It answers plain HTTP and accepted calls without credentials from inside the cluster. (KB-RQV2, live, checked 2026-07-28)
 - remove_orphan_files rejects any older_than window shorter than 24 hours, by upstream Iceberg design. A timestamp in the future trips the same check, because the window is measured against the current time. (KB-RUF5, live, checked 2026-07-30)
-- For MRS 3.x, including 3.5.0-LTS, the MRS user manual sets a floor of 64 GB for master node memory (most pages say greater than 64 GB, the Doris page at least 64 GB), so 16 GiB and 32 GiB master flavors do not qualify. The MRS 3.5.0-LTS clusters built on eu-de used 64 GiB flavors, m3.2xlarge.8 for master and c4.4xlarge.4 for core nodes. (KB-RY3G, docs, checked 2026-09-25)
 - impalad on an MRS cluster listens on the core nodes, ports 21050 and 21000, not on the master node. (KB-SGOR, live, checked 2026-07-28)
 - On MRS, a HetuEngine query user needs the YARN queue permission and membership in the hetuuser group, and HetuEngine is restarted after that grant. (KB-SHRY, live, checked 2026-07-28)
 - spark-sql caches Iceberg table metadata for the life of a session. The files and snapshots metadata tables read right after a maintenance call still return the pre-maintenance numbers; a fresh session showed the compaction result, 5 data files before and 2 after. (KB-SYST, live, checked 2026-07-30)

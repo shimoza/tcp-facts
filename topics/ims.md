@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-22: ims
+# TCP Facts 2026-10-28: ims
 
 - A private image is removed with DELETE /v2/images/{image_id} on the Glance-compatible IMS surface in eu-de, which answers HTTP 204. (KB-23TF, live, checked 2026-06-12)
 - Private images of a tenant are listed with GET /v2/cloudimages?__imagetype=private on the IMS endpoint in eu-de, optionally narrowed with a name parameter. The image type parameter carries a double underscore prefix. (KB-2L2B, live, checked 2026-09-25)
@@ -44,7 +44,6 @@
 - The platform converts an external image on ingest. An image registered from a VHDX file reports disk_format zvhd2, not vhdx, so the uploaded format is not the stored format. (KB-FMM7, live, checked 2026-09-02)
 - PATCH /v2/cloudimages/{image_id} on IMS answers HTTP 400 IMG.0001 to a remove operation without a value field. The same remove with "value": "" deletes the attribute. (KB-FZJP, live, checked 2026-10-01)
 - An external image file must be uploaded to an OBS bucket in the same region as the image that is registered from it. (KB-GJIJ, docs, checked 2026-07-30)
-- Public image names in TCP eu-de follow Standard_Ubuntu_24.04_* for Ubuntu 24, Enterprise_RedHat_9_* for RHEL 9 and Enterprise_Windows-Server_* for Windows Server, as listed on 2026-09-25. (KB-GP36, live, checked 2026-09-25)
 - An ECS rebuilt from an IMS image keeps the installed software but presents a new machine identity to a node-locked license manager, which requires a fresh activation. A license left on a deleted instance needs a vendor reset to recover. (KB-GTQH, live, checked 2026-06-17)
 - Section 3.10.1 of the TCP service description (revision 09.10.2026) provides public images and GPU drivers for use on T Cloud Public only and prohibits downloading, copying, storing or using them in other environments. (KB-HQFZ, contract, checked 2026-10-14)
 - On 2026-10-05 the eu-de public image Standard_Ubuntu_24.04_amd64_bios_latest (also as _uefi_latest) carried __support_kvm and __support_kvm_hi1822_hiovs true, so it fits both s3 flavors (condition __support_kvm) and s9 flavors (condition __support_kvm plus hi1822_hiovs); min_disk 4 GB, min_ram 1 GB. (KB-HTPH, live, checked 2026-10-05)
@@ -55,9 +54,7 @@
 - The IMS image attribute virtual_env_type takes only the values FusionCompute, Ironic, DataImage and IsoImage. A normal virtual ECS system-disk image carries FusionCompute, so that value is not a symptom of a faulty import. (KB-JKZY, docs, checked 2026-07-30)
 - An IMS import from an OBS file takes hw_firmware_type uefi in the body of POST /v2/cloudimages/action. The image becomes active with hw_firmware_type uefi. (KB-JLKQ, live, checked 2026-10-01)
 - A Windows, SUSE, Red Hat, Ubuntu or Oracle Linux private image that was created from an external image file can be exported, unlike one built from the matching public image. (KB-JN7G, docs, checked 2026-09-25)
-- TCP has no FreeBSD public image and no FreeBSD price tier in eu-de. (KB-KVBP, live, checked 2026-09-25)
 - Image Management Service (IMS) manages the operating system images from which Elastic Cloud Servers are created: public images provided by Telekom, private images the customer creates from a server or uploads as an image file, and images shared between tenants. The public images named in the service description are SUSE Linux Enterprise Server, Oracle Linux, Red Hat Enterprise Linux and Microsoft Windows Server. The Regions and Endpoints page lists API endpoints for IMS in eu-de and eu-nl. (KB-LC4V, contract, checked 2026-10-14)
-- Windows Server 2025 public images are live in eu-de. A listing of Windows public images in that region returned 22 images, all Standard edition, marked STD or STD-CORE. (KB-M3JR, live, checked 2026-09-25)
 - A private image created from a running ECS inherits the source image's __support_kvm tags and its hw_firmware_type. (KB-MPY3, live, checked 2026-07-20)
 - The image import path is decided per single disk file, not per VM: up to 128 GB the supported formats import directly, from 128 GB to 1 TB only RAW with a bitmap file or ZVHD2, and 1 TB is the documented maximum for one disk file. (KB-MXW6, docs, checked 2026-09-21)
 - After acceptance the recipient finds the image with GET /v2/cloudimages?id=<image id>, where it reports __imagetype=shared and keeps the same image id as in the owner tenant. An ECS can be created from it. (KB-N7EM, live, checked 2026-07-21)
@@ -77,7 +74,6 @@
 - When automatic configuration is enabled for the registration of an image file, IMS records the latest automatic change it made to a Linux image in /var/log/rainbow_modification_record.log. On a Windows image it restores the IDE driver, regenerates the mouse and keyboard registry keys and restores DHCP, so the OS gets its IP address by DHCP. (KB-T7QX, docs, checked 2026-09-25)
 - A vendor appliance image published as a KVM or OpenStack x86-64 build imports through IMS and boots on TCP. (KB-TSYG, live, checked 2026-07-23)
 - Creating a system-disk image from a Windows ECS with POST /v2/cloudimages/action took about 25 minutes for a 200 GB disk. (KB-TWQP, live, checked 2026-06-11)
-- The IMS list of operating systems supported for imported private images has Windows 10 64bit as the newest client Windows, and Windows 11 is absent from it. Uploading an image whose OS is not on the list is documented as possibly failing, and the docs advise contacting customer service before the upload. (KB-ULTQ, docs, checked 2026-09-25)
 - Creating a whole machine image from a CBR backup is done with POST /v1/cloudimages/wholeimages/action and whole_image_type set to CBR. (KB-URBQ, docs, checked 2026-09-25)
 - A single image is read with GET /v2/cloudimages?id={image_id} on ims.eu-de.otc.t-systems.com. The image sits in the images array, status is active once the image is usable, __image_size gives the file size in bytes as a string and min_disk is in GB. (KB-VAUK, live, checked 2026-09-25)
 - An IMS import submitted without os_version registers the image with __os_version set to Other(64 bit) and virtual_env_type FusionCompute instead of ECS. Such an image still provisioned and booted on an s9 flavor, with degraded OS typing and driver handling. (KB-VESX, live, checked 2026-06-12)

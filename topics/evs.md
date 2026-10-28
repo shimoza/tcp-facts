@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-22: evs
+# TCP Facts 2026-10-28: evs
 
 - Elastic Volume Service (EVS) provides block storage volumes that are attached to Elastic Cloud Servers as system or data disks; up to 32 volumes can be attached to one server and a volume can be expanded online when the operating system supports it. The disk types are High I/O, GP SSD, GP SSD V2, Ultra-High I/O and Extreme SSD, and the documentation states that system and data disks support encryption, snapshots and backups. The Regions and Endpoints page lists API endpoints for EVS in eu-de and eu-nl. (KB-2DY5, contract, checked 2026-10-14)
 - On a Linux ECS an attached EVS data disk appears as a virtio block device such as /dev/vdb. A file system is created on the device before it is mounted. (KB-3URW, live, checked 2026-05-01)
@@ -35,7 +35,6 @@
 - In eu-de the EVS volume listing GET /v2/{project_id}/cloudvolumes/detail returns count and volumes, and each entry carries id, name, size, volume_type, bootable and a metadata object. The metadata carries __system__encrypted on some volumes only, with value 1 or 0, and __system__cmkid only on encrypted volumes, while the top-level encrypted field read false even on encrypted volumes (checked 2026-09-25). (KB-O5MK, live, checked 2026-09-25)
 - The size of the volume actually attached to an ECS is read from the EVS cloudvolumes/detail response, matching attachments[].server_id against the instance UUID from the metadata service at /openstack/latest/meta_data.json. A guest still enumerating the old size after a clean boot points to a volume that was not extended. (KB-P3SX, live, checked 2026-06-08)
 - On an ECS with virtio_blk disks, the guest picks up an extended EVS volume size automatically through a virtio config-change interrupt. /sys/class/block/vda/size shows the new size before growpart is run. (KB-RGHC, live, checked 2026-06-08)
-- ESSD was available in eu-de-01 when checked. The volume types offered per availability zone are listed by GET https://evs.eu-de.otc.t-systems.com/v3/{project_id}/types. (KB-SOBS, live, checked 2026-09-25)
 - An EVS snapshot moves from creating to available on GET /v2/{project_id}/snapshots/{snapshot_id}. For a 40 GB GPSSD root disk that took about five seconds. (KB-SY3Y, live, checked 2026-07-29)
 - A virtio_blk disk picks up a new volume size through a virtio config-change interrupt once the volume was really extended. The kernel view can be read from /sys/class/block/<dev>/size or with fdisk, and it already shows the new capacity when the event arrived. (KB-T4IL, live, checked 2026-06-08)
 - EVS Extreme SSD reaches at most 1,000 MiB/s and 128,000 IOPS with sub-millisecond latency, but its throughput is Min(1,000, 120 + 0.5 x capacity in GiB): the full rate, which loads a 430 GB model in about 7 minutes, needs a disk of about 1,760 GiB, while a disk sized just for the model gets about 320 MiB/s. Extreme SSD also has an IOPS burst token bucket (burst limit 64,000) and General Purpose SSD is capped at 250 MiB/s. (KB-TUFK, docs, checked 2026-09-25)

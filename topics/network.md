@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-22: network
+# TCP Facts 2026-10-28: network
 
 - The Meraki vMX 26.1.4 KVM image does not ask a metadata service at 169.254.169.254 for user data: under QEMU with a network it sent no request in 15 minutes, while a control guest did. (KB-3H4S, live, checked 2026-10-01)
 - With the MTU raised on one side only, a path MTU bisect returned 1276 bytes, which is not a tunnel limit. It is the far end veth still at 1300 plus the bridge allowance of mtu plus hard_header_len plus VLAN_HLEN, 18 bytes. (KB-3UAP, live, checked 2026-08-26)

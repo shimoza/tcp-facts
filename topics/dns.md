@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-22: dns
+# TCP Facts 2026-10-28: dns
 
 - A signed parent zone's denial of DS stays in resolver caches after a DS is published. Measured caps on the public resolvers: Google 1800 s, Quad9 about 3600 s, Cloudflare honours the parent SOA MINIMUM in full. (KB-34BU, live, checked 2026-09-10)
 - Private DNS zones on TCP resolve the cloud-internal namespace. (KB-3DUD, docs, checked 2026-07-17)
@@ -17,7 +17,6 @@
 - DNSSEC is absent from the DNS api-ref, and the opentelekomcloud Terraform provider 1.37.8 ships no DNSSEC resource. (KB-5SWB, docs, checked 2026-09-10)
 - On a TCP public zone with DNSSEC enabled, the parent side returns no authenticated denial of DS for a delegated child zone, so validating resolvers cannot resolve names below such a delegation, wherever the child is hosted. Keep child names in the parent zone, or leave DNSSEC off while a delegation is needed. (KB-5T6U, live, checked 2026-09-10)
 - Enabling DNSSEC works on a subdomain public zone on TCP, although the console banner says DNSSEC can be enabled only for top-level domains and the UMN says DNSSEC supports only primary domain names. (KB-6PPX, live, checked 2026-09-10)
-- In eu-de the regional service endpoint for OMS has no DNS record, while the DRS endpoint in the same region resolves and its gateway answers HTTP 404 for an unknown path. (KB-7QD4, live, checked 2026-09-25)
 - Domain Name Service (DNS) is an authoritative DNS service in which the customer configures DNS zones and records for internal and external communication. It provides public zones that resolve domain names on the internet, private zones that resolve names to private IP addresses inside VPCs, and reverse resolution of IP addresses to domain names. The Regions and Endpoints page lists API endpoints for DNS in eu-de and eu-nl. (KB-ABGI, contract, checked 2026-10-14)
 - TCP DNS rejects DNSKEY as a record set type and refuses both AXFR and IXFR, so a second provider's ZSK cannot be published and a signing secondary cannot be fed. RFC 8901 multi-signer is not possible with TCP DNS as a participant. (KB-CWDY, live, checked 2026-09-10)
 - CTS logs DNSSEC switching as the operations enableDnssecConfig and disableDnssecConfig with resource_type dnssec and trace_type ConsoleAction, while a scripted record-set create appears with trace_type ApiCall. (KB-DR5A, live, checked 2026-09-10)
@@ -32,4 +31,3 @@
 - The DNS DNSSEC resource is registered read-only. POST, PUT, PATCH and DELETE on /v2/zones/{id}/dnssec return 404 APIGW.0101 with the text "method POST not found", both with AK/SK signing and with IAM tokens. (KB-W7XD, live, checked 2026-09-10)
 - The DNS fine-grained action list on TCP has no action for the DNSSEC operation, so it cannot be separated from zone administration in an IAM policy. The audit service records the operation. (KB-XFW6, docs, checked 2026-09-10)
 - Wildcard records and underscore-prefixed names resolve and validate on a DNSSEC-signed TCP public zone. A wildcard answer carries an RRSIG with the correct label count plus the NSEC proving the queried name does not exist. (KB-XWFC, live, checked 2026-09-10)
-- A DNS check on 2026-09-25 showed the eu-de endpoint hosts rms, tms, cfw and the Cloud Connect host cc.eu-de resolving, while the host config.eu-de did not resolve. In the check of 2026-07-17 cc.eu-de had no record yet. (KB-ZH7A, live, checked 2026-09-25)

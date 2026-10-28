@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-22: other
+# TCP Facts 2026-10-28: other
 
 - HetuEngine in MRS 3.5.0-LTS does not support registering an Iceberg catalog as shipped, because HSConsole has no ICEBERG data source type. Workaround: repoint the template of an unused type in HSConsole etc/datasource.properties, restart HetuEngine, then POST the catalog to /v1/hsconsole/datasource on port 29880. (KB-2KDP, live, checked 2026-07-28)
 - The base service description, revision 09.10.2026, section 4.2, names a single availability figure: a monthly platform availability target of 99.95%, which applies separately to Elastic Cloud Server, Object Storage Service and Elastic Volume Service. For all other services it states that there is no minimum availability. (KB-35HK, contract, checked 2026-10-14)
@@ -21,7 +21,6 @@
 - Enterprise Agreement 1.0 (EA10) is an optional extended service contract from Telekom in the service classes Silver, Gold and Platinum, ordered separately on top of the standard service. All classes add a consulting and administration service; Gold and Platinum add IT architecture consulting, an availability report and service meetings; Platinum adds dedicated service and delivery management and a manager on duty service. Service levels, response times and credits are contract terms and are not stated here. (KB-7U4I, contract, checked 2026-10-14)
 - Data Admin Service (DAS) is a cloud database management platform in preview for managing databases on a web console, with database development, operations and intelligent diagnosis. The service description of 09.10.2026 announces it as expected to be available from 1 May 2027, and as a preview version it is meant for testing. (KB-AB67, contract, checked 2026-10-14)
 - Secure Mail Gateway (SMG) lets applications hosted on T Cloud Public (TCP) send email to the internet through a gateway service, so the sending servers' own IP addresses do not land on spam blacklists; outbound SMTP on ports 465 and 587 is opened only towards this gateway. The documentation names anti-virus and anti-spam checks, three mail servers spread over eu-de-01, eu-de-02 and eu-de-03, and a possible limit of 100 mails per minute per customer, which the service description also reserves. (KB-BGAJ, contract, checked 2026-10-14)
-- FunctionGraph runs in eu-de only: on 2026-09-25 GET /v2/{project_id}/fgs/functions answered HTTP 200 on functiongraph.eu-de.otc.t-systems.com and HTTP 404 APIGW.0101 on the eu-nl endpoint. (KB-BGBR, live, checked 2026-09-25)
 - Consulting Services (CS) are optional consulting services from Telekom in the T Cloud Public (TCP) environment, commissioned separately through the T Cloud Public Support Center, that go beyond the support services of the standard contract. (KB-CXIW, contract, checked 2026-10-14)
 - The public platform is branded T Cloud Public (TCP) after the 2025 rename. The service description carries the title "Service Specifications & Additional Terms and Conditions T Cloud Public". (KB-DFXG, contract, checked 2026-07-15)
 - On the shared default DLI queue, statements stayed in LAUNCHING for over 15 minutes and the synchronous submit returned DLI.0019 Get sync job result timeout; the job id is in the error text. Capability tests need a dedicated queue or elastic resource pool. (KB-ETTV, live, checked 2026-07-28)
@@ -52,3 +51,4 @@
 - Section 7.2.4 of the TCP service description, revision of 2026-10-09, points to the documentation and a switching information page to support the customer's exit strategy, and section 7.2.5 makes the customer responsible for performing the migration, exporting its content and choosing and configuring the new provider, with no liability of the operator for the success of the migration. (KB-VNL6, contract, checked 2026-10-14)
 - Distributed Database Middleware (DDM) is a MySQL-compatible distributed middleware service for relational databases that removes capacity and performance limits of Relational Database Service (RDS) instances for large data volumes at high access rates. The documentation names automatic database and table sharding across several data nodes, read/write splitting and scaling of compute nodes and of shards. The Regions and Endpoints page lists the DDM API endpoint in eu-de. (KB-WVTD, contract, checked 2026-10-14)
 - Alert Service is an optional preview service that tracks the customer's spending on T Cloud Public (TCP) and is reached through MyWorkplace. The service description of 09.10.2026 still lists it as expected to be available from 1 October 2026, and as a preview version it is meant for testing. (KB-XKXQ, contract, checked 2026-10-14)
+- The public price API carries Managed Services under their own service names: the package base fee under sn=ms-base-fee (Base Basic, Standard, Advanced, ids OTC_MS_T_B/S/C) and managed CCE clusters under sn=ms-man-cce (ids OTC_MS_I_CC*), each priced per item and month. The names ms, mgs, msp and managedservices return HTTP 500. (KB-XQES, live, checked 2026-10-22)

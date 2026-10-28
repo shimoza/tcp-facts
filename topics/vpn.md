@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-22: vpn
+# TCP Facts 2026-10-28: vpn
 
 - On T Cloud Public (TCP) in eu-de VPN gateways are listed with GET /v5/{project_id}/vpn-gateways, which returns them under the key vpn_gateways. Per the API reference each entry carries name, id, status, flavor, vpc_id (only for gateways attached to a VPC) and an eip1 object with ip_address and bandwidth_size. (KB-37QB, docs, checked 2026-09-25)
 - Classic VPN reached end of life in eu-de on 2025-06-01 but stays current for eu-nl, so its rate remains listed in the current price list. (KB-6AR3, contract, checked 2026-10-14)
@@ -18,7 +18,6 @@
 - The VPN user manual carries no MTU statement. The only MTU-related numbers in the doc set are one vendor CLI example with mtu 1400 and the VPN quota lines, maximum TCP packet length 1300 bytes and MSS below 1399. (KB-7VF7, docs, checked 2026-08-26)
 - A customer gateway can be recreated with the same settings in another project, as its create call takes only plain values (name, id_type, id_value, bgp_asn and tags). A VPN gateway can be recreated there with the same flavor, attachment type, local subnets and BGP ASN, but its vpc_id or er_id, connect_subnet, access_vpc_id, access_subnet_id and EIP ids must point to resources that exist in the new project. (KB-AI63, docs, checked 2026-09-25)
 - A VPN v5 gateway carries one connection per combination of gateway EIP and customer gateway. A second create on the same pair returned error VPN.0310, VPN connection already exists between that vgw ip and cgw id; the other EIP or another customer gateway takes the next connection. (KB-ASYH, live, checked 2026-08-26)
-- For IPsec to another site TCP has site-to-cloud VPN, where a VPN gateway of the VPC connects to a customer gateway through IKE and IPsec tunnels. If the customer gateway reaches the Internet through a NAT device, NAT traversal has to be enabled on it. (KB-CKVZ, docs, checked 2026-09-25)
 - Enterprise VPN (EV) establishes site-to-site IPsec tunnels, encrypted with IKE and IPsec, between a customer network and a VPC, so the VPC communicates securely with an on-premises data center. Enterprise VPN gateways are exclusive to one tenant and support several connection modes, and a VPN connection links the cloud VPN gateway with the customer gateway device on premises. The Regions and Endpoints page lists the Enterprise VPN API endpoint in eu-de. (KB-CVCM, contract, checked 2026-10-14)
 - A VPN v5 connection built on the standby EIP of an active-standby gateway has to carry an HA role. Without it the create returned error VPN.0001, invalid request, connection haRole is invalid. (KB-E3CC, live, checked 2026-08-26)
 - Enterprise VPN Basic carries a specification ceiling of 10 connection groups. (KB-EI4V, contract, checked 2026-08-27)

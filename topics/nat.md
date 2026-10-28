@@ -1,18 +1,17 @@
-<!-- TCP Facts, dataset of 2026-10-22. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-21. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-22: nat
+# TCP Facts 2026-10-28: nat
 
 - A public NAT gateway handles TCP, UDP and ICMP only. It does not support application layer gateway (ALG) functions or the ESP and AH protocols used by IPsec and GRE tunnels. (KB-2C3A, docs, checked 2026-09-25)
 - DNAT rules are listed with GET /v2.0/dnat_rules?nat_gateway_id=... on the NAT endpoint in eu-de. The response key is dnat_rules, and each rule holds id, floating_ip_address, external_service_port, private_ip, internal_service_port and protocol. (KB-4O52, docs, checked 2026-09-25)
-- Private NAT gateways are not available in eu-nl. On 2026-09-25 four private NAT v3 list paths answered 404 APIGW.0101 in eu-nl but 200 in eu-de, and section 6.5.7.2 of the service description shows n.a. for EU-NL for all four sizes. (KB-5RPQ, live, checked 2026-09-25)
 - Section 6.5.7.1 of the TCP service description prices NAT Gateway by an hourly rate that depends only on the gateway size. (KB-6JVL, contract, checked 2026-09-11)
 - NAT gateway quotas cannot be changed online. A higher quota is requested from customer service by phone or email with the domain name, project name, project ID and the quota needed. (KB-6OE4, docs, checked 2026-09-25)
 - The service description lists five public NAT gateway types with their maximum SNAT connections and SNAT connections per second: Micro 1,000 and 100, Small 10,000 and 1,000, Medium 50,000 and 5,000, Large 200,000 and 10,000, Extra-Large 1,000,000 and 30,000. (KB-BFOA, contract, checked 2026-10-14)
