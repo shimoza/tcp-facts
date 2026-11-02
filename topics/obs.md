@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-02. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-02. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-28: obs
+# TCP Facts 2026-11-02: obs
 
 - OBS SDK guides are published for python, java, go, nodejs, dotnet and c. Community OBS SDK sources for python and java are published under the opentelekomcloud-community organisation. (KB-24VK, docs, checked 2026-06-19)
 - The OBS user guide limits a user-defined domain name bound to a bucket to HTTP requests instead of HTTPS, and the domain name points by a CNAME record to the bucket domain name, so a DNS lookup of the own domain returns the OBS bucket host. (KB-252Q, docs, checked 2026-09-25)
@@ -38,7 +38,7 @@
 - An OBS parallel file system takes SSE-KMS only as a bucket default combining BucketKeyEnabled true with an explicit KMSMasterKeyID, all together. Objects then report ServerSideEncryption aws:kms with no per-request header. (KB-64ON, live, checked 2026-07-29)
 - TCP exposes no array-level immutable snapshot storage to tenants. Tenant-facing WORM comes from OBS Object Lock, which covers objects only, and from CBR backup locking, which keeps automatic backups in server, disk and SFS Turbo vaults undeletable during their retention period while manual backups stay deletable (checked 2026-09-25). (KB-66D6, docs, checked 2026-09-25, recheck due)
 - A presigned OBS URL is bound to its object key, its HTTP method and its expiry. Reuse against another key, use after the Expires value, and a DELETE sent to a URL presigned for PUT each return HTTP 403. (KB-6AP2, live, checked 2026-06-26)
-- obsutil stores the multipart uploadId in a checkpoint file under its local `.obsutil_checkpoint/upload` directory and reuses that uploadId when the same copy is retried. (KB-6IAO, live, checked 2026-05-01)
+- obsutil stores the multipart uploadId in a checkpoint file under its local `.obsutil_checkpoint/upload` directory and reuses that uploadId when the same copy is retried. (KB-6IAO, live, checked 2026-05-01, recheck due)
 - An OBS presigned URL in the OBS signature form carries AccessKeyId, Expires (a Unix timestamp) and a Signature over the HTTP method, Content-MD5, Content-Type, Expires, the x-obs-* headers and the bucket and object key with sub-resources such as response-content-type, so it is bound to one method and one object key while the scheme stays outside the signed string. It is signed with an AK/SK pair or with a temporary AK/SK pair plus x-obs-security-token. (KB-6K64, docs, checked 2026-09-25)
 - In the service description §6.4.1 OBS Standard storage is charged per GiB per month in volume tiers with the first 5 GiB free, and outbound traffic is a separate item with its own tiers. (KB-6LWE, contract, checked 2026-10-14)
 - Addressing an OBS bucket whose name contains dots in virtual-host style fails TLS SNI validation in eu-de. (KB-737E, live, checked 2026-09-16)
@@ -62,11 +62,11 @@
 - In an OBS bucket policy the principal reads domain/{domain_id}:user/{user_id}, with a colon between the domain part and the user part. A slash in that position returns 400 MalformedPolicy with "invalid principal". (KB-CJ4H, live, checked 2026-06-17)
 - A presigned OBS URL is issued on the bucket host, which in eu-de is the bucket name in front of obs.eu-de.otc.t-systems.com, with AccessKeyId, Expires and Signature as query parameters, so a user who gets the link sees the platform domain. (KB-CQHL, docs, checked 2026-09-25)
 - The S3-compatible OBS interface does not process If-None-Match on PUT. A presigned PUT sent with If-None-Match: * overwrote the existing object and answered HTTP 200 instead of 412, so a conditional header gives no create-only upload on that interface. (KB-D5FT, live, checked 2026-06-26)
-- In a recursive `obsutil cp` upload to OBS, a `.cache` directory and its files were uploaded while an `-exclude` pattern with an absolute path ending in `/.cache/*` was set. (KB-DDGQ, live, checked 2026-05-01)
+- In a recursive `obsutil cp` upload to OBS, a `.cache` directory and its files were uploaded while an `-exclude` pattern with an absolute path ending in `/.cache/*` was set. (KB-DDGQ, live, checked 2026-05-01, recheck due)
 - An OBS bucket policy is written with a PUT on the bucket and the ?policy sub-resource, signed V2. The string to sign is "PUT\n\n\n{rfc1123 gmt date}\n/{bucket}/?policy" and the header form is Authorization: OBS {access_key}:{base64 hmac_sha1 signature}. (KB-DK67, live, checked 2026-06-17)
 - OBS answers standard S3 clients at https://obs.eu-de.otc.t-systems.com with region eu-de, signature version 4 and virtual-hosted addressing. Listing, download and upload were verified this way with boto3. (KB-DR24, live, checked 2026-06-19)
 - Default server-side encryption on an OBS bucket is set with a PUT on the bucket and the ?encryption sub-resource, carrying a ServerSideEncryptionConfiguration whose SSEAlgorithm is kms. Objects written afterwards answer HEAD with the header x-obs-server-side-encryption: kms. (KB-DVX5, live, checked 2026-06-15)
-- After `obsutil abort obs://<bucket> -r -f`, a retry that still finds the old checkpoint file fails with 404 NoSuchUpload, because the uploadId was invalidated server-side. Deleting the checkpoint file makes the retry start a fresh multipart upload with a new uploadId. (KB-E3O4, live, checked 2026-05-01)
+- After `obsutil abort obs://<bucket> -r -f`, a retry that still finds the old checkpoint file fails with 404 NoSuchUpload, because the uploadId was invalidated server-side. Deleting the checkpoint file makes the retry start a fresh multipart upload with a new uploadId. (KB-E3O4, live, checked 2026-05-01, recheck due)
 - Against OBS a boto3 client with signature_version s3v4 handles objects and the bucket policy alike: PUT, GET and DELETE of a bucket policy worked on 2026-09-25, and path-style addressing worked as well as virtual. The S3 API expects the policy in S3 syntax (Principal AWS arn:aws:iam::<domain>:root, Action s3:GetObject, Resource arn:aws:s3:::<bucket>/<key>); a policy in the native OBS syntax is answered with HTTP 400 MalformedPolicy. (KB-E73J, live, checked 2026-09-25)
 - OBS expects its own V2 signing scheme. A request to the OBS endpoint signed with the V4 algorithm returns 400 even when the access key is valid, which reads like a broken key. (KB-EA2F, live, checked 2026-08-24)
 - HetuEngine 2.1.0 in MRS 3.5.0-LTS ships an Iceberg connector (Iceberg 1.4.1) plus Delta Lake and Hudi connectors. Against Iceberg tables on OBS it ran SELECT, JOIN, GROUP BY, partition predicates, the $snapshots, $partitions and $files metadata tables and INSERT. (KB-ECWX, live, checked 2026-07-28, recheck due)
@@ -121,7 +121,7 @@
 - During an OBS delta sync a NoSuchKey error appears for an object that was deleted between the listing call and the copy call. It reflects a source-side delete, not a failed copy. (KB-PQYE, docs, checked 2026-09-25)
 - OBS objects in the GLACIER storage class need a restore to STANDARD before a copy or an encryption run can read them. (KB-PWBT, docs, checked 2026-09-25)
 - A single OBS object can be up to 48.8 TB when it is uploaded with OBS Browser+, the API or an SDK. Through the API this size needs multipart upload because a single PUT or POST upload takes at most 5 GB. (KB-PWSD, docs, checked 2026-09-25)
-- Uploading a large directory to OBS with obsutil from a 4 vCPU ECS in eu-de lost 3 of 81 parts to TCP drops at parallelism 16. The same upload at parallelism 8 finished with no failed parts. (KB-QDQE, live, checked 2026-05-01)
+- Uploading a large directory to OBS with obsutil from a 4 vCPU ECS in eu-de lost 3 of 81 parts to TCP drops at parallelism 16. The same upload at parallelism 8 finished with no failed parts. (KB-QDQE, live, checked 2026-05-01, recheck due)
 - A multipart upload to OBS is limited to 10000 parts of 100 KB to 5 GB each (only the last part may be smaller), so the part size must be at least the object size divided by 10000. A 142 GiB object at 128 MiB parts uses 1136 parts. (KB-QLRN, docs, checked 2026-09-25)
 - OBS object-lock retention covers only objects uploaded after the policy is set, and uploading the same key again creates a new current version that sits outside the protection. (KB-R7FC, docs, checked 2026-09-01)
 - A bucket-level OBS request must go to the endpoint of the bucket's own region: a bucket created in eu-de returned 404 NoSuchBucket through the eu-nl endpoint. ListBuckets answered through either regional endpoint. (KB-RLOL, live, checked 2026-09-15)
@@ -130,7 +130,7 @@
 - OBS error codes show where a temporary AK/SK fails: a wrong secret key gives 403 SignatureDoesNotMatch (the access key is known), a missing or changed x-obs-security-token gives 403 InvalidAccessKeyId, an unknown access key gives 403 InvalidAccessKeyId, and a known credential without rights gives 403 AccessDenied. (KB-RUGO, live, checked 2026-10-28)
 - An upload of about 400 GB spread over 81 objects, sent from an ECS to an OBS bucket in the same region, took roughly 65 minutes. (KB-S4QM, live, checked 2026-05-01)
 - OBS bucket notification event names are written without the s3: prefix. ObjectCreated:* is the accepted form. (KB-SAM5, live, checked 2026-08-27)
-- Copying 81 files of about 5 GB each to OBS with `obsutil cp -r -p 16` from a 4 vCPU host failed on 3 files with `write tcp: use of closed network connection` and exit code 8. The targeted retries with `-p 8` finished without a failure. (KB-SD7O, live, checked 2026-05-01)
+- Copying 81 files of about 5 GB each to OBS with `obsutil cp -r -p 16` from a 4 vCPU host failed on 3 files with `write tcp: use of closed network connection` and exit code 8. The targeted retries with `-p 8` finished without a failure. (KB-SD7O, live, checked 2026-05-01, recheck due)
 - An OBS bucket without a bucket policy is closed to other accounts by its private ACL only. Inside the owning account every IAM user whose IAM permissions allow OBS reaches it, because ACLs do not control the IAM users of that account. Only an explicit Deny in a bucket policy overrides such an IAM allow. (KB-SPIK, docs, checked 2026-09-23)
 - A WORM-protected OBS object can have its storage class changed by a lifecycle rule while the retention lock still blocks deletion of the object. (KB-SQDE, docs, checked 2026-09-02)
 - OBS Cold storage restore has three documented speeds: Expedited 1 to 5 minutes, Standard 3 to 5 hours and Bulk 5 to 12 hours. (KB-SSWP, docs, checked 2026-09-02)

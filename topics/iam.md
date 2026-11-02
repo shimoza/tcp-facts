@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-02. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-02. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-28: iam
+# TCP Facts 2026-11-02: iam
 
 - Moving a resource to another enterprise project does not change the resource itself, but it changes who can access it when access is granted per enterprise project: a user who holds permissions only for the source enterprise project can lose access after the move. (KB-27UC, docs, checked 2026-09-25)
 - On TCP the default IAM quota is 500 users per tenant. GET /v3.0/OS-QUOTA/domains/{domain_id} returned quota 500, min 50 and max 2000 for type user on two test tenants in eu-de on 2026-10-02. (KB-2DEG, live, checked 2026-10-02)
@@ -19,6 +19,7 @@
 - The oidc protocol sub-resource under an IAM identity provider carries the mapping_id of the federation mapping in its request body. (KB-364P, live, checked 2026-08-27)
 - On the check date GET /v3/roles with per_page=300 returned about 220 system roles, each with its policy document. GET /v3.0/OS-ROLE/roles returned only the tenant's own custom policies, so system roles and custom policies come from different listings. (KB-3AAE, live, checked 2026-08-19)
 - The console forces a password change at the first login of a new user, who shows pwd_status false until then. After that change the password an automation still holds no longer authenticates. (KB-3JTS, live, checked 2026-08-19)
+- On a project whose router quota is full, POST /v1/{project_id}/vpcs with the temporary AK/SK or the project-scoped token of a federated identity whose group holds only Tenant Guest returned 409 VPC.0114 OverQuota, not 403. The quota answer hides the permission answer, so a deny test for a VPC create needs a project with free VPC quota; a group with VPC ReadOnlyAccess got 403 in the same run. (KB-3NUN, live, checked 2026-10-28)
 - OBS does not take an IAM token in X-Auth-Token: the bucket list answered 403 "Anonymous access is forbidden" for the administrator token too. Temporary AK/SK of a Tenant Guest group pass the OBS signature but get 403 Access Denied on the bucket list, so OBS needs its own OBS role. (KB-3NXA, live, checked 2026-10-26)
 - The OIDC id_token exchange POST /v3.0/OS-AUTH/id-token/tokens returns 201 for every scope form: none (an unscoped token with no roles and an empty catalog), a project by id, a project by name and the domain by id or by name. (KB-3NYK, live, checked 2026-10-26)
 - Enterprise Project Service accepts a domain-scoped federated token from the OIDC id_token exchange, and refuses project-scoped federated tokens and every temporary AK/SK with 401 EPS.0003. (KB-3QWM, live, checked 2026-10-26)

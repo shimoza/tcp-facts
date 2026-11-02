@@ -1,27 +1,27 @@
-<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-02. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-02. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-28: evs
+# TCP Facts 2026-11-02: evs
 
 - Elastic Volume Service (EVS) provides block storage volumes that are attached to Elastic Cloud Servers as system or data disks; up to 32 volumes can be attached to one server and a volume can be expanded online when the operating system supports it. The disk types are High I/O, GP SSD, GP SSD V2, Ultra-High I/O and Extreme SSD, and the documentation states that system and data disks support encryption, snapshots and backups. The Regions and Endpoints page lists API endpoints for EVS in eu-de and eu-nl. (KB-2DY5, contract, checked 2026-10-14)
 - On a Linux ECS an attached EVS data disk appears as a virtio block device such as /dev/vdb. A file system is created on the device before it is mounted. (KB-3URW, live, checked 2026-05-01)
-- Releasing an attached EVS volume takes two calls in two different services. Detach runs through the ECS API as DELETE /v1/{project_id}/cloudservers/{server_id}/detachvolume/{volume_id} and is asynchronous, so its job must reach SUCCESS first. Only then does DELETE /v2/{project_id}/cloudvolumes/{volume_id} on the EVS API remove the volume. (KB-4V7Z, live, checked 2026-05-01)
+- Releasing an attached EVS volume takes two calls in two different services. Detach runs through the ECS API as DELETE /v1/{project_id}/cloudservers/{server_id}/detachvolume/{volume_id} and is asynchronous, so its job must reach SUCCESS first. Only then does DELETE /v2/{project_id}/cloudvolumes/{volume_id} on the EVS API remove the volume. (KB-4V7Z, live, checked 2026-05-01, recheck due)
 - EVS shared disks on T Cloud Public (TCP) support SCSI-3 reservations and can be attached to up to 16 servers. The attached ECS instances have to sit in an anti-affinity ECS group. (KB-4WQV, docs, checked 2026-08-24)
 - A 430 GB AWQ-INT4 model cold-load took 50 to 180 minutes from a GPSSD volume and about 7 minutes from an ESSD volume on the same GPU instance type. (KB-56WX, live, checked 2026-05-07)
 - An 80 GiB restored Windows system disk reported 0 percent lazy loading at 13 s, 6 percent at 137 s and 100 percent at 438 s after the create call, while RDP answered at about 149 s. The counter is non-monotonic near the end, only the final value is reliable. (KB-5DQ4, live, checked 2026-09-02)
 - An EVS data disk attached to a Windows Server 2019 or 2022 ECS supports ReFS block cloning. Backup software reported fast cloning as supported after the volume was formatted ReFS with GPT, a 64 KB cluster size and integrity streams off. (KB-6Z6K, live, checked 2026-04-22)
 - EVS encryption happens at the volume layer, so an encrypted data disk is partitioned, formatted and mounted inside a Linux guest exactly like an unencrypted one. (KB-7ZUP, live, checked 2026-06-15)
-- POST /v2.1/{project_id}/cloudvolumes creates an EVS volume asynchronously and returns a job_id. That job is polled on the EVS jobs endpoint /v1/{project_id}/jobs/{job_id} rather than the ECS jobs endpoint, and the new volume id appears as entities.volume_id once the job status is SUCCESS. (KB-CZH3, live, checked 2026-05-01)
+- POST /v2.1/{project_id}/cloudvolumes creates an EVS volume asynchronously and returns a job_id. That job is polled on the EVS jobs endpoint /v1/{project_id}/jobs/{job_id} rather than the ECS jobs endpoint, and the new volume id appears as entities.volume_id once the job status is SUCCESS. (KB-CZH3, live, checked 2026-05-01, recheck due)
 - Lazy-loading progress of a restored disk is read with GET /v3/{project_id}/os-vendor-volumes/{volume_id}/internal-info. The live response carries the field lazyloading_progress, while the documentation names the field loading_progress. (KB-DLKD, live, checked 2026-09-02)
 - The TCP service description states that up to 32 block storage devices may be assigned per Elastic Cloud Server, while the ECS user manual states 24 at creation and up to 60 after attachment (VBD max 24, SCSI max 59, VBD plus SCSI at most 60). The two sources disagree and neither number is settled. (KB-DMN5, docs, checked 2026-09-02)
-- A volume create request on the EVS path /v2.1/{project_id}/cloudvolumes carries availability_zone in the volume body, for example eu-de-01, and the volume is created in that AZ. (KB-FSXW, live, checked 2026-05-01)
+- A volume create request on the EVS path /v2.1/{project_id}/cloudvolumes carries availability_zone in the volume body, for example eu-de-01, and the volume is created in that AZ. (KB-FSXW, live, checked 2026-05-01, recheck due)
 - An EVS disk consumed in CCE through a dynamic PV is bound to one AZ and can be mounted by one pod at a time. (KB-GZTZ, docs, checked 2026-09-16)
 - Data of a disk restored from CBR loads lazily from OBS after the mount. A full read took 183 seconds for 8 GiB and 1780 seconds for 81 GiB, about 22 seconds per GiB or roughly 47 MB/s, and it applies per disk. (KB-HJKW, live, checked 2026-09-02)
 - On a running Linux ECS with a virtio_blk system disk (ext4 on GPT), an extended EVS system disk grows online with growpart and resize2fs, without reboot. Verified from 30 GB to 100 GB while the filesystem was mounted. (KB-HNAB, live, checked 2026-06-08)

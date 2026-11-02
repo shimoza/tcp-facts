@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-02. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-02. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-28: pricing
+# TCP Facts 2026-11-02: pricing
 
 - The price API returns rows for flavors marked sellout in cond:operation:az and for ramped-down services. Orderability follows from the per-AZ state, not from the presence of a price row. (KB-4ABK, live, checked 2026-09-25)
 - No public service description of the Swiss offering (eu-ch2) was found on 2026-10-08: the TCP service description revision 17.08.2026 covers EU-DE and EU-NL only, the Swiss product pages link that same general document, and the operator's Swiss site offers a price calculator in CHF and a technical flyer of 2022 but no service description or price list. What is offered in eu-ch2 has to be confirmed with the Swiss entity before it is quoted. (KB-4FW6, docs, checked 2026-10-08)

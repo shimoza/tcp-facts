@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-02. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-02. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-28: gpu
+# TCP Facts 2026-11-02: gpu
 
 - G6, G7 and G7v ECS from a public image carry the NVIDIA GRID driver, but the GRID licence has to be bought and configured by the customer. (KB-2DTS, docs, checked 2026-10-21)
 - On 2026-09-25 the eu-de public image catalog held 57 images flagged for GPU flavors, 45 of them Linux, and only six Linux ones name an NVIDIA driver in their description: Standard_Ubuntu_22.04_GPU_NV, latest and prev, with Nvidia public driver included, and Standard_RockyLinux_9_GRID in bios and uefi variants with the GRID driver file NVIDIA-Linux-x86_64-535.288.01-grid.run included. (KB-3JIJ, live, checked 2026-09-25, recheck due)

@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-02. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-02. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-28: ecs
+# TCP Facts 2026-11-02: ecs
 
 - Each ECS flavor exposes info:cpu:name in os_extra_specs, giving CPU microarchitecture and clock, for example Intel Cascade Lake 2.6GHz. The newest s9 and c9 families return masked values such as Intel CPU N.NGHz or General Purpose Processor. (KB-232P, live, checked 2026-07-19)
 - The service description contracts an availability SLA for ECS, EVS and OBS. Periods in which at least one AZ of the region stays up are excluded from the downtime calculation. (KB-23F7, contract, checked 2026-10-14)
@@ -42,7 +42,7 @@
 - Upstream OpenStack Nova accepts sata as a disk bus for the libvirt virt types kvm and qemu (SUPPORTED_DEVICE_BUSES lists virtio, scsi, ide, usb, fdc and sata), so hw_disk_bus=sata is a standard Nova option that TCP refuses with code 0300000. (KB-6MAQ, docs, checked 2026-10-09)
 - Flavor sellability has to be read from the per-AZ field cond:operation:az. The global cond:operation:status can report abandon for a flavor that is still sellable in an availability zone. (KB-6PLG, live, checked 2026-06-12)
 - An ECS create can return error Ecs.0319 with the message "capacity not sufficient", which reports a stock shortage of that flavor. A flavor listed with os_extra_specs["cond:operation:az"] = normal is orderable and can still return Ecs.0319. (KB-6VPI, live, checked 2026-08-18)
-- An ECS can read its own server id from the instance metadata service at /openstack/latest/meta_data.json. That id is what ECS API calls need to address the instance itself. (KB-7AIC, live, checked 2026-05-01)
+- An ECS can read its own server id from the instance metadata service at /openstack/latest/meta_data.json. That id is what ECS API calls need to address the instance itself. (KB-7AIC, live, checked 2026-05-01, recheck due)
 - In the console the same setting is the Source/Destination Check toggle, reached on the ECS detail page under the Network Interfaces tab by opening the NIC's IP details. (KB-7HLP, docs, checked 2026-07-23)
 - An ECS create issued while the subnet is still in state BUILD fails. Polling the VPC to status OK and the subnet to status ACTIVE first makes the same create succeed. (KB-7LLJ, live, checked 2026-08-18)
 - The flavor extra spec cond:operation:status reads abandon on c9.2xlarge.2, m9.2xlarge.8 and pi5e.2xlarge.4 in eu-de while cond:operation:az reads normal for their zones, and POST /v1/{project_id}/cloudservers creates and boots them without error. The abandon value of that key is not an availability statement; cond:operation:az is. (KB-A4DH, live, checked 2026-10-21)
@@ -67,7 +67,7 @@
 - Console output timing depends on the host generation. c9 hosts wrap the lines in qemu-kvm charserial0 log prefixes and can lag minutes behind the guest, leaving the console empty long after boot, while s7n hosts deliver clean lines quickly. (KB-CZPT, live, checked 2026-06-11)
 - An m9.2xlarge.8 ECS in eu-de-01 gets no VMX (Intel VT-x) exposed to the guest: the kvm_intel module gives no /dev/kvm on Ubuntu 24.04 UEFI, so nested virtualization is off on the m9 family at 8 vCPU as on c9, and VBS or Credential Guard cannot start in a Windows guest on it despite the TPM and Secure Boot flags. (KB-DUTE, live, checked 2026-10-21)
 - The Swiss T Cloud Public (eu-ch2) differs from eu-de per the Cloud Create guide: only s3 flavors (s3.medium.1 and the like), two availability zones eu-ch2a and eu-ch2b, EVS volume types SAS and SSD only, DNS private zones only (no public zones) and NAT gateway specifications of its own. Its documentation lives on a Swiss documentation portal of its own. (KB-DVB7, docs, checked 2026-10-08)
-- Attaching an EVS volume to a running ECS goes through the ECS API as POST /v1/{project_id}/cloudservers/{server_id}/attachvolume. The call is asynchronous: it returns a job that has to be polled on the ECS jobs endpoint until the job state reads SUCCESS. (KB-DWRX, live, checked 2026-05-01)
+- Attaching an EVS volume to a running ECS goes through the ECS API as POST /v1/{project_id}/cloudservers/{server_id}/attachvolume. The call is asynchronous: it returns a job that has to be polled on the ECS jobs endpoint until the job state reads SUCCESS. (KB-DWRX, live, checked 2026-05-01, recheck due)
 - GET /v1/{project_id}/cloudservers/flavors with availability_zone=eu-de-01 returned 326 flavors, 323 of them carrying os_extra_specs cond:operation:status abandon, among them s2 and s3 families that were orderable at that time. (KB-DXPP, live, checked 2026-08-26)
 - The system disk of a new ECS must be at least the min_disk of its source image. Private images with preinstalled software carried min_disk 200 GB, so a 120 GB system disk required a fresh public image instead. (KB-E6CH, live, checked 2026-06-17)
 - ECS quota increases go through the service hotline or email, per the ECS documentation on quota adjustment, so a large estate needs the request filed well before deployment. (KB-EOFG, docs, checked 2026-08-25)

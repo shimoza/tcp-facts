@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-02. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-02. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-28: modelarts
+# TCP Facts 2026-11-02: modelarts
 
 - The ModelArts v2 training job listing is POST /v2/{project_id}/training-job-searches, not a GET. GET /v1/{project_id}/services answers HTTP 200 with a count field and serves, like the flavor and engine GETs, as a cheap liveness probe. (KB-FFU5, live, checked 2026-07-02)
 - ModelArts is an end-to-end AI development platform that covers data preprocessing and semi-automatic labeling, distributed training, automated model building and deployment of models on T Cloud Public (TCP). The documentation names the open-source frameworks TensorFlow, PyTorch and MindSpore, dedicated resources and custom images for custom frameworks. The Regions and Endpoints page lists the ModelArts API endpoint in eu-de. (KB-O2UG, contract, checked 2026-10-14)

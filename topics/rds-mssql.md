@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-02. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-02. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-28: rds-mssql
+# TCP Facts 2026-11-02: rds-mssql
 
 - RDS for SQL Server supports instances joined to an AD domain, and the documentation marks that setup as not recommended. (KB-4SGC, docs, checked 2026-08-25)
 - In a DRS backup migration the database name is matched case-sensitively against the name stored inside the backup file. The names master, model, msdb, tempdb, rdsadmin and resource are refused as a source name and as a new name. (KB-5VMM, docs, checked 2026-05-20)
@@ -43,7 +43,7 @@
 - SQL Server flavour keys in the RDS listing follow the form db.x1.<size>.<ratio>.<mode>.mssql, where mode is single, ha or rr. In that listing the hourly rate of an ha flavour was exactly twice the rate of the matching single flavour. (KB-SVWO, live, checked 2026-06-01)
 - RDS for SQL Server in eu-de does not accept the instance collation Latin1_General_CI_AS_KS or German_PhoneBook_CI_AS. The create answers HTTP 500 DBS.200005 Server failure, the same answer as an invented collation, while the same body with Latin1_General_100_CI_AS is accepted. Of the _CI_AS_KS variants only Latin1_General_100_CI_AS_KS is in the advertised list. (KB-TAXN, live, checked 2026-10-14)
 - RDS for SQL Server on T Cloud Public (TCP) allows a maximum of 100 databases per instance. (KB-TQJT, docs, checked 2026-08-24)
-- A DRS Backup Migration restore onto RDS for SQL Server keeps the collation of the source user database. In a 162 GiB restore the database arrived as Latin1_General_CI_AS on an instance whose server collation was Latin1_General_100_CI_AS_KS. (KB-TTWD, live, checked 2026-05-01)
+- A DRS Backup Migration restore onto RDS for SQL Server keeps the collation of the source user database. In a 162 GiB restore the database arrived as Latin1_General_CI_AS on an instance whose server collation was Latin1_General_100_CI_AS_KS. (KB-TTWD, live, checked 2026-05-01, recheck due)
 - RDS for SQL Server in eu-de offers Latin1_General_CI_AS as an instance collation: on 2026-08-24 it was both in the collation listing and accepted by the create call. (KB-UGZC, live, checked 2026-09-25, recheck due)
 - DRS backup migration requires each backup file to hold exactly one database. A database whose backup is spread over several files is outside what the task accepts. (KB-W72N, docs, checked 2026-05-20)
 - On 2026-08-24 the collation listing in eu-de returned 8 values: Chinese_PRC_CI_AS, Chinese_PRC_CI_AI, Chinese_PRC_90_CI_AI, Cyrillic_General_CI_AS, SQL_Latin1_General_CP1_CI_AS, SQL_Latin1_General_CP850_BIN2, Latin1_General_100_CI_AS_KS and Latin1_General_CI_AS. The same listing returned 7 on 2026-05-22, with Latin1_General_CI_AS added since. (KB-WESI, live, checked 2026-09-25, recheck due)

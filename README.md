@@ -1,22 +1,24 @@
 <h1 align="center">TCP Facts</h1>
 
-<p align="center"><b>Checked facts about T Cloud Public (TCP) for any AI assistant, dataset of 2026-10-28</b></p>
+<p align="center"><b>Checked facts about T Cloud Public (TCP) for any AI assistant, dataset of 2026-11-02</b></p>
 
 > **Unofficial and independent.** Not a product of, and not endorsed by, T-Systems or Deutsche Telekom; it speaks for nobody but its author. Built only from public sources (the public documentation, the public service description, the public price API), with respect for robots.txt and the terms of those sources. No customer data and no confidential information. No warranty: the provider's contract documents are binding.
 
+<p align="center">Claude Desktop, one click: <a href="https://github.com/shimoza/tcp-facts/releases/latest/download/tcp-facts.mcpb">tcp-facts.mcpb</a> (needs Python 3.10 or newer)</p>
+
 <p align="center">
   <img alt="Unofficial" src="https://img.shields.io/badge/Status-Unofficial-c64a3d">
-  <img alt="Facts: 1819" src="https://img.shields.io/badge/Facts-1819-2f6fd1">
-  <img alt="Best before: 2026-11-27" src="https://img.shields.io/badge/Best_before-2026--11--27-e0b43a">
+  <img alt="Facts: 1820" src="https://img.shields.io/badge/Facts-1820-2f6fd1">
+  <img alt="Best before: 2026-12-02" src="https://img.shields.io/badge/Best_before-2026--12--02-e0b43a">
   <img alt="License: CC BY 4.0" src="https://img.shields.io/badge/License-CC_BY_4.0-3f9d5a">
   <a href="#mcp-clients"><img alt="MCP server" src="https://img.shields.io/badge/MCP-server-8a63b8"></a>
 </p>
 
-Build of 2026-10-28 18:01 UTC. A later build of the same day replaces this one under the same name; the manifest carries the build time.
+Build of 2026-11-02 11:06 UTC. A later build of the same day replaces this one under the same name; the manifest carries the build time.
 
-1819 checked facts about T Cloud Public (TCP) with the list of orderable services. Made to be dropped into any AI assistant. Prices are not part of the dataset: they come live from the public price API with --live.
+1820 checked facts about T Cloud Public (TCP) with the list of orderable services. Made to be dropped into any AI assistant. Prices are not part of the dataset: they come live from the public price API with --live.
 
-1178 facts were tested live on a TCP tenant, 475 come from the vendor documentation and 166 from the service description (revision 09.10.2026). No fact from hearsay, no expired fact, no customer, no project, no credential.
+1179 facts were tested live on a TCP tenant, 475 come from the vendor documentation and 166 from the service description (revision 09.10.2026). No fact from hearsay, no expired fact, no customer, no project, no credential.
 
 391 of the 475 documentation facts come from the open source repositories of the GitHub organisation opentelekomcloud-docs, published under the Apache License 2.0. The public source of each of the others is in facts.jsonl. The documentation website is not crawled, its robots.txt disallows all robots. Sources whose terms forbid automated analysis are not used, so the community portal and internal documentation are left out. The live checks ran on the compiler's own TCP test tenants.
 
@@ -107,7 +109,7 @@ What the dataset does not hold and never will: commitments on certificates and a
 
 ## Facts with a recheck due
 
-156 facts are past their expiry date and wait for their weekly recheck. They stay in the dataset until something invalidates them: a recheck that refutes them, a newer fact that replaces them or a change of the service description. Name the check date when you use one.
+167 facts are past their expiry date and wait for their weekly recheck. They stay in the dataset until something invalidates them: a recheck that refutes them, a newer fact that replaces them or a change of the service description. Name the check date when you use one.
 
 | fact | grade | checked | state |
 |---|---|---|---|
@@ -129,6 +131,17 @@ What the dataset does not hold and never will: commitments on certificates and a
 | KB-YPPS | live | 2026-03-04 | recheck due |
 | KB-LJFS | live | 2026-03-07 | recheck due |
 | KB-H7UG | live | 2026-03-10 | recheck due |
+| KB-4V7Z | live | 2026-05-01 | recheck due |
+| KB-6IAO | live | 2026-05-01 | recheck due |
+| KB-7AIC | live | 2026-05-01 | recheck due |
+| KB-CZH3 | live | 2026-05-01 | recheck due |
+| KB-DDGQ | live | 2026-05-01 | recheck due |
+| KB-DWRX | live | 2026-05-01 | recheck due |
+| KB-E3O4 | live | 2026-05-01 | recheck due |
+| KB-FSXW | live | 2026-05-01 | recheck due |
+| KB-QDQE | live | 2026-05-01 | recheck due |
+| KB-SD7O | live | 2026-05-01 | recheck due |
+| KB-TTWD | live | 2026-05-01 | recheck due |
 | KB-EDXJ | live | 2026-05-06 | recheck due |
 | KB-MJ5A | docs | 2026-06-12 | recheck due |
 | KB-HT72 | live | 2026-07-17 | recheck due |
@@ -286,7 +299,7 @@ How you use it is your responsibility as the user. The dataset gives you checked
 
 tcp_facts_mcp.py is a read-only MCP server over the files beside it: one Python file, standard library only, Python 3.10 or newer, JSON-RPC 2.0 over stdio. It has four tools: tcp_facts_search (facts by words, tag or grade), tcp_service_check (offered or not, from services.md), tcp_price_find (live price rows of eu-de or eu-nl, only with --live) and tcp_calculate (exact arithmetic in hours, a month is 720 h). It reads no file outside its folder, opens no connection without --live and writes nothing.
 
-Claude Desktop, one click: download tcp-facts-<date>.mcpb from the latest release at github.com/shimoza/tcp-facts and open it (double click, or drag it into Settings, Extensions). Claude Desktop shows the extension and its four tools; press Install. The file carries the server and the data of that build. It needs Python 3.10 or newer on the machine.
+Claude Desktop, one click: download https://github.com/shimoza/tcp-facts/releases/latest/download/tcp-facts.mcpb (the newest release, the same bytes as its tcp-facts-<date>.mcpb) and open it (double click, or drag it into Settings, Extensions). Claude Desktop shows the extension and its four tools; press Install. The file carries the server and the data of that build. It needs Python 3.10 or newer on the machine.
 
 Any other client: unpack the zip of the latest release or clone github.com/shimoza/tcp-facts, then add the server by hand. Replace /path/to/tcp-facts with that folder, the one that holds facts.jsonl and tcp_facts_mcp.py.
 
@@ -318,7 +331,7 @@ facts.md: all facts, grouped by topic. facts.jsonl: the same facts with source, 
 
 ## Dates and licence
 
-Built 2026-10-28. Best before 2026-11-27: facts about availability are re-checked every 30 days. Prices are not part of the dataset: the live price API is the source of truth before any quote.
+Built 2026-11-02. Best before 2026-12-02: facts about availability are re-checked every 30 days. Prices are not part of the dataset: the live price API is the source of truth before any quote.
 
 Dataset: TCP Facts, github.com/shimoza/tcp-facts.
 

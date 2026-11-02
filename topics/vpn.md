@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-10-28. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-02. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-11-27. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-02. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-10-28: vpn
+# TCP Facts 2026-11-02: vpn
 
 - On T Cloud Public (TCP) in eu-de VPN gateways are listed with GET /v5/{project_id}/vpn-gateways, which returns them under the key vpn_gateways. Per the API reference each entry carries name, id, status, flavor, vpc_id (only for gateways attached to a VPC) and an eip1 object with ip_address and bandwidth_size. (KB-37QB, docs, checked 2026-09-25)
 - Classic VPN reached end of life in eu-de on 2025-06-01 but stays current for eu-nl, so its rate remains listed in the current price list. (KB-6AR3, contract, checked 2026-10-14)
