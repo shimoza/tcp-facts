@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-11-02. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-09. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-02. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-09. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-02: dds
+# TCP Facts 2026-11-09: dds
 
 - The DDS lifecycle table gives 4.0, 4.2 and 4.4 planned end of marketing dates that have passed (January 2022, November 2022 and September 2023) and plans their end of service for April 2027, April 2028 and April 2029. It gives no dates for 5.0 and marks the older 3.2 and 3.4 unavailable. (KB-4V3I, docs, checked 2026-09-25, recheck due)
 - The document database DDS offers the versions 4.0, 4.2, 4.4 and 5.0 in eu-de and eu-nl: on 2026-09-25 GET /v3/{project_id}/datastores/DDS-Community/versions returned exactly these four in both regions. (KB-C2YH, live, checked 2026-09-25, recheck due)

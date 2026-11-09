@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-11-02. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-09. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-02. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-09. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-02: elb
+# TCP Facts 2026-11-09: elb
 
 - Creating the pool with listener_id and leaving default_pool_id off the listener makes the pool depend on the listener in Terraform, so destroy removes the pool first and the listener second, matching the order the ELB v3 API accepts. (KB-2BL5, live, checked 2026-09-16)
 - Only a dedicated load balancer can send traffic to servers outside its own VPC. With IP as a backend enabled it adds servers by private IPv4 address in a VPC linked by VPC peering or in an on-premises data centre linked by Direct Connect or VPN. (KB-36IY, docs, checked 2026-09-25)
@@ -24,7 +24,7 @@
 - DELETE /v3/{project_id}/elb/pools/{id} returns HTTP 204 while the listener that the pool belongs to still exists, which frees the listener for a later delete. (KB-DIPH, live, checked 2026-09-16)
 - A shared load balancer cannot route traffic to backend servers in another VPC and cannot be used across accounts. The shared ELB API requires each member to sit in a subnet of the VPC of the load balancer. (KB-DVMF, docs, checked 2026-09-25)
 - In the opentelekomcloud provider a changed certificate body on an ELB v3 certificate resource is planned as "updated in-place": the plan carries no replacement marker, and an apply would swap the certificate the listener serves. (KB-DWDN, live, checked 2026-09-17)
-- On 2026-10-05 GET /v3/{project_id}/elb/flavors in eu-de listed six dedicated L7 flavors with their QPS: L7_flavor.elb.s1.small 4,000, s1.medium 16,000, s1.large 80,000, s2.small 8,000, s2.medium 40,000 and s2.large 160,000, plus L4 flavors s1 and s2 in small, medium and large. Terraform's l7_flavor takes the flavor id, which the data source opentelekomcloud_lb_flavor_v3 finds by name. (KB-E2KU, live, checked 2026-10-05)
+- On 2026-10-05 GET /v3/{project_id}/elb/flavors in eu-de listed six dedicated L7 flavors with their QPS: L7_flavor.elb.s1.small 4,000, s1.medium 16,000, s1.large 80,000, s2.small 8,000, s2.medium 40,000 and s2.large 160,000, plus L4 flavors s1 and s2 in small, medium and large. Terraform's l7_flavor takes the flavor id, which the data source opentelekomcloud_lb_flavor_v3 finds by name. (KB-E2KU, live, checked 2026-10-05, recheck due)
 - A shared ELB v2.0 in eu-de with an HTTP listener on port 80, a ROUND_ROBIN pool and an HTTP health monitor marked an ECS backend ONLINE within about 20 s of the monitor create, once the web server on the backend answered. The backend security group let port 80 in from the subnet range and from 100.125.0.0/16; which of the two the health checks use was not proven. (KB-EGHR, live, checked 2026-10-12)
 - The shared ELB v2.0 API in eu-de accepts AK/SK calls signed SDK-HMAC-SHA256 without an X-Project-Id header: the creates of load balancer, listener, pool, member and health monitor answered 201, the deletes 204, and a read after the delete answered 404. (KB-ERDD, live, checked 2026-10-12)
 - A backend member of a dedicated load balancer in eu-de that has nothing listening yet shows operating_status OFFLINE with reason_code CONNECT_FAILED in GET /v3/{project_id}/elb/pools/{pool_id}/members, and the HTTPS listener then answers 502. In a run on 2026-10-06 the server was created at 12:43 UTC, cloud-init reached modules:final at 12:44:51, nginx was being installed at about 12:45:06 and the member read ONLINE with the site answering 200 at 12:45:28: about two and a half minutes from terraform creating the server to a working site. (KB-ESMU, live, checked 2026-10-06)
@@ -50,7 +50,7 @@
 - Rebuilding an ELB in another project includes creating the backend pools and their members again. (KB-OVTY, docs, checked 2026-09-25)
 - ELB L7 policies are listed with GET /v3/{project_id}/elb/l7policies using limit (default and maximum 2000) and marker paging; the response holds l7policies[] plus page_info with current_count and previous_marker; next_marker appears only when the server offers another page. In eu-de on 2026-09-25 a short page did not mean the end of the list: with limit=2 the first page held 1 of 3 policies and carried no next_marker, while the default limit returned all 3. (KB-P5PW, live, checked 2026-09-25)
 - POST /v3/{project_id}/elb/certificates expects the body wrapped in a certificate object. A flat body returns HTTP 400 "Invalid request body: Error map format". The inner fields are name, type (server), domain, certificate and private_key. (KB-PJVB, live, checked 2026-05-26)
-- GET /v3/{project_id}/elb/availability-zones on eu-de returned eu-de-01 and eu-de-02 on two separate tenants. The service description states up to three availability zones, which is a contractual maximum and not the zone list this endpoint returned. (KB-QQBS, live, checked 2026-10-05)
+- GET /v3/{project_id}/elb/availability-zones on eu-de returned eu-de-01 and eu-de-02 on two separate tenants. The service description states up to three availability zones, which is a contractual maximum and not the zone list this endpoint returned. (KB-QQBS, live, checked 2026-10-05, recheck due)
 - A forwarding policy of a dedicated ELB takes one rule per rule type: on 2026-09-25 a second PATH rule on the same policy was refused with HTTP 409 ELB.8907 (already has rules with type PATH), while a HOST_NAME rule next to it was accepted. (KB-ROUV, live, checked 2026-09-25)
 - On 2026-07-02 GET /v3/{project_id}/elb/availability-zones in eu-de returned exactly two zones, eu-de-01 and eu-de-02, both in state ACTIVE. Dedicated load balancer placement on that date followed this listing. (KB-SBUW, live, checked 2026-09-25, recheck due)
 - Each L7 policy returned by the v3 listing carries id, name, action, listener_id, redirect_pool_id, redirect_url_config and priority. (KB-TQG5, live, checked 2026-09-25)

@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-11-02. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-09. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-02. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-09. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-02: rds
+# TCP Facts 2026-11-09: rds
 
 - GET /v3/{project_id}/flavors/{engine}?version_name={version} returns the flavors for an RDS engine version under the key flavors. On 2026-09-16 in eu-de it returned 138 flavors for mysql 8.4 and 144 for postgresql 18.
 On 2026-10-19 the state is: 1:flavors.0.spec_code has rds.mysql. (KB-2NF7, live, checked 2026-10-19)
@@ -29,7 +29,7 @@ On 2026-10-19 the state is: 2:flavors.0.spec_code lacks rds. (KB-FBFG, live, che
 - In an RDS create call the subnet_id must be the VPC subnet ID. Passing the neutron subnet ID makes the call fail with error DBS.200501. (KB-HSF7, docs, checked 2026-09-25)
 - The RDS instance describe call returns a created field with the creation time exact to the second, so an instance creation time can be read from the service API without CTS. (KB-ISMZ, live, checked 2026-07-31)
 - Relational Database Service (RDS) provides managed relational databases with MySQL, PostgreSQL or Microsoft SQL Server (Standard and Enterprise Edition), with tools for automated deployment, maintenance, monitoring, backup and recovery. Each engine runs as a single instance or as a synchronous primary/standby (HA) pair with optional read replicas, and MySQL and PostgreSQL come in general purpose and dedicated flavors. The documentation describes automated backups in a one-hour time window on the days of the backup cycle (every day by default), kept for a retention period of 1 to 732 days (default 7) for all three engines. The Regions and Endpoints page lists API endpoints for RDS in eu-de and eu-nl. (KB-JQJN, contract, checked 2026-10-14)
-- On 2026-10-05 in eu-de RDS for MySQL 8.4 and RDS for PostgreSQL 18 could be ordered: the flavors call returned 138 MySQL 8.4 and 144 PostgreSQL 18 flavors in single, HA and replica mode, 78 of each with at least one AZ in state normal. The datastore listing showed MySQL 8.4, 8.0, 5.7 and PostgreSQL 13 to 18. (KB-QKU4, live, checked 2026-10-05)
+- On 2026-10-05 in eu-de RDS for MySQL 8.4 and RDS for PostgreSQL 18 could be ordered: the flavors call returned 138 MySQL 8.4 and 144 PostgreSQL 18 flavors in single, HA and replica mode, 78 of each with at least one AZ in state normal. The datastore listing showed MySQL 8.4, 8.0, 5.7 and PostgreSQL 13 to 18. (KB-QKU4, live, checked 2026-10-05, recheck due)
 - The RDS create call takes a chosen private IP address in the data_vip field; fixed_ip is not a documented request field. Without data_vip the address is assigned from the subnet. (KB-TPVJ, docs, checked 2026-09-25)
 - RDS engine versions are read with GET /v3/{project_id}/datastores/{engine}. The engine name in the path is case-insensitive, and the versions come back under the camelCase response key dataStores, each entry with id and name. (KB-YBOK, live, checked 2026-09-16)
 - An HA RDS instance is created by sending ha with mode Ha and a replication_mode that fits the engine (MySQL async or semisync, PostgreSQL async or sync, SQL Server sync) and by listing one AZ per node in availability_zone, for example eu-de-01,eu-de-02. (KB-ZEBY, docs, checked 2026-09-25)

@@ -1,21 +1,21 @@
-<!-- TCP Facts, dataset of 2026-11-02. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-09. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-02. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-09. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-02: backup
+# TCP Facts 2026-11-09: backup
 
 - Veeam Backup & Replication ships no hypervisor plug-in for the OpenStack/KVM platform that TCP runs on, so nothing that needs hypervisor integration can be delivered through it there. (KB-2FA3, docs, checked 2026-09-25, recheck due)
-- The Veeam 13 Plug-in for Universal Hypervisor API supports only VergeOS and Platform9, whose vendors built the integration. Platform9 is OpenStack based, so Veeam can cover an OpenStack platform this way, but no such plug-in exists for TCP. (KB-2IMZ, docs, checked 2026-10-09)
+- The Veeam 13 Plug-in for Universal Hypervisor API supports only VergeOS and Platform9, whose vendors built the integration. Platform9 is OpenStack based, so Veeam can cover an OpenStack platform this way, but no such plug-in exists for TCP. (KB-2IMZ, docs, checked 2026-10-09, recheck due)
 - Veeam sizing guidance for an object-storage repository is roughly 250 TB per bucket, so a 2 PB repository on OBS is laid out over about eight buckets. (KB-2T3L, docs, checked 2026-09-02)
 - Veeam Backup & Replication 13 exports disks from VMware vSphere and Hyper-V VM backups and from Veeam Agent backups to VMDK, VHD or VHDX, and it can write them to any server added to its backup infrastructure. (KB-6ACV, docs, checked 2026-10-09)
 - A Veeam Backup & Replication 13 disk export in VMDK format writes two files, a descriptor and a content file, and outside an ESXi datastore the disk is thick provision lazy zeroed. A VHD or VHDX export writes one file, which fits the one-file-per-image import of IMS. (KB-BUR2, docs, checked 2026-10-09)
-- The Veeam Backup & Replication 13 workloads list (updated 2026-07-31) names Amazon Web Services, Microsoft Azure and Google Cloud as the only public clouds and has no OpenStack entry, so TCP, like other smaller public clouds, is not on the official Veeam support list. (KB-C7WI, docs, checked 2026-10-09)
+- The Veeam Backup & Replication 13 workloads list (updated 2026-07-31) names Amazon Web Services, Microsoft Azure and Google Cloud as the only public clouds and has no OpenStack entry, so TCP, like other smaller public clouds, is not on the official Veeam support list. (KB-C7WI, docs, checked 2026-10-09, recheck due)
 - Veeam Backup & Replication 13 application-aware processing needs VMware Tools in the guest OS of a VMware VM. So in a Veeam recovery to TCP the tools stay on the source VMs and are removed on the restored ECS, not before the backup. (KB-CEC6, docs, checked 2026-10-09)
 - In AWS Backup only full-management resource types (S3, EFS, EKS and DynamoDB with advanced features) produce Backup-owned artefacts that restore into AWS only. EBS, RDS, Aurora, FSx and standard DynamoDB keep native snapshots with first-party export paths, including RDS snapshot export to Parquet in S3 and DynamoDB export to S3 as JSON or Ion. (KB-D6KV, docs, checked 2026-09-01)
 - Veeam v13 Universal CDP protects virtual, physical and cloud guests with an in-guest agent, so continuous replication out of a TCP instance to an on-premises vSphere target works. The guest must use UEFI boot, GPT partitioning and a supported operating system. (KB-G66F, docs, checked 2026-09-02)

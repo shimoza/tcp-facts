@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-11-02. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-09. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-02. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-09. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-02: evs
+# TCP Facts 2026-11-09: evs
 
 - Elastic Volume Service (EVS) provides block storage volumes that are attached to Elastic Cloud Servers as system or data disks; up to 32 volumes can be attached to one server and a volume can be expanded online when the operating system supports it. The disk types are High I/O, GP SSD, GP SSD V2, Ultra-High I/O and Extreme SSD, and the documentation states that system and data disks support encryption, snapshots and backups. The Regions and Endpoints page lists API endpoints for EVS in eu-de and eu-nl. (KB-2DY5, contract, checked 2026-10-14)
 - On a Linux ECS an attached EVS data disk appears as a virtio block device such as /dev/vdb. A file system is created on the device before it is mounted. (KB-3URW, live, checked 2026-05-01)
@@ -22,12 +22,14 @@
 - Lazy-loading progress of a restored disk is read with GET /v3/{project_id}/os-vendor-volumes/{volume_id}/internal-info. The live response carries the field lazyloading_progress, while the documentation names the field loading_progress. (KB-DLKD, live, checked 2026-09-02)
 - The TCP service description states that up to 32 block storage devices may be assigned per Elastic Cloud Server, while the ECS user manual states 24 at creation and up to 60 after attachment (VBD max 24, SCSI max 59, VBD plus SCSI at most 60). The two sources disagree and neither number is settled. (KB-DMN5, docs, checked 2026-09-02)
 - A volume create request on the EVS path /v2.1/{project_id}/cloudvolumes carries availability_zone in the volume body, for example eu-de-01, and the volume is created in that AZ. (KB-FSXW, live, checked 2026-05-01, recheck due)
+- In the EVS API of TCP the volume_type value SSD is the ultra-high I/O disk type (GPSSD is General Purpose SSD, ESSD is Extreme SSD, GPSSD2 is General Purpose SSD V2, SAS is high I/O, SATA is common I/O). In the eu-de price API its per-GB record is the one with flavor vss.ssd (OTC_EL_BLST_SSD, named EVS Ultra-High I/O); vss.gpssd and vss.essd are the records of GPSSD and ESSD. A match on the word SSD in the record names hits all three. (KB-GL4O, docs, checked 2026-11-08)
 - An EVS disk consumed in CCE through a dynamic PV is bound to one AZ and can be mounted by one pod at a time. (KB-GZTZ, docs, checked 2026-09-16)
 - Data of a disk restored from CBR loads lazily from OBS after the mount. A full read took 183 seconds for 8 GiB and 1780 seconds for 81 GiB, about 22 seconds per GiB or roughly 47 MB/s, and it applies per disk. (KB-HJKW, live, checked 2026-09-02)
 - On a running Linux ECS with a virtio_blk system disk (ext4 on GPT), an extended EVS system disk grows online with growpart and resize2fs, without reboot. Verified from 30 GB to 100 GB while the filesystem was mounted. (KB-HNAB, live, checked 2026-06-08)
 - A root EVS volume on a running ECS can be extended online. After the cloud-side extend, growpart on the root device followed by resize2fs grows a mounted ext4 partition while the instance keeps running, verified from 30 GB to 100 GB on a virtio_blk GPT disk. (KB-IP25, live, checked 2026-06-08)
 - EVS General Purpose SSD (GPSSD) behaved like a burst-credit volume similar to AWS gp2 in a test: fresh volumes burst above baseline, and after hours of heavy reads sustained reads fell to about 21 MB/s (small random reads, about 285 IOPS). That made loading large model weights disk-bound. (KB-JKEF, live, checked 2026-05-07)
 - EVS GP SSD v2 bills on three separate meters on TCP: provisioned capacity, provisioned IOPS above the 3,000 IOPS included, and provisioned throughput above the 125 MiB/s included. (KB-JN3T, contract, checked 2026-09-09)
+- GET /v2/{project_id}/os-quota-sets/{project_id} with the query usage=true on the EVS endpoint in eu-de returns limit and in_use per quota, also per volume type such as gigabytes_GPSSD. (KB-KIFA, live, checked 2026-11-03)
 - Bringing a 10 GiB GPT data volume back on a Windows Server 2022 guest took 43 s in total: 6 s to create the volume from the CBR backup, 12 s to attach it, the rest to bring it online. The volume arrives Offline under the SAN policy OfflineShared. (KB-KQUM, live, checked 2026-09-02)
 - Data disks under heavy write survive a crash-consistent capture by both SDRS mirroring and CBR backup: both copies reported Filesystem state clean, mounted, and passed e2fsck -fn. The file count differs between the copies, which is expected for a point-in-time capture. (KB-KUQ7, live, checked 2026-09-02)
 - A CBR backup can be restored into another availability zone: POST /v2/{project_id}/cloudvolumes on the EVS endpoint accepts backup_id together with a target availability_zone, volume_type and size, and creates the disk there. (KB-LXHJ, live, checked 2026-08-26)

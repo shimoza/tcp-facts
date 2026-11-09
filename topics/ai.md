@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-11-02. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-09. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-02. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-09. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-02: ai
+# TCP Facts 2026-11-09: ai
 
 - A 400 validation error is a FastAPI error list that echoes the submitted request body, so the prompt can end up in client error logs. (KB-234F, live, checked 2026-09-21)
 - Visual RAG runs under /v1 (files and vector stores) with text-embedding-bge-m3 for text and tsi-embedding-colqwen2-2b-v1 for page images. GET /v1/vector_stores answered on a Category 1 key. (KB-2PS3, live, checked 2026-09-21)
@@ -22,8 +22,8 @@
 - The Category 1 backend is vLLM; system_fingerprint starts with "vllm-". (KB-7PHA, live, checked 2026-09-21)
 - In v1.24 the service description removed the section on the chat frontend (Playground), so the Playground is no longer a contracted feature. (KB-B5UT, docs, checked 2026-10-08)
 - A customer who sends personal data must sign a data processing agreement (Telekom template), available on request. (KB-BVS7, docs, checked 2026-06-12)
-- Category 2 models in v1.24 (20): on Azure Sweden GPT-5.6 Sol, Terra and Luna, GPT-6.1 Sol and GPT-6 Luna; on Azure GPT-Image-2; Ada-Text (Azure France); on GCP Mistral Medium 3; on GCP and Azure Mistral Medium 3.5, Claude Opus 5, Opus 5.5, Sonnet 5, Sonnet 5.5, Fable 5 and Fable 5.1; on GCP Gemini 3 Flash, 3.1 Pro, 3.5 Flash, 3.8 Flash and 3 Pro Image. (KB-CN3H, docs, checked 2026-10-08)
-- Category 1 models are operated by Telekom on T Cloud Public / Industrial AI Cloud. Data is processed in the EU/EEA and/or in countries with an EU adequacy decision. (KB-EZ6O, docs, checked 2026-10-08)
+- Category 2 models in v1.24 (20): on Azure Sweden GPT-5.6 Sol, Terra and Luna, GPT-6.1 Sol and GPT-6 Luna; on Azure GPT-Image-2; Ada-Text (Azure France); on GCP Mistral Medium 3; on GCP and Azure Mistral Medium 3.5, Claude Opus 5, Opus 5.5, Sonnet 5, Sonnet 5.5, Fable 5 and Fable 5.1; on GCP Gemini 3 Flash, 3.1 Pro, 3.5 Flash, 3.8 Flash and 3 Pro Image. (KB-CN3H, docs, checked 2026-10-08, recheck due)
+- Category 1 models are operated by Telekom on T Cloud Public / Industrial AI Cloud. Data is processed in the EU/EEA and/or in countries with an EU adequacy decision. (KB-EZ6O, docs, checked 2026-10-08, recheck due)
 - A stream always ends with a usage chunk whose choices list is empty, even without stream_options.include_usage. A client that reads choices[0] on every chunk fails on it. (KB-FTZX, live, checked 2026-09-21)
 - Tool calling works on every Category 1 chat model except Qwen3.6-35B-A3B-FP8. response_format json_object is not honoured on GLM-5.2, Nemotron 3 Super and Qwen3.6. (KB-GGYA, live, checked 2026-09-17)
 - The /queue/... endpoints return a finished completion with no job id. They answer synchronously and do not work as a batch API. (KB-GMCD, live, checked 2026-09-21)
@@ -35,7 +35,7 @@
 - Whisper has a 448-token context per request. Audio longer than about 2.5 minutes came back with duplicated text or a lost final segment, so long audio must be split. (KB-JWXS, live, checked 2026-09-08)
 - Prefix caching matches exact token prefixes only. T Cloud models use the request fields save_cache and cache_salt; Anthropic models use cache_control. The docs call cache counters diagnostics, not a billing statement. (KB-K6QW, docs, checked 2026-08-21)
 - A free trial key from the self-service portal gives access to all available models, without an SLA; the provider can limit or deactivate it. (KB-L5JU, docs, checked 2026-08-25, recheck due)
-- Published Category 1 rate limits (Essential / Professional / Agentic): GPT-OSS-120B 400k / 1M / 2M TPM and 100 / 200 / 300 RPM; Gemma 4, Mistral Small 4, Qwen3.6 and Nemotron 3 Super 50k / 100k / 300k TPM and 50 / 100 / 150 RPM; GLM 5.2 400k / 1M / 2M TPM and 100 / 200 / 300 RPM; Whisper large-v3 218 TPM, turbo 345 TPM, 300 RPM in every plan. (KB-LT6G, docs, checked 2026-10-08)
+- Published Category 1 rate limits (Essential / Professional / Agentic): GPT-OSS-120B 400k / 1M / 2M TPM and 100 / 200 / 300 RPM; Gemma 4, Mistral Small 4, Qwen3.6 and Nemotron 3 Super 50k / 100k / 300k TPM and 50 / 100 / 150 RPM; GLM 5.2 400k / 1M / 2M TPM and 100 / 200 / 300 RPM; Whisper large-v3 218 TPM, turbo 345 TPM, 300 RPM in every plan. (KB-LT6G, docs, checked 2026-10-08, recheck due)
 - The API base URL is https://llm-server.llmhub.t-systems.net/v2 (path /v2, not /v1) and it is OpenAI-compatible. (KB-MAIA, live, checked 2026-09-21)
 - Optional services, each quoted after a feasibility check: LLMs on a dedicated instance, fine-tuning, installation in the customer's own environment, additional LLMs or embedding models, and further support. (KB-MJ5A, docs, checked 2026-06-12, recheck due)
 - The service description names only public internet access: HTTPS requests or the Python package openai, with the handover point at the API endpoint in the Telekom data centre. It names no VPN, Direct Connect, peering or private endpoint. (KB-NF43, docs, checked 2026-10-10)
@@ -50,7 +50,7 @@
 - Rate limits apply per contract and are shared by all keys under it. They are maximum ceilings on a best-effort basis and not part of the SLA. (KB-VA7X, docs, checked 2026-10-08)
 - On a Category 1 key, /v2/chat/completions, /v2/completions, /v2/audio/transcriptions, /v2/coding/chat/completions and /v2/responses (tested with gpt-oss-120b) work. (KB-VBP2, live, checked 2026-09-21)
 - Models hosted on T Cloud Public send no rate-limit headers; clients must count usage themselves. (KB-VCL5, live, checked 2026-08-25)
-- Category 1 models in v1.24 (12): Gemma 4 31B, Mistral Small 4, Qwen3.6 35B, NVIDIA Nemotron 3 Super, GLM 5.2, GLM 5.3 Flash, Qwen 3.8 27B, GPT-OSS-120B, jina-embeddings-v2-base-de, text-embedding-bge-m3, Whisper Large v3 and Whisper Large v3 Turbo. (KB-VOCY, docs, checked 2026-10-08)
+- Category 1 models in v1.24 (12): Gemma 4 31B, Mistral Small 4, Qwen3.6 35B, NVIDIA Nemotron 3 Super, GLM 5.2, GLM 5.3 Flash, Qwen 3.8 27B, GPT-OSS-120B, jina-embeddings-v2-base-de, text-embedding-bge-m3, Whisper Large v3 and Whisper Large v3 Turbo. (KB-VOCY, docs, checked 2026-10-08, recheck due)
 - Whisper is billed by transcript tokens, all in completion_tokens, with prompt_tokens 0. Dense German speech produced about 152.6 tokens per audio minute. (KB-W2D6, live, checked 2026-09-08)
 - The plans Essential, Professional and Agentic can be bought on the T Cloud Public Marketplace as "LLM Serving Service (TCP Models)". The listing says it includes only models hosted on T Cloud Public; models on Azure or GCP need a separate offer. (KB-W6A3, docs, checked 2026-08-25, recheck due)
 - GET /v2/models lists the models of the key. GET /v2/models/{id} returns 405. (KB-WKNA, live, checked 2026-09-17)

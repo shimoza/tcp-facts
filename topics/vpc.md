@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-11-02. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-09. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-02. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-09. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-02: vpc
+# TCP Facts 2026-11-09: vpc
 
 - Once the WAF engine port is gone, the security group and the subnet delete cleanly. A VPC delete can still answer 409 VPC.0104 once while the subnet settles and then succeed on the next attempt. (KB-3TES, live, checked 2026-09-16)
 - The VPC api-ref requires a plain IP address for the ip_address of an allowed address pair under the hardware SDN networking plan, and a dedicated security group for a pair whose mask is shorter than /24. (KB-3YKZ, docs, checked 2026-06-12)
@@ -43,6 +43,7 @@
 - A VPC peering between two VPCs of the same tenant becomes active on creation, without a separate accept step. Routes have to be added on both sides, in Terraform with opentelekomcloud_vpc_route_v2, type "peering" and nexthop set to the peering id. (KB-H7KG, live, checked 2026-09-16)
 - The VPC API reference on TCP exposes no sub-network-interface endpoints. The VLAN-based supplementary network interface capability exists on the platform but is consumed by the CCE Turbo CNI only, so there is no customer-usable equivalent of ENI prefix delegation on ECS. (KB-HLIZ, docs, checked 2026-06-12)
 - Two VPC route conflicts are rejected: creating a VPN connection whose peer subnet equals an existing VPC subnet returns VPN.0219, and adding a peering route for a destination already routed to a VPN returns 400 DestinationAlreadyExist. (KB-HNE7, live, checked 2026-08-26)
+- GET /v2.0/ports reports port_security_enabled true on a port that has an any-source allowed address pair with prefix /0, so port_security_enabled does not tell whether the source and destination check is off; read allowed_address_pairs instead. (KB-HPNY, live, checked 2026-11-05)
 - The VPC v1 API lists security groups together with their rules at /v1/{project_id}/security-groups in eu-de, returning security_groups[].security_group_rules[]. Each rule carries id, direction, ethertype as IPv4 or IPv6, protocol where null means any, port_range_min, port_range_max, remote_ip_prefix and remote_group_id. (KB-IJZM, live, checked 2026-06-08)
 - GET /v1/{project_id}/subnets also returns legacy neutron networks, recognisable by status UNKNOWN, scope center and a missing vpc_id field. A record without vpc_id is not a VPC subnet. (KB-KGJY, live, checked 2026-09-17)
 - On T Cloud Public (TCP) in eu-de network ACLs are read with the VPC v3 call GET /v3/{project_id}/vpc/firewalls, which returns HTTP 200 with the response keys firewalls and page_info. (KB-KMWL, live, checked 2026-07-02)
@@ -79,6 +80,7 @@
 - Anti-spoofing on a VPC NIC drops packets whose source or destination address differs from the NIC's fixed IP, which affects any routing, firewall or VPN gateway instance. It is opened per NIC with PUT /v2.0/ports/{port_id} on vpc.eu-de.otc.t-systems.com setting allowed_address_pairs, returning HTTP 200. (KB-W7H2, live, checked 2026-07-23)
 - In eu-de the quota for type vpc returned by the VPC quota endpoint is 10 VPCs per project. (KB-WGTH, live, checked 2026-08-26)
 - Subnets are AZ-agnostic: an ECS placed in eu-de-03 was created on a subnet labelled eu-de-01 without problems. (KB-XGKU, live, checked 2026-07-20)
+- A default route to a NAT gateway in a VPC shows in GET /v1/{project_id}/routetables/{id} as type nat with the gateway id and in GET /v1/{project_id}/vpcs as a route with the private IP of the gateway port as nexthop, but GET /v2.0/vpc/routes lists only the peering routes of that VPC, so that list alone does not show the default route. (KB-XQLC, live, checked 2026-11-04)
 - A VPC create in a project that has reached its VPC quota fails with a quota error, not with a syntax or validation error. (KB-Y72H, live, checked 2026-08-18)
 - The description of a security group rule is free text and has no effect on filtering. A rule described "Deny all traffic" with protocol All, port range 0 to 0 and remote_ip_prefix 0.0.0.0/0 is an ordinary allow-all rule. (KB-YGSM, docs, checked 2026-09-02)
 - A VPC route table on T Cloud Public (TCP) cannot hold two routes with the same destination, even when the next hop types differ, and the system route created for a VPC subnet CIDR cannot be modified or deleted. (KB-YHLQ, docs, checked 2026-08-26)

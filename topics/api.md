@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-11-02. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-09. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-02. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-09. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-02: api
+# TCP Facts 2026-11-09: api
 
 - The enterprise project quota is 100 per account, readable with GET /quotas on the EPS endpoint. (KB-263E, live, checked 2026-06-03)
 - Creating a DLI elastic resource pool via API worked with max_cu equal to min_cu: 16/16 returned 200, 16/64 returned DLI.0035. The pool took about 10 minutes to reach AVAILABLE. (KB-3VTJ, live, checked 2026-07-28)
@@ -18,11 +18,13 @@
 - In a list query, limit=200 caps the page size rather than the number of matching records, so a full page of 200 means at least 200 records exist. (KB-6G5Y, live, checked 2026-09-02)
 - An existing resource is moved into an enterprise project with POST /v1.0/enterprise-projects/{id}/resources-migrate, which answers 204; id 0 moves it back to the default project. The result is visible through POST /{id}/resources/filter. (KB-6OP2, live, checked 2026-06-03)
 - The vendor's per-service Python SDK clients fail with region lookup errors when they are pointed at eu-de, because eu-de is missing from the region list those clients ship with. (KB-7LDG, live, checked 2026-09-25)
+- Quota reads on eu-de: GET /v3/{project_id}/elb/quotas, /autoscaling-api/v1/{project_id}/quotas, /v2/{project_id}/os-quota-sets/{project_id} of sfs and /v3.0/OS-QUOTA/projects/{project_id} of iam answer 200, while /v2.0/quotas of nat, /v3/{project_id}/quotas of cbr and /v2/quotas of dns answer 404 APIGW.0101. (KB-C36H, live, checked 2026-11-04)
 - On 2026-09-25 a signed POST with an empty body reached request validation, not authentication, on ECS, VPC, EVS, RDS, ELB, CBR, CES, SMN, WAF, VPCEP, VPN, NAT and IMS in eu-de: each answered its own HTTP 400 error and none answered 401. The DRS job list and the KMS key list, both POST calls, answered 200, and signed creates and deletes on CES, WAF, VPC, ELB and ECS succeeded the same day. (KB-DK5M, live, checked 2026-09-25)
 - The Authorization header of a signed call has the form SDK-HMAC-SHA256 Access=<access key>, SignedHeaders=<names>, Signature=<hex>. The signed header names are lowercased, sorted and joined with semicolons. (KB-DVYO, live, checked 2026-09-25)
 - A call to a service endpoint in another region needs that region's own project_id. Using the eu-de project_id against an eu-nl endpoint returns HTTP 403, which reads like the service being absent in that region. (KB-FOCJ, live, checked 2026-08-27)
 - A signed call carries an X-Sdk-Date header with the UTC timestamp in YYYYMMDDThhmmssZ form. The header name is part of the signed header list, so the signature covers the request timestamp. (KB-GLEX, live, checked 2026-09-25)
 - The DLI SQL check, POST /v1.0/{project_id}/jobs/check-sql, answers at once without submitting a job and already refuses unsupported DDL: on 2026-09-25 it refused CREATE TABLE ... USING ICEBERG with DLI.0007 and STORED BY with DLI.0005, so it tests what DLI supports without a queue run. (KB-HZUX, live, checked 2026-09-25)
+- With a read-only login a signed call answers HTTP 404 on GET /v1/{project_id}/os-keypairs of ecs, GET /v2.0/vpn/ipsec-site-connections of vpc and GET /v3/{project_id}/dcaas/direct-connects of dcaas in eu-de, so these paths do not show whether such resources exist. (KB-IEQC, live, checked 2026-11-04)
 - In the canonical request each path segment is percent-encoded and the path ends with a slash, query parameters are sorted by key with key and value percent-encoded, and the body hash is SHA256 of the raw body, or of the empty string when there is no body. (KB-IMQR, live, checked 2026-08-18)
 - In the vendor SDK on huaweicloudsdkcore 3.1.186, the region lookup <Service>Region.value_of("eu-de"), whose result .with_region() normally takes, raises KeyError because eu-de is not in the region table the SDK ships. A plain string passed to .with_region() raises nothing there, and build() then fails with AttributeError. (KB-LCLP, live, checked 2026-09-25)
 - TCP API requests are authenticated with an AK/SK signature of type SDK-HMAC-SHA256. The algorithm needs only HMAC-SHA256 and SHA-256, so an HTTP client plus a standard crypto library can sign calls. (KB-LHNK, live, checked 2026-09-23)

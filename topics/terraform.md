@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-11-02. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-09. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-02. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-09. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-02: terraform
+# TCP Facts 2026-11-09: terraform
 
 - OpenTofu 1.10.3 stores remote state on OBS through the S3 backend with the skip_ flags set. init, apply and state pull complete, and the stored state objects are byte-exact across repeated applies. (KB-23WT, live, checked 2026-07-17)
 - With the opentelekomcloud Terraform provider, an opentelekomcloud_networking_secgroup_v2 resource applies in about one second and destroys in about eight seconds. (KB-2NKA, live, checked 2026-08-18)
@@ -40,7 +40,7 @@
 - State written to OBS by OpenTofu 1.10.3 without skip_s3_checksum carries no aws-chunked or x-amz-checksum framing: Content-Length equals the body and the object reads back as valid JSON. (KB-R5TS, live, checked 2026-07-17)
 - The opentelekomcloud Terraform provider exposes enterprise projects through the enterprise_project_id argument on about 16 resources, among them vpc_secgroup_v3, lts_group_v2, fgs_function_v2, ces_*, private_nat_*, taurusdb_*, apigw_gateway_v2, cfw_firewall_v1 and waf_cloud_instance_v1. (KB-RE2U, docs, checked 2026-06-02)
 - The Terraform resource opentelekomcloud_ecs_instance_v1 resizes in place on a flavor change, stop, resize and start, with no rebuild, and it ignores the image cond:image tag like the raw API does. Verified from s7n.large.4 to s9.large.2 on an untagged image. (KB-T2RV, live, checked 2026-07-21)
-- On 2026-10-05 the upstream Terraform issue 36704 (skip_s3_checksum not applied to GetObject, a breaking change since Terraform 1.11.2 for S3-compatible state backends) was still open. A remote state in OBS therefore still needs Terraform pinned to 1.11.1 or OpenTofu 1.10 or newer with the skip flags and use_lockfile. (KB-TN3S, docs, checked 2026-10-05)
+- On 2026-10-05 the upstream Terraform issue 36704 (skip_s3_checksum not applied to GetObject, a breaking change since Terraform 1.11.2 for S3-compatible state backends) was still open. A remote state in OBS therefore still needs Terraform pinned to 1.11.1 or OpenTofu 1.10 or newer with the skip flags and use_lockfile. (KB-TN3S, docs, checked 2026-10-05, recheck due)
 - The opentelekomcloud Terraform provider (schema v1.36) accepts enterprise_project_id at provider level, so one enterprise project can be set once per stack instead of on every resource. It only takes effect on resources that support enterprise projects. (KB-U52F, docs, checked 2026-07-17)
 - Resource Formation Service (RFS) is a managed infrastructure-as-code engine that builds and manages cloud resources such as databases, VPCs, pipelines and IAM roles from templates, in batches and in a consistent way. The documentation states that RFS fully supports Terraform, both the HCL language and providers, and deploys the resources a template specifies automatically. (KB-UJSI, contract, checked 2026-10-14)
 - T Cloud Public (TCP) supports infrastructure as code: Resource Formation Service (RFS) runs Terraform templates (HCL and providers) as a managed service, the opentelekomcloud Terraform provider (version 1.37.7 exposes 331 resources, KB-LYTV) drives the platform from customer pipelines, and resources are provisioned and managed fully automatically through the platform APIs, the OpenStack APIs and standard OpenStack command-line tools. (KB-V42N, docs, checked 2026-10-11)

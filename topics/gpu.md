@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-11-02. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-09. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-02. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-09. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-02: gpu
+# TCP Facts 2026-11-09: gpu
 
 - G6, G7 and G7v ECS from a public image carry the NVIDIA GRID driver, but the GRID licence has to be bought and configured by the customer. (KB-2DTS, docs, checked 2026-10-21)
 - On 2026-09-25 the eu-de public image catalog held 57 images flagged for GPU flavors, 45 of them Linux, and only six Linux ones name an NVIDIA driver in their description: Standard_Ubuntu_22.04_GPU_NV, latest and prev, with Nvidia public driver included, and Standard_RockyLinux_9_GRID in bios and uefi variants with the GRID driver file NVIDIA-Linux-x86_64-535.288.01-grid.run included. (KB-3JIJ, live, checked 2026-09-25, recheck due)
@@ -16,8 +16,8 @@
 - In eu-de the vGPU flavors g7v.2xlarge.8, g7v.4xlarge.8 and g7v.6xlarge.8 carry NVIDIA A40-8Q, A40-16Q and A40-24Q profiles with 8, 16 and 24 GB of GPU memory, 8, 16 and 24 vCPU and 64, 128 and 192 GB RAM, offered only in eu-de-01, where g7v.6xlarge.8 read sellout on 2026-10-21. (KB-3VXF, live, checked 2026-10-21)
 - DJI Terra ships no official CLI or headless API. The backend engines DJIMapGen.exe, TerraWorkingProcess.exe, terra_3dgs.exe and DJIPicMapGen.exe are driven from an Electron GUI (DJIBrowser.exe). (KB-4A7E, docs, checked 2026-06-23)
 - The NVIDIA Container Toolkit install guide requires an installed NVIDIA GPU driver and a supported container engine such as Docker, then the toolkit packages, and for Docker the command nvidia-ctk runtime configure --runtime=docker, which updates /etc/docker/daemon.json so that Docker can use the NVIDIA Container Runtime, followed by a restart of the Docker daemon. (KB-4C3N, docs, checked 2026-09-25)
-- On an eight-GPU instance, docker rm -f followed immediately by docker run --gpus all sometimes gives the new container only seven GPUs while nvidia-smi -L on the host still lists eight, and torch aborts with device >= 0 && device < num_gpus. Restarting the docker daemon between swaps restored all eight. (KB-5GI3, live, checked 2026-05-07)
-- vLLM 0.19.1 loading AWQ-INT4 weights through the compressed-tensors MarlinLinearKernel path repacks the layout in memory at load, about 110 seconds per 5 GB shard, single threaded per worker on cold page cache (81 shards, about 2.5 hours). Raising OMP_NUM_THREADS slowed it to about 200 seconds per shard on 80 vCPU. (KB-65QI, live, checked 2026-05-07)
+- On an eight-GPU instance, docker rm -f followed immediately by docker run --gpus all sometimes gives the new container only seven GPUs while nvidia-smi -L on the host still lists eight, and torch aborts with device >= 0 && device < num_gpus. Restarting the docker daemon between swaps restored all eight. (KB-5GI3, live, checked 2026-05-07, recheck due)
+- vLLM 0.19.1 loading AWQ-INT4 weights through the compressed-tensors MarlinLinearKernel path repacks the layout in memory at load, about 110 seconds per 5 GB shard, single threaded per worker on cold page cache (81 shards, about 2.5 hours). Raising OMP_NUM_THREADS slowed it to about 200 seconds per shard on 80 vCPU. (KB-65QI, live, checked 2026-05-07, recheck due)
 - On 2026-10-21 in eu-de only the _prev Windows Server 2022 STD public images (uefi and bios) carried __support_kvm_gpu_a40_g7v true; the _latest ones carried false, so a g7v Windows Server 2022 host starts from the previous patch level. (KB-6Z4Y, live, checked 2026-10-21)
 - The TCP service description, revision 09.10.2026, lists only the local-disk flavors i3 and d2 and all Dedicated Host types as charged in the shutdown state, so a stopped GPU ECS such as g7v is not charged for compute. (KB-AX36, contract, checked 2026-10-21)
 - GPU flavors in eu-de come with fixed RAM, and every Windows GPU flavor cheaper than g6.10xlarge.7 on pay-as-you-go has 32 to 128 GB RAM (2026-09-25). g6.10xlarge.7 itself pairs one T4 with 280 GB RAM, and p2s.8xlarge.8 and p2v.8xlarge.8 reach 256 GB with only 32 vCPU. (KB-CQ2S, live, checked 2026-09-25, recheck due)

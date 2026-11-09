@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-11-02. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-09. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-02. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-09. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-02: obs
+# TCP Facts 2026-11-09: obs
 
 - OBS SDK guides are published for python, java, go, nodejs, dotnet and c. Community OBS SDK sources for python and java are published under the opentelekomcloud-community organisation. (KB-24VK, docs, checked 2026-06-19)
 - The OBS user guide limits a user-defined domain name bound to a bucket to HTTP requests instead of HTTPS, and the domain name points by a CNAME record to the bucket domain name, so a DNS lookup of the own domain returns the OBS bucket host. (KB-252Q, docs, checked 2026-09-25)
@@ -117,6 +117,7 @@
 - An OBS bucket is created with a PUT to the bucket root carrying a CreateBucketConfiguration body with Location eu-de and Content-Type application/xml, which answers HTTP 200. A DELETE to the same bucket root after all objects are removed answers HTTP 204. (KB-OWQ7, live, checked 2026-06-12)
 - The S3-compatible bucket notification call against OBS in eu-de returned InvalidArgument, Unable to validate the following destination configurations, when the destination was an SMN topic urn. The SMN topic itself had been created with 201 in the same run. (KB-OXT6, live, checked 2026-07-29)
 - An OBS bucket listing returns a Size element per object together with IsTruncated. The next page is requested with max-keys and marker set to the last Key of the previous page, so total bucket size can be summed from the listings. (KB-OYZJ, live, checked 2026-09-16)
+- An OBS object uploaded with public-read is downloaded anonymously with Invoke-WebRequest from a Windows Server 2019 guest on the internet through its virtual-hosted URL, with the size and SHA-256 unchanged. (KB-P2AH, live, checked 2026-11-03)
 - OBS does not accept requests signed with the API gateway scheme SDK-HMAC-SHA256: a bucket listing signed that way answered HTTP 400 InvalidArgument, 'Authorization header is invalid -- one and only one ' ' (space) required'. OBS takes S3-style signatures (SigV2 or SigV4) or its own OBS scheme only. (KB-PHQ5, live, checked 2026-10-05)
 - During an OBS delta sync a NoSuchKey error appears for an object that was deleted between the listing call and the copy call. It reflects a source-side delete, not a failed copy. (KB-PQYE, docs, checked 2026-09-25)
 - OBS objects in the GLACIER storage class need a restore to STANDARD before a copy or an encryption run can read them. (KB-PWBT, docs, checked 2026-09-25)
@@ -138,6 +139,7 @@
 - An OBS object in the Cold (GLACIER) class has to be restored to STANDARD before it can be read, copied or re-encrypted. The S3-compatible restore request takes a number of days and a retrieval tier; a HEAD on the object reports Restore ongoing-request="false" once the copy is ready. (KB-TA3K, docs, checked 2026-09-25)
 - On OBS, WORM retention on a bucket and cross-region replication of that bucket are mutually exclusive, per the OBS documentation. (KB-TA6I, docs, checked 2026-09-01)
 - The default storage class of an OBS bucket is set with PUT on the bucket URL with the ?storageClass sub-resource and an XML StorageClass body naming STANDARD, WARM or COLD, and read back with GET ?storageClass. The IAM action is obs:bucket:PutBucketStoragePolicy. (KB-TD5E, docs, checked 2026-09-25)
+- A PUT of an OBS object with the header x-obs-acl public-read stores the object with a read grant for everyone, shown by GET on the object with the acl query, while the bucket stays private. The ETag equals the MD5 of the body. An anonymous download itself was not checked in this call. (KB-TNTK, live, checked 2026-11-03)
 - Object Storage is billed with a cumulative graduated price: the price scales are filled one after another and each part of the used quantity is billed at its own scale. Taking the single tier a volume lands in and multiplying the whole volume by that rate over-states the bill. (KB-TPA7, contract, checked 2026-08-27)
 - An IAM user reaches one OBS state bucket through a bucket policy naming the principal as domain/<domain_id>:user/<user_id>, with no OBS role assigned at all. A second bucket in the same account stayed denied for that user. (KB-TQIX, live, checked 2026-09-17)
 - OBS Bucket is a resource type supported by enterprise projects. Buckets can be placed in an enterprise project and a user group authorized with an OBS role scoped to that enterprise project. (KB-UGXP, docs, checked 2026-07-09)

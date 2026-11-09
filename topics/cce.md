@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-11-02. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-09. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a grade (live = tested on a tenant, contract = from the service description, docs = from the vendor documentation)
    and a check date. Name the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-02. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-09. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-02: cce
+# TCP Facts 2026-11-09: cce
 
 - Cloud Container Engine and Cloud Container Engine Turbo (CCE, CCE Turbo) provide managed Kubernetes clusters in which the customer runs, manages and monitors containers, with the compute, storage and network resources reserved on T Cloud Public (TCP). CCE Turbo adds passthrough networking (Cloud Native 2.0) and better scheduling compared with CCE Standard; the preassembled cluster flavors hold up to 50, 200, 1,000 or 2,000 nodes, among them a high-availability flavor. The Regions and Endpoints page lists API endpoints for CCE in eu-de and eu-nl. (KB-22XD, contract, checked 2026-10-14)
 - A new CCE cluster comes with 17 storage classes, among them `csi-disk`, `csi-nas`, `csi-obs`, `csi-sfsturbo` and older flexvolume ones, and none of them carries the `storageclass.kubernetes.io/is-default-class` annotation. A PersistentVolumeClaim that does not name a class stays Pending. (KB-27TG, live, checked 2026-09-16)
@@ -31,7 +31,7 @@
 - On CCE a 10 Gi PersistentVolumeClaim with the csi-disk storage class bound in about one minute. While the volume is being provisioned, exec into the pod answers "container not found". (KB-CR6R, live, checked 2026-09-17)
 - CCE creates the SWR pull credential default-secret in every namespace of a cluster, so a Pod or Job pulling a private image from SWR only needs imagePullSecrets: [{name: default-secret}]. (KB-E6ID, live, checked 2026-09-17)
 - CCE Turbo node pools accept x86 VM flavors from the c3n, c4ne, c7n, c9, x2ne, s7n, s9, m3n, m7n and m9 families plus the GPU families g7, pi5e and p5e, as the CCE API reference lists them on 2026-09-25; region availability varies. (KB-GMRI, docs, checked 2026-09-25, recheck due)
-- GET /api/v3/addontemplates on the CCE endpoint returned 14 add-on templates on eu-de on 2026-09-25: autoscaler, cce-hpa-controller, metrics-server, nginx-ingress, gpu-beta, volcano, coredns, everest, grafana, log-agent, npd, storage-driver, node-local-dns and cie-collector. The newest supportVersions patterns reach cluster version v1.35. (KB-I7J7, live, checked 2026-10-05)
+- GET /api/v3/addontemplates on the CCE endpoint returned 14 add-on templates on eu-de on 2026-09-25: autoscaler, cce-hpa-controller, metrics-server, nginx-ingress, gpu-beta, volcano, coredns, everest, grafana, log-agent, npd, storage-driver, node-local-dns and cie-collector. The newest supportVersions patterns reach cluster version v1.35. (KB-I7J7, live, checked 2026-10-05, recheck due)
 - On CCE, `csi-disk` is the EVS-backed block storage class, and a 10Gi PersistentVolumeClaim naming it bound in about 5 seconds. (KB-JGA2, live, checked 2026-09-16)
 - While no elastic IP is bound to the CCE cluster API, the external_otc endpoint cannot be authenticated against, although it resolves and serves a valid certificate. (KB-KTT2, live, checked 2026-09-16)
 - Pod density on a CCE Turbo node is capped by the node flavor's supplementary network interface quota rather than by the kubelet default. Documentation examples give 128 pods on a 4xlarge class node and 256 on an 8xlarge class node. (KB-NFSU, docs, checked 2026-06-12)
@@ -43,7 +43,7 @@
 - When concurrent emptyDir-heavy pods fill nodefs on a CCE worker, the node gets `node.kubernetes.io/disk-pressure` and further pods stay Pending with an untolerated taint. `GET /api/v1/nodes/<node>/proxy/stats/summary` can report 5 percent used while the taint is still set, because the kubelet holds the condition for its transition period. (KB-QYGN, live, checked 2026-09-17)
 - On a standard CCE cluster a LoadBalancer ingress registers only Services of type NodePort. With a ClusterIP backend the controller logs `can not found protocol port of pod <ns>/<pod>, skip add member`, the ELB pool stays empty and requests return 502. ClusterIP backends work on a CCE Turbo cluster with a dedicated load balancer. (KB-SH6U, docs, checked 2026-09-16)
 - The public price API carries the CCE cluster charge under sn=cce as one hourly item per cluster flavor: cce.s1.small, cce.s1.medium and, for the HA clusters, cce.s2.small to cce.s2.xlarge, six items in eu-de on 2026-09-24. Worker nodes, EIP, NAT gateway and EVS are priced under their own service names. (KB-SJJV, live, checked 2026-09-24, recheck due)
-- The CCE add-on catalog read on eu-de on 2026-09-25 held no keda and no knative template, so on that date no add-on offered request driven pod scale to zero. (KB-SQ4W, live, checked 2026-10-05)
+- The CCE add-on catalog read on eu-de on 2026-09-25 held no keda and no knative template, so on that date no add-on offered request driven pod scale to zero. (KB-SQ4W, live, checked 2026-10-05, recheck due)
 - The number of master nodes in a CCE cluster is fixed when the cluster is created, so a highly available control plane has to be chosen at creation time. (KB-UOZO, docs, checked 2026-09-25)
 - On CCE the number of master nodes is fixed at cluster creation. Changing the cluster scale (50, 200, 1000 nodes) leaves the master count unchanged and only moves upward, so reaching a three-master HA cluster from a single-master one means a new cluster. (KB-VXRJ, docs, checked 2026-09-09)
 - A stale `node.kubernetes.io/disk-pressure` taint is removed with `kubectl taint node <node> node.kubernetes.io/disk-pressure-`; Kubernetes adds it again automatically while the node disk space is still near its limit. (KB-WJEE, docs, checked 2026-09-25)
