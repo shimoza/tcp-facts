@@ -1,6 +1,6 @@
 <h1 align="center">TCP Facts</h1>
 
-<p align="center"><b>Checked facts about T Cloud Public (TCP) for any AI assistant, dataset of 2026-11-09</b></p>
+<p align="center"><b>Checked facts about T Cloud Public (TCP) for any AI assistant, dataset of 2026-11-16</b></p>
 
 > **Unofficial and independent.** Not a product of, and not endorsed by, T-Systems or Deutsche Telekom; it speaks for nobody but its author. Built only from public sources (the public documentation, the public service description, the public price API), with respect for robots.txt and the terms of those sources. No customer data and no confidential information. No warranty: the provider's contract documents are binding.
 
@@ -8,19 +8,19 @@
 
 <p align="center">
   <img alt="Unofficial" src="https://img.shields.io/badge/Status-Unofficial-c64a3d">
-  <img alt="Facts: 1873" src="https://img.shields.io/badge/Facts-1873-2f6fd1">
-  <img alt="Best before: 2026-12-09" src="https://img.shields.io/badge/Best_before-2026--12--09-e0b43a">
+  <img alt="Facts: 2006" src="https://img.shields.io/badge/Facts-2006-2f6fd1">
+  <img alt="Best before: 2026-12-16" src="https://img.shields.io/badge/Best_before-2026--12--16-e0b43a">
   <img alt="License: CC BY 4.0" src="https://img.shields.io/badge/License-CC_BY_4.0-3f9d5a">
   <a href="#mcp-clients"><img alt="MCP server" src="https://img.shields.io/badge/MCP-server-8a63b8"></a>
 </p>
 
-Build of 2026-11-09 06:00 UTC. A later build of the same day replaces this one under the same name; the manifest carries the build time.
+Build of 2026-11-16 06:01 UTC. A later build of the same day replaces this one under the same name; the manifest carries the build time.
 
-1873 checked facts about T Cloud Public (TCP) with the list of orderable services. Made to be dropped into any AI assistant. Prices are not part of the dataset: they come live from the public price API with --live.
+2006 checked facts about T Cloud Public (TCP) with the list of orderable services. Made to be dropped into any AI assistant. Prices are not part of the dataset: they come live from the public price API with --live.
 
-1221 facts were tested live on a TCP tenant, 484 come from the vendor documentation and 168 from the service description (revision 09.10.2026). No fact from hearsay, no expired fact, no customer, no project, no credential.
+1335 facts were tested live on a TCP tenant, 504 come from the vendor documentation and 167 from the service description (revision 09.10.2026). No fact from hearsay, no customer, no project, no credential.
 
-391 of the 484 documentation facts come from the open source repositories of the GitHub organisation opentelekomcloud-docs, published under the Apache License 2.0. The public source of each of the others is in facts.jsonl. The documentation website is not crawled, its robots.txt disallows all robots. Sources whose terms forbid automated analysis are not used, so the community portal and internal documentation are left out. The live checks ran on the compiler's own TCP test tenants.
+393 of the 504 documentation facts come from the open source repositories of the GitHub organisation opentelekomcloud-docs, published under the Apache License 2.0. The public source of each of the others is in facts.jsonl. The documentation website is not crawled, its robots.txt disallows all robots. Sources whose terms forbid automated analysis are not used, so the community portal and internal documentation are left out. The live checks ran on the compiler's own TCP test tenants.
 
 
 ## Use
@@ -107,9 +107,22 @@ A good answer quotes the fact and its id, for example (KB-MZQU) for this one, so
 What the dataset does not hold and never will: commitments on certificates and attestations, SLA values, support hours and response times, prices and subcontractors. These are contract matters: check them in the contract. A fact that touches one of them is background from a public source, not a commitment.
 
 
+## Validation levels
+
+Every fact carries one level, after its id in facts.md and as "level" in facts.jsonl. The level follows from the grade, the check block and the check date of the fact, nothing else.
+
+| level | what it means | how it stays true | facts |
+|---|---|---|---|
+| V4 kept live | Tested live on a TCP tenant and inside its check period. | A check block repeats the test every week by itself. | 77 |
+| V3 live | Tested live on a TCP tenant and inside its check period. | No check block yet: it is tested again when it expires. | 1109 |
+| V2 contract | Stated by the current service description and inside its check period. | Checked again when the service description gets a new revision. | 126 |
+| V1 docs | Taken from the vendor documentation and inside its check period. | Checked again when its documentation page changes or when it expires. | 443 |
+| V0 recheck due | Past its check date, or a recheck contradicted it. | Use it only with its check date and say that it waits for a recheck. | 251 |
+
+
 ## Facts with a recheck due
 
-192 facts are past their expiry date and wait for their weekly recheck. They stay in the dataset until something invalidates them: a recheck that refutes them, a newer fact that replaces them or a change of the service description. Name the check date when you use one.
+251 facts are past their expiry date and wait for their weekly recheck. They stay in the dataset until something invalidates them: a recheck that refutes them, a newer fact that replaces them or a change of the service description. Name the check date when you use one.
 
 | fact | grade | checked | state |
 |---|---|---|---|
@@ -253,7 +266,6 @@ What the dataset does not hold and never will: commitments on certificates and a
 | KB-QLJ5 | live | 2026-09-25 | recheck due |
 | KB-QQFN | docs | 2026-09-25 | recheck due |
 | KB-R3TV | docs | 2026-09-25 | recheck due |
-| KB-RBRL | live | 2026-09-25 | recheck due |
 | KB-RUHF | live | 2026-09-25 | recheck due |
 | KB-RY3G | docs | 2026-09-25 | recheck due |
 | KB-SBUW | live | 2026-09-25 | recheck due |
@@ -305,6 +317,66 @@ What the dataset does not hold and never will: commitments on certificates and a
 | KB-VOCY | docs | 2026-10-08 | recheck due |
 | KB-2IMZ | docs | 2026-10-09 | recheck due |
 | KB-C7WI | docs | 2026-10-09 | recheck due |
+| KB-XVXB | docs | 2026-10-10 | recheck due |
+| KB-KYR6 | live | 2026-10-12 | recheck due |
+| KB-PLHK | live | 2026-10-12 | recheck due |
+| KB-22YR | contract | 2026-10-14 | recheck due |
+| KB-2GNH | docs | 2026-10-14 | recheck due |
+| KB-2SIL | contract | 2026-10-14 | recheck due |
+| KB-5RCL | live | 2026-10-14 | recheck due |
+| KB-6AR3 | contract | 2026-10-14 | recheck due |
+| KB-6EWX | contract | 2026-10-14 | recheck due |
+| KB-6LWE | contract | 2026-10-14 | recheck due |
+| KB-752O | contract | 2026-10-14 | recheck due |
+| KB-7KEU | docs | 2026-10-14 | recheck due |
+| KB-BFOA | contract | 2026-10-14 | recheck due |
+| KB-BJGL | contract | 2026-10-14 | recheck due |
+| KB-BKQH | contract | 2026-10-14 | recheck due |
+| KB-BLS4 | contract | 2026-10-14 | recheck due |
+| KB-BOS5 | contract | 2026-10-14 | recheck due |
+| KB-BXH5 | contract | 2026-10-14 | recheck due |
+| KB-C27P | docs | 2026-10-14 | recheck due |
+| KB-FEC6 | contract | 2026-10-14 | recheck due |
+| KB-FIKE | contract | 2026-10-14 | recheck due |
+| KB-FJ2L | docs | 2026-10-14 | recheck due |
+| KB-HUHI | contract | 2026-10-14 | recheck due |
+| KB-I4EH | contract | 2026-10-14 | recheck due |
+| KB-I4TR | live | 2026-10-14 | recheck due |
+| KB-JJEO | contract | 2026-10-14 | recheck due |
+| KB-K5D2 | live | 2026-10-14 | recheck due |
+| KB-KA35 | contract | 2026-10-14 | recheck due |
+| KB-KSMV | contract | 2026-10-14 | recheck due |
+| KB-KWII | contract | 2026-10-14 | recheck due |
+| KB-LQBE | contract | 2026-10-14 | recheck due |
+| KB-MHO7 | live | 2026-10-14 | recheck due |
+| KB-MV5K | live | 2026-10-14 | recheck due |
+| KB-NHCM | live | 2026-10-14 | recheck due |
+| KB-NMV2 | docs | 2026-10-14 | recheck due |
+| KB-ORQX | contract | 2026-10-14 | recheck due |
+| KB-P4WZ | contract | 2026-10-14 | recheck due |
+| KB-QLMG | contract | 2026-10-14 | recheck due |
+| KB-RNFZ | contract | 2026-10-14 | recheck due |
+| KB-S22V | live | 2026-10-14 | recheck due |
+| KB-SWH2 | live | 2026-10-14 | recheck due |
+| KB-T6NU | live | 2026-10-14 | recheck due |
+| KB-TAXN | live | 2026-10-14 | recheck due |
+| KB-TEXG | contract | 2026-10-14 | recheck due |
+| KB-TNVA | live | 2026-10-14 | recheck due |
+| KB-TXBP | contract | 2026-10-14 | recheck due |
+| KB-UEVJ | contract | 2026-10-14 | recheck due |
+| KB-UFQA | contract | 2026-10-14 | recheck due |
+| KB-UVSS | live | 2026-10-14 | recheck due |
+| KB-VEDO | contract | 2026-10-14 | recheck due |
+| KB-VYRW | contract | 2026-10-14 | recheck due |
+| KB-WD2H | contract | 2026-10-14 | recheck due |
+| KB-WKYI | live | 2026-10-14 | recheck due |
+| KB-WNNJ | contract | 2026-10-14 | recheck due |
+| KB-WQA4 | live | 2026-10-14 | recheck due |
+| KB-WQWT | contract | 2026-10-14 | recheck due |
+| KB-X3HG | contract | 2026-10-14 | recheck due |
+| KB-Z3MG | live | 2026-10-14 | recheck due |
+| KB-ZLGK | contract | 2026-10-14 | recheck due |
+| KB-ZMQL | contract | 2026-10-14 | recheck due |
 
 
 ## Before you use it with a public model
@@ -356,7 +428,7 @@ facts.md: all facts, grouped by topic. facts.jsonl: the same facts with source, 
 
 ## Dates and licence
 
-Built 2026-11-09. Best before 2026-12-09: facts about availability are re-checked every 30 days. Prices are not part of the dataset: the live price API is the source of truth before any quote.
+Built 2026-11-16. Best before 2026-12-16: facts about availability are re-checked every 30 days. Prices are not part of the dataset: the live price API is the source of truth before any quote.
 
 Dataset: TCP Facts, github.com/shimoza/tcp-facts.
 
