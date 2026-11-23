@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-11-16. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-23. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a level (V4 kept live, V3 live, V2 contract, V1 docs, V0 recheck due; see README) and a check date.
    Name the level when it is V0 and the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-16. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-23. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-16: cbr
+# TCP Facts 2026-11-23: cbr
 
 - A crash-consistent restore of a Windows ECS backed up during continuous writes contained one truncated file out of 37, while a comparison run with writes stopped and the volume cache flushed before the backup contained zero damaged files out of 57. (KB-3PZR, V3 live, checked 2026-09-02)
 - Creating a CBR vault with consistent_level app_consistent returns HTTP 400 with error code BackupService.6126, while crash_consistent returns 200. The API enum accepts both values. Checked on a vault with object_type server. (KB-3T3I, V3 live, checked 2026-09-02)
@@ -41,6 +41,7 @@
 - In a CBR vault object the billing.size field is the capacity in GB, while billing.used is the used capacity in MB (API reference: 'Used capacity, in MB'). A disk vault of size 10 with used 3084 holds about 3 GB, not more than its capacity. (KB-LGK7, V1 docs, checked 2026-10-05)
 - The TCP service description, as checked on 2026-09-16, names neither CBR backup locking nor OBS WORM. (KB-MC6B, V0 recheck due, contract, checked 2026-09-16)
 - CBR backup deletion is asynchronous: delete calls return success while the backups move to state `deleting`, and a list call issued right after still counts all of them. They drain to zero in about 60 seconds. A resource removed from a vault sits at `protect_status: removing` for the same window. (KB-MYLM, V3 live, checked 2026-09-16)
+- A first CBR backup of a 10 GB SAS data disk in eu-de, started with POST /v3/{project_id}/checkpoints in a disk vault, went from waiting_protect through protecting to available in about four and a half minutes. (KB-MZ2T, V3 live, checked 2026-11-20)
 - Back-to-back CBR backup share and accept API calls run into a rate limit and return HTTP 429. Delays of 3 to 5 seconds between the calls were used to stay under it. (KB-PAUD, V0 recheck due, live, checked 2026-02-04)
 - A CBR vault created with POST /v3/{project_id}/vaults protects disks when billing.object_type is disk and the resource entries use type OS::Cinder::Volume. Whole-server protection uses the resource type OS::Nova::Server instead. (KB-PP2P, V3 live, checked 2026-08-26)
 - Encryption of a volume created from a CBR backup is decided when the volume is created, since per the EVS documentation the encryption attribute of a disk cannot be changed afterwards. For an encrypted backup shared into another tenant the CBR documentation also requires the key to be shared with the recipient. (KB-Q6ES, V1 docs, checked 2026-09-25)
@@ -48,5 +49,5 @@
 - A CBR backup of a Windows Server 2022 ECS taken while the guest wrote continuously to the NTFS system disk restored to a machine that booted, reported the dirty bit as NOT Dirty, logged a healthy volume event and passed a read-only chkdsk. (KB-SPKE, V3 live, checked 2026-09-02)
 - A CBR vault can be shrunk: PUT /v3/{project_id}/vaults/{vault_id} with {"vault":{"billing":{"size":300}}} returned 200, the vault reported 300 GB at once and the existing backups stayed intact. The new size has to stay above billing.used. (KB-TWYK, V3 live, checked 2026-09-17)
 - Cross-tenant sharing of CBR backups is rate limited. Share calls issued in quick succession return HTTP 429, and a pause of a few seconds between calls keeps the sequence inside the limit. (KB-XXAD, V0 recheck due, live, checked 2026-02-04)
-- Cloud Backup and Recovery (CBR) provides backup and restore for Elastic Cloud Servers, Elastic Volume Service disks and SFS Turbo file systems: the customer backs up all or selected volumes of a server, sets the execution time of automated backups and their retention period, and can replicate server backups to the other region. Backups are stored in vaults, the first backup is full and later ones are incremental, and backup policies set timing, frequency and retention. The Regions and Endpoints page lists API endpoints for CBR in eu-de and eu-nl. (KB-Y4LS, V2 contract, checked 2026-10-14)
+- Cloud Backup and Recovery (CBR) provides backup and restore for Elastic Cloud Servers, Elastic Volume Service disks and SFS Turbo file systems: the customer backs up all or selected volumes of a server, sets the execution time of automated backups and their retention period, and can replicate server backups to the other region. Backups are stored in vaults, the first backup is full and later ones are incremental, and backup policies set timing, frequency and retention. The Regions and Endpoints page lists API endpoints for CBR in eu-de and eu-nl. (KB-Y4LS, V0 recheck due, contract, checked 2026-10-14)
 - CBR backups are incremental after the first one. A second backup of the same 81 GiB server took 243 seconds against 501 seconds for the first, which ran at roughly 3.5 seconds per GiB plus about 220 seconds fixed. (KB-YC6H, V3 live, checked 2026-09-02)

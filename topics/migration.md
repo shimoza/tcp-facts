@@ -1,18 +1,19 @@
-<!-- TCP Facts, dataset of 2026-11-16. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-23. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a level (V4 kept live, V3 live, V2 contract, V1 docs, V0 recheck due; see README) and a check date.
    Name the level when it is V0 and the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-16. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-23. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-16: migration
+# TCP Facts 2026-11-23: migration
 
 - In POST /v3/{project_id}/jobs/batch-creation the subnet of the DRS replication instance is passed in the field customize_sutnet_id, spelled sutnet. A body that spells the field subnet leaves it unread, and DRS places the replication instance in a subnet of its own choice. (KB-46C6, V0 recheck due, live, checked 2026-02-04)
 - After a failed or forcibly stopped DRS PostgreSQL task (DELETE /v3/{project_id}/jobs/batch-jobs with delete_type terminate or force_terminate) its logical replication slot can stay on the source. The DRS docs drop it with SELECT pg_drop_replication_slot('<slot>') as the task's own source database user; on RDS for PostgreSQL root also has the Replication attribute. (KB-5WJI, V1 docs, checked 2026-09-25)
 - MRS 3.3.0-LTS.1 and 3.5.0-LTS ship Spark 3.3.1, the same Spark 3.3 line that AWS Glue 4.0 uses, so porting Glue 4.0 PySpark code to MRS needs no Spark version jump. (KB-74US, V0 recheck due, docs, checked 2026-09-25)
+- DRS MySQL online migration through the v3 batch API in eu-de, RDS for MySQL 8.0 to RDS for MySQL 8.0 over the VPC (net_type vpc): POST /v3/{project_id}/jobs/batch-creation with node_type high was CONFIGURATION after 152 s (node_type micro is refused with DRS.10020002); batch-connection succeeded for source (end_point_type so) and target (ta); batch-precheck passed 100 % with alarms only for GTIDSET_MISSING and destination disk size; after batch-starting the task reached INCRE_TRANSFER_STARTED in 124 s; DELETE /v3/{project_id}/jobs/batch-jobs with terminate, then delete, removed it. The older path /v3/{project_id}/jobs/batch-creation-jobs answers APIGW.0101. (KB-7D7W, V3 live, checked 2026-11-20)
 - In POST /v3/{project_id}/jobs/batch-connection each entry of the jobs array tests one endpoint of a task, with end_point_type "so" for the source and "ta" for the target. The examples in the API reference send one endpoint per request. (KB-BSBV, V1 docs, checked 2026-09-25)
 - The DRS job list, POST /v3/{project_id}/jobs, returns the total number of jobs in total_record. On 2026-09-25 the answer carried no count field at all (in February count came back as 0), so paging has to use total_record. (KB-BSE2, V3 live, checked 2026-09-25)
 - Per the DRS API reference the incremental replication delay incre_trans_delay is read with POST /v3/{project_id}/jobs/batch-progress, a call separate from batch-detail and batch-status. The error fields error_code and error_message come back from POST /v3/{project_id}/jobs/batch-status and also in each batch-detail result. (KB-BZUP, V1 docs, checked 2026-09-25)
@@ -27,5 +28,6 @@
 - The DRS batch-detail call is a POST to /v3/{project_id}/jobs/batch-detail with a jobs list of ids and an optional page_req object holding cur_page and per_page. The page size per_page defaults to 5, goes up to 100 and returns all ids at 0, so a request with more than five ids and no per_page gets only the first five results on page 1. (KB-LK4Y, V1 docs, checked 2026-09-25)
 - A DRS job for PostgreSQL does not synchronize database-level privileges. Grants made with GRANT on DATABASE are missing at the destination, where the databases carry only the owner grant and the pg_database_owner grant. (KB-LWS5, V0 recheck due, live, checked 2026-02-04)
 - DRS batch status is a POST to /v3/{project_id}/jobs/batch-status with a jobs list of ids and an optional page_req whose per_page defaults to 5 and goes up to 100. Per the API reference each entry of the results list carries id, status, error_code and error_message; incre_trans_delay is documented only for batch-progress, although a live call on 2026-02-04 saw it in the batch-status results. (KB-MED3, V1 docs, checked 2026-09-25)
+- DDS in eu-de: a single-node create (dds.mongodb.s2.medium.4.single, ULTRAHIGH) is refused with DBS.212008 for DDS-Community 4.4 and 4.2 and accepted for 4.0, which reached status normal after 243 s. (KB-OXLG, V3 live, checked 2026-11-20)
 - Creating a DRS task over the API runs as a sequence of calls: batch-creation, batch-connection, batch-modification, batch-select-objects, batch-precheck and batch-starting. Source and target connections are tested in separate batch-connection calls. (KB-RJTE, V1 docs, checked 2026-09-25)
 - Each job object returned by the DRS job listing carries name, id, status, engine_type and job_direction. (KB-VBW2, V1 docs, checked 2026-09-25)

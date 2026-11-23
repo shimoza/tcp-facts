@@ -1,20 +1,21 @@
-<!-- TCP Facts, dataset of 2026-11-16. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-23. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a level (V4 kept live, V3 live, V2 contract, V1 docs, V0 recheck due; see README) and a check date.
    Name the level when it is V0 and the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-16. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-23. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-16: backup
+# TCP Facts 2026-11-23: backup
 
 - Veeam Backup & Replication ships no hypervisor plug-in for the OpenStack/KVM platform that TCP runs on, so nothing that needs hypervisor integration can be delivered through it there. (KB-2FA3, V0 recheck due, docs, checked 2026-09-25)
 - The Veeam 13 Plug-in for Universal Hypervisor API supports only VergeOS and Platform9, whose vendors built the integration. Platform9 is OpenStack based, so Veeam can cover an OpenStack platform this way, but no such plug-in exists for TCP. (KB-2IMZ, V0 recheck due, docs, checked 2026-10-09)
 - Veeam sizing guidance for an object-storage repository is roughly 250 TB per bucket, so a 2 PB repository on OBS is laid out over about eight buckets. (KB-2T3L, V1 docs, checked 2026-09-02)
 - Veeam Backup & Replication 13 exports disks from VMware vSphere and Hyper-V VM backups and from Veeam Agent backups to VMDK, VHD or VHDX, and it can write them to any server added to its backup infrastructure. (KB-6ACV, V1 docs, checked 2026-10-09)
 - A manual CBR backup (one checkpoint, crash consistent, full) of two running g7v.2xlarge.8 Windows ECS with 100 GB plus 250 GB ESSD each was available for both servers 9 minutes after the checkpoint call, without stopping the servers. (KB-BGBL, V3 live, checked 2026-11-13)
+- PUT /v3/{project_id}/policies/{policy_id} on CBR changes an existing backup policy in place, name, operation_definition and trigger together: a weekly policy became daily with the pattern FREQ=DAILY;INTERVAL=1;BYHOUR=22;BYMINUTE=00 and timezone UTC+01:00, keeping its id and its vault association. (KB-BTCX, V3 live, checked 2026-11-16)
 - A Veeam Backup & Replication 13 disk export in VMDK format writes two files, a descriptor and a content file, and outside an ESXi datastore the disk is thick provision lazy zeroed. A VHD or VHDX export writes one file, which fits the one-file-per-image import of IMS. (KB-BUR2, V1 docs, checked 2026-10-09)
 - The Veeam Backup & Replication 13 workloads list (updated 2026-07-31) names Amazon Web Services, Microsoft Azure and Google Cloud as the only public clouds and has no OpenStack entry, so TCP, like other smaller public clouds, is not on the official Veeam support list. (KB-C7WI, V0 recheck due, docs, checked 2026-10-09)
 - Veeam Backup & Replication 13 application-aware processing needs VMware Tools in the guest OS of a VMware VM. So in a Veeam recovery to TCP the tools stay on the source VMs and are removed on the restored ECS, not before the backup. (KB-CEC6, V1 docs, checked 2026-10-09)
@@ -26,8 +27,11 @@
 - Veeam Backup & Replication 13.0, from the Veeam Data Platform Premium 13.0 installer ISO dated 2026-03-10, installed and ran in standalone mode (backup server, proxy and repository on one host, bundled PostgreSQL configuration database, 30-day evaluation licence) on a Windows Server 2022 ECS built from the eu-de public image Enterprise_Windows-Server_2022_STD_amd64_bios_latest, flavor s3.2xlarge.2 (8 vCPU, 16 GB) as read back on 2026-10-09. (KB-MJY3, V3 live, checked 2026-04-22)
 - Veeam Backup & Replication 13 does not accept the backup server as the target of a disk export (the user guide gives security reasons), so a recovery chain that exports disks on TCP needs a second Windows or Linux server added to the Veeam infrastructure as the export target. (KB-NTSU, V1 docs, checked 2026-10-09)
 - Veeam v13 SureBackup has a "Backup verification and content scan only" mode that runs without a virtual lab, so it works against a backup repository hosted on TCP. (KB-OIH7, V1 docs, checked 2026-09-02)
+- POST /v3/{project_id}/vaults/{vault_id}/removeresources on CBR also deletes the backups of the removed server: its only backup turned to status deleting 20 s after the call, while the vault still listed the server in resources at that moment. (KB-PYHJ, V3 live, checked 2026-11-16)
 - The Veeam Backup & Replication 13 PowerShell reference lists Add-VBRAmazonS3CompatibleRepository, the cmdlet that adds an S3 compatible object storage repository such as OBS, for the Enterprise, Enterprise Plus and Veeam Universal License editions only, not for Standard. (KB-S7MW, V1 docs, checked 2026-10-09)
+- A CBR backup policy is attached to a vault with POST /v3/{project_id}/vaults/{vault_id}/associatepolicy and the body policy_id; PUT on that path answers 404 APIGW.0101. A weekly policy is created with POST /v3/{project_id}/policies, operation_definition max_backups and timezone, and trigger.properties.pattern FREQ=WEEKLY;BYDAY=SA;BYHOUR=22;BYMINUTE=00. (KB-T7WV, V3 live, checked 2026-11-16)
 - A Veeam perpetual per-socket licence covers only VMs running on the licensed source hosts. A workload moved to TCP leaves that socket licence behind and needs an instance-based licence. (KB-TJYJ, V1 docs, checked 2026-09-02)
+- After POST .../vaults/{vault_id}/removeresources the CBR vault still listed the removed server and its allocated size for at least 80 s; about one minute later resources showed only the remaining server and billing.allocated had dropped by that server's disk size (700 to 350 GB). (KB-VO5W, V3 live, checked 2026-11-16)
 - In Veeam the storage-class selector exists only on the Amazon S3 repository type. An OBS bucket is added as the "S3 compatible with data archiving" repository type to get an archive tier. (KB-X7SP, V1 docs, checked 2026-09-02)
 - Veeam Backup & Replication 13 consumes licences only to back up data. A restore needs no licence, so restoring VMs to TCP after a disaster uses none. Backing up the restored VMs on TCP with Veeam afterwards does need licences. (KB-YQRM, V1 docs, checked 2026-10-09)
 - Each Veeam step of a disk-export recovery to TCP has a Veeam Backup & Replication 13 PowerShell cmdlet: Add-VBRAmazonS3CompatibleRepository adds the OBS bucket as an S3 compatible repository, Sync-VBRBackupRepository rescans it and Start-VBRRestoreVirtualDisks exports disks of VMware or Hyper-V backups as VMDK, VHD or VHDX. (KB-ZDJ2, V1 docs, checked 2026-10-09)

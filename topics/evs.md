@@ -1,16 +1,16 @@
-<!-- TCP Facts, dataset of 2026-11-16. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-23. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a level (V4 kept live, V3 live, V2 contract, V1 docs, V0 recheck due; see README) and a check date.
    Name the level when it is V0 and the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-16. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-23. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-16: evs
+# TCP Facts 2026-11-23: evs
 
-- Elastic Volume Service (EVS) provides block storage volumes that are attached to Elastic Cloud Servers as system or data disks; up to 32 volumes can be attached to one server and a volume can be expanded online when the operating system supports it. The disk types are High I/O, GP SSD, GP SSD V2, Ultra-High I/O and Extreme SSD, and the documentation states that system and data disks support encryption, snapshots and backups. The Regions and Endpoints page lists API endpoints for EVS in eu-de and eu-nl. (KB-2DY5, V2 contract, checked 2026-10-14)
+- Elastic Volume Service (EVS) provides block storage volumes that are attached to Elastic Cloud Servers as system or data disks; up to 32 volumes can be attached to one server and a volume can be expanded online when the operating system supports it. The disk types are High I/O, GP SSD, GP SSD V2, Ultra-High I/O and Extreme SSD, and the documentation states that system and data disks support encryption, snapshots and backups. The Regions and Endpoints page lists API endpoints for EVS in eu-de and eu-nl. (KB-2DY5, V0 recheck due, contract, checked 2026-10-14)
 - On a Linux ECS an attached EVS data disk appears as a virtio block device such as /dev/vdb. A file system is created on the device before it is mounted. (KB-3URW, V3 live, checked 2026-05-01)
 - Releasing an attached EVS volume takes two calls in two different services. Detach runs through the ECS API as DELETE /v1/{project_id}/cloudservers/{server_id}/detachvolume/{volume_id} and is asynchronous, so its job must reach SUCCESS first. Only then does DELETE /v2/{project_id}/cloudvolumes/{volume_id} on the EVS API remove the volume. (KB-4V7Z, V0 recheck due, live, checked 2026-05-01)
 - EVS shared disks on T Cloud Public (TCP) support SCSI-3 reservations and can be attached to up to 16 servers. The attached ECS instances have to sit in an anti-affinity ECS group. (KB-4WQV, V1 docs, checked 2026-08-24)
@@ -28,8 +28,9 @@
 - On a running Linux ECS with a virtio_blk system disk (ext4 on GPT), an extended EVS system disk grows online with growpart and resize2fs, without reboot. Verified from 30 GB to 100 GB while the filesystem was mounted. (KB-HNAB, V3 live, checked 2026-06-08)
 - A root EVS volume on a running ECS can be extended online. After the cloud-side extend, growpart on the root device followed by resize2fs grows a mounted ext4 partition while the instance keeps running, verified from 30 GB to 100 GB on a virtio_blk GPT disk. (KB-IP25, V3 live, checked 2026-06-08)
 - EVS General Purpose SSD (GPSSD) behaved like a burst-credit volume similar to AWS gp2 in a test: fresh volumes burst above baseline, and after hours of heavy reads sustained reads fell to about 21 MB/s (small random reads, about 285 IOPS). That made loading large model weights disk-bound. (KB-JKEF, V3 live, checked 2026-05-07)
-- EVS GP SSD v2 bills on three separate meters on TCP: provisioned capacity, provisioned IOPS above the 3,000 IOPS included, and provisioned throughput above the 125 MiB/s included. (KB-JN3T, V2 contract, checked 2026-09-09)
+- EVS GP SSD v2 bills on three separate meters on TCP: provisioned capacity, provisioned IOPS above the 3,000 IOPS included, and provisioned throughput above the 125 MiB/s included. (KB-JN3T, V0 recheck due, contract, checked 2026-09-09)
 - GET /v2/{project_id}/os-quota-sets/{project_id} with the query usage=true on the EVS endpoint in eu-de returns limit and in_use per quota, also per volume type such as gigabytes_GPSSD. (KB-KIFA, V4 kept live, checked 2026-11-03)
+- On 2026-11-20 in eu-de an EVS create with volume_type SATA in eu-de-01 was refused with HTTP 400 Invalid input received, the volume type listing SATA as sold out in eu-de-01, eu-de-02 and eu-de-03; SAS disks were created in the same zone. (KB-KPZZ, V3 live, checked 2026-11-20)
 - Bringing a 10 GiB GPT data volume back on a Windows Server 2022 guest took 43 s in total: 6 s to create the volume from the CBR backup, 12 s to attach it, the rest to bring it online. The volume arrives Offline under the SAN policy OfflineShared. (KB-KQUM, V3 live, checked 2026-09-02)
 - Data disks under heavy write survive a crash-consistent capture by both SDRS mirroring and CBR backup: both copies reported Filesystem state clean, mounted, and passed e2fsck -fn. The file count differs between the copies, which is expected for a point-in-time capture. (KB-KUQ7, V3 live, checked 2026-09-02)
 - A CBR backup can be restored into another availability zone: POST /v2/{project_id}/cloudvolumes on the EVS endpoint accepts backup_id together with a target availability_zone, volume_type and size, and creates the disk there. (KB-LXHJ, V3 live, checked 2026-08-26)
@@ -47,6 +48,7 @@
 - On a Linux guest, reading a restored volume end to end took 183 s for 8 GiB and 1780 s for 81 GiB while the background load was still running. (KB-V2AA, V3 live, checked 2026-09-02)
 - Deleting an EVS disk deletes all data of the disk including the snapshots created from it, so an EVS snapshot does not outlive its source disk as it would in plain Cinder. An EVS snapshot is not an independent copy. (KB-W5BY, V3 live, checked 2026-07-29)
 - EVS volumes are triple-replicated on the platform side, so capacity is planned at net capacity: a mirrored pair of two 3.84 TB on-premises disks corresponds to about 3.84 TB of EVS, not 7.68 TB. (KB-WKHA, V1 docs, checked 2026-09-25)
+- A data disk detached with DELETE /v1/{project_id}/cloudservers/{id}/detachvolume/{volume_id} is available again after a few seconds and attaches to another ECS in the same AZ with POST .../attachvolume; an EIP moves between ECSs by PUT /v1/{project_id}/publicips/{id} with port_id null and then the port of the new server. (KB-WOC5, V3 live, checked 2026-11-20)
 - After hours of heavy reads a GPSSD volume drained its burst credits and sustained reads fell to about 21 MB/s (iostat -x showed about 285 IOPS at roughly 10 ms r_await), against a baseline near 150 MB/s. An ESSD volume in the same test sustained about 1 GB/s with sub-millisecond latency. (KB-XXZV, V3 live, checked 2026-05-07)
 - Deleting an EVS volume also deletes the snapshots taken from it, so a snapshot lives only as long as its source disk. An IMS image or a CBR backup survives deletion of the source instance. (KB-YENF, V3 live, checked 2026-07-29)
 - An EVS data volume created from the backup child of an encrypted volume together with a destination KMS key comes up encrypted at the destination, without an OS-level copy of the data. (KB-YEPK, V1 docs, checked 2026-09-25)

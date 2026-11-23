@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-11-16. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-23. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a level (V4 kept live, V3 live, V2 contract, V1 docs, V0 recheck due; see README) and a check date.
    Name the level when it is V0 and the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-16. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-23. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-16: container
+# TCP Facts 2026-11-23: container
 
 - The Neutron port API on TCP deviates from upstream OpenStack, so the OpenShift Machine API fails to create network ports when a MachineSet scales workers. The documented workaround replaces machine-api-provider-openstack with a patched image published in SWR. The deviation affects OpenStack-native tooling in general. (KB-5ZKF, V1 docs, checked 2026-06-08)
 - OpenShift is orderable on TCP through the Cloud Create self-service catalogue as self-managed Red Hat OpenShift Container Platform, bring your own subscription, installed UPI on the OpenStack-compatible API. Template versions 4.16.19 and 4.18.30 are offered, further versions on request. (KB-6EFK, V0 recheck due, docs, checked 2026-09-25)

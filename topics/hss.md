@@ -1,18 +1,18 @@
-<!-- TCP Facts, dataset of 2026-11-16. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-23. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a level (V4 kept live, V3 live, V2 contract, V1 docs, V0 recheck due; see README) and a check date.
    Name the level when it is V0 and the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-16. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-23. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-16: hss
+# TCP Facts 2026-11-23: hss
 
 - Container image scanning comes from HSS Container Edition, which scans private, shared and enterprise repositories in SWR as well as running container images. (KB-2GNH, V0 recheck due, docs, checked 2026-10-14)
-- On a CCE worker node the HSS host agent runs three processes: hostguard at about 311 MB RSS, containerserver at about 42 MB and hostwatch at about 12 MB, roughly 365 MB RSS together, about 563 MB on disk and about 1.5 percent CPU at idle. Measured on EulerOS 2.9. (KB-2ZZR, V3 live, checked 2026-02-04)
-- Host Security Service (HSS) protects server workloads: it identifies and manages the assets on servers, reduces risks and defends against intrusions and web page tampering. It includes Container Guard Service (CGS), which scans container images for vulnerabilities and configuration issues, and Web Tamper Protection (WTP), which monitors website directories in real time and restores tampered files from backups. The Regions and Endpoints page lists the HSS API endpoint in eu-de. (KB-3CST, V2 contract, checked 2026-10-14)
+- On a CCE worker node the HSS host agent runs three processes: hostguard at about 311 MB RSS, containerserver at about 42 MB and hostwatch at about 12 MB, roughly 365 MB RSS together, about 563 MB on disk and about 1.5 percent CPU at idle. Measured on EulerOS 2.9. (KB-2ZZR, V0 recheck due, live, checked 2026-02-04)
+- Host Security Service (HSS) protects server workloads: it identifies and manages the assets on servers, reduces risks and defends against intrusions and web page tampering. It includes Container Guard Service (CGS), which scans container images for vulnerabilities and configuration issues, and Web Tamper Protection (WTP), which monitors website directories in real time and restores tampered files from backups. The Regions and Endpoints page lists the HSS API endpoint in eu-de. (KB-3CST, V0 recheck due, contract, checked 2026-10-14)
 - The HSS user manual documents an HSS Administrator role and an HSSFullAccess policy for HSS permissions. Whether a subscribed domain needs them in addition to the subscription was not tested. (KB-AVCB, V1 docs, checked 2026-09-02)
 - On 2026-09-02 the feature-gates response reported enable_hss_service:false on both tested domains, while the HSS v5 calls failed at the API gateway and the same credential worked against ECS. This points at a service-entitlement gate in front of HSS. (KB-IP74, V0 recheck due, live, checked 2026-09-02)
 - On 2026-09-25 the documented HSS v5 API was not published in eu-nl: four GET paths answered 404 APIGW.0101 there, while in eu-de they reached the service (403 for a user without HSS rights). The public price API listed only the HSS Premium Edition for eu-nl, although section 6.10.7 of the service description lists four editions for EU-NL. (KB-OVOE, V0 recheck due, live, checked 2026-09-25)

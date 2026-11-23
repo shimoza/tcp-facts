@@ -1,16 +1,17 @@
-<!-- TCP Facts, dataset of 2026-11-16. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-23. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a level (V4 kept live, V3 live, V2 contract, V1 docs, V0 recheck due; see README) and a check date.
    Name the level when it is V0 and the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-16. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-23. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-16: api
+# TCP Facts 2026-11-23: api
 
 - The enterprise project quota is 100 per account, readable with GET /quotas on the EPS endpoint. (KB-263E, V3 live, checked 2026-06-03)
+- In eu-de the tag calls POST /v1/{project_id}/cloudservers/{id}/tags/action, POST /v2/{project_id}/cloudvolumes/{id}/tags/action, POST /v2.0/{project_id}/vpcs/{id}/tags, POST /v2.0/{project_id}/subnets/{id}/tags and POST /v2/{project_id}/images/{id}/tags all answer 204 with the lab key of a test tenant. (KB-2KUG, V3 live, checked 2026-11-19)
 - Creating a DLI elastic resource pool via API worked with max_cu equal to min_cu: 16/16 returned 200, 16/64 returned DLI.0035. The pool took about 10 minutes to reach AVAILABLE. (KB-3VTJ, V3 live, checked 2026-07-28)
 - A TMS call to /v1.0/predefined-tags signed with AK/SK answered HTTP 404. TMS is a global service, and the call was not repeated with a domain scoped token, so the required auth type stays unconfirmed. (KB-47NM, V3 live, checked 2026-07-17)
 - Config (RMS) answers on rms.eu-de.otc.t-systems.com. GET /v1/resource-manager/domains/{domain_id}/all-resources returns a domain-wide inventory including tags and the enterprise project id, and /all-resources/summary returns counts per provider, type and region. Both need a domain-scoped token. (KB-535D, V3 live, checked 2026-07-17)

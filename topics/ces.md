@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-11-16. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-23. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a level (V4 kept live, V3 live, V2 contract, V1 docs, V0 recheck due; see README) and a check date.
    Name the level when it is V0 and the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-16. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-23. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-16: ces
+# TCP Facts 2026-11-23: ces
 
 - In eu-de on 2026-09-25 the 4-hour and 24-hour rollups (period 14400 and 86400) reached back 235 days to the creation of the oldest measured resource, beyond the 155 days of the 1-hour rollups. The docs give no retention for these two periods, so whether Cloud Eye keeps a full year could not be proven. (KB-2FSY, V3 live, checked 2026-09-25)
 - On T Cloud Public (TCP) in eu-de a CES resource group is created with POST /V1.0/{project_id}/resource-groups. The body carries group_name and a resources array, where each entry names a namespace such as SYS.ECS and a dimensions list with a name like instance_id and the resource id as value. (KB-3GQL, V1 docs, checked 2026-09-25)
@@ -24,7 +24,7 @@
 - The CES metrics list path is case sensitive. Written with capital V1.0 it returns the metric list, written as v1 the API gateway answers HTTP 404. (KB-E3AA, V4 kept live, checked 2026-09-25)
 - On T Cloud Public (TCP) in eu-de, CES creates an alarm with POST /V1.0/{project_id}/alarms on ces.eu-de.otc.t-systems.com, the version segment written with an uppercase V. The body carries metric (namespace such as SYS.ECS, dimensions, metric_name), condition, alarm_type and alarm_enabled. (KB-F3UI, V1 docs, checked 2026-09-25)
 - An application adds its own metric data with POST /V1.0/{project_id}/metric-data on the Cloud Eye endpoint: the body is an array of entries, each with metric (namespace, metric_name and up to three dimensions), ttl of 1 to 604,800 seconds, collect_time in UNIX milliseconds and value, plus optional unit and type. The call answers 201 without a body, while each data point is deleted once its ttl expires. (KB-FEHS, V1 docs, checked 2026-09-25)
-- Cloud Eye (CES) monitors the status of cloud resources in real time and raises alarms: monitoring starts automatically for resources such as Elastic Cloud Servers, the customer sets alarm rules on metrics and views them on dashboards. The documentation adds an agent for Elastic Cloud Servers that collects about 40 metrics such as CPU, memory and disk usage at 60-second granularity, and alarm notifications by email, SMS or HTTP/HTTPS. The Regions and Endpoints page lists API endpoints for Cloud Eye in eu-de and eu-nl. (KB-FK5P, V2 contract, checked 2026-10-14)
+- Cloud Eye (CES) monitors the status of cloud resources in real time and raises alarms: monitoring starts automatically for resources such as Elastic Cloud Servers, the customer sets alarm rules on metrics and views them on dashboards. The documentation adds an agent for Elastic Cloud Servers that collects about 40 metrics such as CPU, memory and disk usage at 60-second granularity, and alarm notifications by email, SMS or HTTP/HTTPS. The Regions and Endpoints page lists API endpoints for Cloud Eye in eu-de and eu-nl. (KB-FK5P, V0 recheck due, contract, checked 2026-10-14)
 - In eu-de on 2026-09-25 the Cloud Eye metric-data API returned raw data back to 2 days, 5-minute rollups back to 10 days, 20-minute rollups back to 20 days and 1-hour rollups back to 155 days, so the 5-minute rollups lived longer than the documented 6 days. (KB-K6SW, V3 live, checked 2026-09-25)
 - A metric-data POST may not exceed 512 KB and every collect_time must lie between three days before and ten minutes after the current time, with 20 seconds of margin at each end. Data should be sent more often than the aggregation period, otherwise the rollups get gaps. (KB-KUTY, V1 docs, checked 2026-09-25)
 - T Cloud Public (TCP) monitors resources and raises alarms with Cloud Eye (CES): metrics of cloud services are collected automatically, an agent adds operating system metrics for servers, alarm rules on thresholds trigger notifications through Simple Message Notification topics by email, SMS or HTTP/HTTPS, and dashboards show the data. Application-level monitoring comes from Application Operations Management and Application Performance Management. (KB-L4FW, V1 docs, checked 2026-10-11)

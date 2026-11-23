@@ -1,20 +1,21 @@
-<!-- TCP Facts, dataset of 2026-11-16. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-23. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a level (V4 kept live, V3 live, V2 contract, V1 docs, V0 recheck due; see README) and a check date.
    Name the level when it is V0 and the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-16. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-23. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-16: network
+# TCP Facts 2026-11-23: network
 
 - The Meraki vMX 26.1.4 KVM image does not ask a metadata service at 169.254.169.254 for user data: under QEMU with a network it sent no request in 15 minutes, while a control guest did. (KB-3H4S, V3 live, checked 2026-10-01)
 - With the MTU raised on one side only, a path MTU bisect returned 1276 bytes, which is not a tunnel limit. It is the far end veth still at 1300 plus the bridge allowance of mtu plus hard_header_len plus VLAN_HLEN, 18 bytes. (KB-3UAP, V3 live, checked 2026-08-26)
 - In eu-de the subnets of a just deleted ECS (two NICs) were deleted with 204 about 2 s after the ECS delete job reported SUCCESS and its EIP was released; no wait for the ports was needed. (KB-3VRG, V3 live, checked 2026-11-11)
 - GET /v1/{project_id}/cloudservers/{server_id} in eu-de lists a security group once per NIC: an ECS with two NICs in the same group returned that group twice in server.security_groups. Deduplicate the names before counting the groups of a server. (KB-4SOA, V3 live, checked 2026-11-11)
 - From a Windows ECS behind a public NAT gateway with egress limited to TCP 80 and 443, the Microsoft Entra sign-in endpoint on 443 answered, SMTP 587 and TCP 53 to the internet were refused, the public source address was the NAT EIP, and the Microsoft Entra private network connector installer (21 MB, version 1.5.5130.0, valid Microsoft signature) downloaded from the Microsoft download host in 13 s. (KB-6S2N, V3 live, checked 2026-11-13)
+- Ubuntu 24.04 ECS without an EIP, in a subnet with an SNAT rule of a public NAT gateway, reached https://www.debian.org with HTTP 200 during cloud-init. (KB-6WXR, V3 live, checked 2026-11-20)
 - A small public NAT gateway (spec 1) created with POST /v2.0/nat_gateways in a new VPC reached ACTIVE 17 s after the create, faster than the two to five minutes seen before, and its SNAT rule answered PENDING_CREATE on create. (KB-CXZO, V3 live, checked 2026-11-13)
 - At boot the Meraki vMX 26.1.4 KVM image mounts /dev/sr0 on /mnt/cd. With an ISO labelled cidata on a CD-ROM it logs 'Successfully mounted CDROM for VMX platform', without one 'Failed to mount CDROM for VMX platform'. (KB-D3EJ, V3 live, checked 2026-10-01)
 - On 2026-10-07 the public Cisco Meraki documentation and product pages describe the vMX only as a virtual machine (AWS, Azure, GCP, Alibaba Cloud, KVM, ESXi, Private Cloud on UCS). A container or Kubernetes edition of the vMX is not described there; ask Cisco for its name and status. (KB-D6SI, V0 recheck due, docs, checked 2026-10-07)
@@ -29,10 +30,15 @@
 - The Content Delivery Network service of the platform is built on Akamai. Its user guide index carries the title "Content Delivery Network (Akamai)" and the API reference in the mirror is a TODO placeholder. (KB-KXZ7, V1 docs, checked 2026-06-08)
 - ARP traverses a VXLAN tunnel between Linux VTEPs by flood and learn. The remote MAC appears in bridge fdb show for the remote VTEP destination, so a stretched subnet works with no L3 route anywhere. (KB-M3JN, V3 live, checked 2026-08-26)
 - The Meraki vMX 26.1.4 KVM image boots only with its disk on an AHCI (SATA) controller. Under QEMU it boots on q35 with SATA and on i440FX with an added AHCI controller, but not from IDE or virtio-blk. (KB-NAOF, V3 live, checked 2026-10-01)
+- A new EIP appears in GET /v1/{project_id}/antiddos with protect_type default and status normal, traffic_pos_id 99 and enable_L7 false, the same values as GET /v1/{project_id}/antiddos/default-config; GET /v2/{project_id}/antiddos/query_config_list answered APIGW.0101. (KB-NZB2, V3 live, checked 2026-11-20)
+- Two VPCs of one tenant peered with POST /v2.0/vpc/peerings plus a peering route each way let a server in one VPC reach SMB 445 and RDP 3389 in the other within 3 minutes of creation, and a guest address held as a two-sided virtual IP (VIP port pair = server address, server port pair = VIP) in the source subnet reached the peered VPC as its source address. (KB-OBZD, V3 live, checked 2026-11-19)
+- On 2026-11-20 the eu-de project of a TCP test tenant was empty (no ECS, no VPC, no EIP; one default security group) with quotas of 10 VPCs, 10 public IPs, 5 VPN, 50 load balancers, 100 ECS instances and 800 vCPUs. (KB-QBLY, V3 live, checked 2026-11-20)
 - GET /v1/{project_id}/security-group-rules/{rule_id} on the VPC v1 API in eu-de needs the full rule UUID: an 8-character prefix of an existing rule answered 404 VPC.0611 SecurityGroupRuleNotFound. Read the full id from GET /v1/{project_id}/security-groups/{sg_id}. (KB-RQA5, V3 live, checked 2026-11-11)
+- A change of primary_dns with PUT /v1/{project_id}/vpcs/{vpc_id}/subnets/{subnet_id} reached a server created after it: its resolv.conf listed the new primary DNS first. Lines a Debian 12 guest writes to /dev/ttyS0 are readable through POST /v2.1/{project_id}/servers/{id}/action with os-getConsoleOutput, so probes need no guest login. (KB-TGRP, V3 live, checked 2026-11-19)
 - In eu-de GET /v1/{project_id}/publicips/{publicip_id} also returns a tags array, and POST /v2.0/{project_id}/publicips/{publicip_id}/tags/action with action create answers 204 on an unbound EIP; GET /v2.0/.../tags then lists the tags sorted by key. (KB-TICK, V3 live, checked 2026-11-11)
-- Section 6.5.1 of the TCP service description prices network traffic under exactly three items: VPN, internet inbound and internet outbound. (KB-TJXA, V2 contract, checked 2026-09-11)
+- Section 6.5.1 of the TCP service description prices network traffic under exactly three items: VPN, internet inbound and internet outbound. (KB-TJXA, V0 recheck due, contract, checked 2026-09-11)
 - Jumbo frames on the underlay are only needed to keep a guest MTU of 1500, which requires 1550 on the wire. A guest clamped to 1450 runs over a normal 1500 underlay. Over IPsec subtract about 62 bytes of ESP overhead, about 78 bytes with NAT-T. (KB-TZV7, V1 docs, checked 2026-08-26)
 - On 2026-11-10 the eu-de region project of a TCP test tenant had used 10 of 10 VPCs and 26 of 30 public IPs in GET /v1/{project_id}/quotas, so test subnets of a lab run there go into an existing VPC. (KB-UPO4, V3 live, checked 2026-11-11)
 - A SonicWall SMA 8200v virtual appliance (firmware 12.5.0-02002, KVM qcow2 build) running as an ECS in eu-de terminated a Connect Tunnel SSL VPN session from a Linux client in another tenant over the internet. The client got an address from a pool inside the VPC subnet and reached RDP on another ECS in that subnet. (KB-VDM3, V3 live, checked 2026-04-15)
 - With Linux VTEPs over VPC peering in eu-de a 1500 byte underlay carries an inner IP MTU of 1450. The largest payload passing with DF set is 1422 bytes, which is exactly 1500 on the wire, because the VXLAN headers take 50 bytes. (KB-XUSG, V3 live, checked 2026-08-26)
+- The NAT Gateway API of TCP eu-de is /v2.0/nat_gateways and /v2.0/snat_rules without a project id in the path; POST /v2/{project_id}/nat_gateways answers APIGW.0101. A small gateway (spec 1) was ACTIVE within 5 s and an SNAT rule for a subnet with an EIP within 5 s. (KB-XZEO, V3 live, checked 2026-11-20)

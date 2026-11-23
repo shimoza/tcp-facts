@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-11-16. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-23. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a level (V4 kept live, V3 live, V2 contract, V1 docs, V0 recheck due; see README) and a check date.
    Name the level when it is V0 and the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-16. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-23. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-16: cts
+# TCP Facts 2026-11-23: cts
 
 - PUT /v3/{project_id}/tracker refuses compress_type in upper case with error CTS.0227 'The compress_type must be json or gzip'; the lower-case value gzip is accepted. (KB-2QGH, V3 live, checked 2026-09-23)
 - CTS in eu-de records public NAT gateway operations under service_type VPC (deleteSnatRule, deleteNatGateway, updateFloatingip, deleteEip), not under NAT: a query with service_type=NAT for the same window returned no traces. (KB-3XKX, V3 live, checked 2026-10-06)
@@ -21,7 +21,7 @@
 - An OBS setBucketPolicy call became visible in the CTS trace query about two to three minutes after it happened: the query returned nothing at first and the trace after a little over two minutes of polling every 30 seconds. (KB-FYVH, V3 live, checked 2026-09-23)
 - Cloud Trace Service keeps traces queryable through its API for 7 days in eu-de. An event older than that returns no trace, and is readable later only if an authorized OBS transfer or an enabled LTS forwarding was already active when the event happened. (KB-GJKP, V3 live, checked 2026-07-31)
 - A CTS event notification with operation_type customized requires an explicit operations list naming service_type, resource_type and trace_names, and then publishes matching traces to an SMN topic. (KB-GWL5, V3 live, checked 2026-07-17)
-- Cloud Trace Service (CTS) is a log audit service that records the operations performed on cloud resources through the console, through API calls and by connected services, for security analysis, change tracking, compliance audit and fault finding. Traces of the last seven days are searched in the console, all traces are stored in Object Storage Service and can be downloaded as a report, and the documentation adds transfer to Log Tank Service and key-event notification through Simple Message Notification. The Regions and Endpoints page lists the CTS API endpoint in eu-de. (KB-HWFP, V2 contract, checked 2026-10-14)
+- Cloud Trace Service (CTS) is a log audit service that records the operations performed on cloud resources through the console, through API calls and by connected services, for security analysis, change tracking, compliance audit and fault finding. Traces of the last seven days are searched in the console, all traces are stored in Object Storage Service and can be downloaded as a report, and the documentation adds transfer to Log Tank Service and key-event notification through Simple Message Notification. The Regions and Endpoints page lists the CTS API endpoint in eu-de. (KB-HWFP, V0 recheck due, contract, checked 2026-10-14)
 - CTS traces record control-plane API actions. In a review after a suspected guest compromise the CTS record was complete for API actions and clean, while what happened inside the guest operating system was not answerable from it. (KB-JBYB, V3 live, checked 2026-07-29)
 - CTS writes hash-chained digest files only for a tracker that has OBS transfer configured together with the opt-in trace-file verification switch. The digest signature is SHA256withRSA and the file hashes are MD5. (KB-KVR7, V1 docs, checked 2026-09-01)
 - GET /v3/{project_id}/traces?trace_type=system on the CTS endpoint returns the operation vocabulary of a service, including operations that have no published API path. (KB-LYUM, V3 live, checked 2026-09-10)

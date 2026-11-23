@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-11-16. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-23. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a level (V4 kept live, V3 live, V2 contract, V1 docs, V0 recheck due; see README) and a check date.
    Name the level when it is V0 and the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-16. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-23. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-16: sdrs
+# TCP Facts 2026-11-23: sdrs
 
 - A planned SDRS switchover has as a precondition that all servers in the protection group are stopped, and the documented procedure stops them as one of its steps. (KB-2DJW, V1 docs, checked 2026-09-02)
 - SDRS uses storage-based synchronous replication. It ensures disk data consistency but cannot ensure application consistency. (KB-3DVW, V1 docs, checked 2026-09-02)
@@ -26,7 +26,7 @@
 - SDRS.1353 is an AZ inventory condition, not a generation gate. SDRS builds the DR server in the paired AZ, and every s7n and m7n size plus every c7n.*.2 size is absent from eu-de-02, while c7n.large.4, which is offered there, protects with no extra parameter. (KB-NMLI, V3 live, checked 2026-08-26)
 - SDRS replication and recovery from a CBR backup deliver the same consistency class, crash-consistent. The difference is the age of the copy: replication is current at the moment of the failure, a backup is as old as its last run. (KB-OXBI, V1 docs, checked 2026-09-02)
 - When an SDRS failover is confirmed, the production servers show a blue screen of death or are forcibly stopped, so the resulting copy is crash-consistent by definition. (KB-OXLO, V1 docs, checked 2026-09-02)
-- Storage Disaster Recovery Service (SDRS) replicates the block storage data of servers to another availability zone, so that after an outage of one availability zone the servers are started with current data in the other zone. A DR drill function tests the disaster recovery at any time. The Regions and Endpoints page lists the SDRS API endpoint in eu-de. (KB-QJ3S, V2 contract, checked 2026-10-14)
+- Storage Disaster Recovery Service (SDRS) replicates the block storage data of servers to another availability zone, so that after an outage of one availability zone the servers are started with current data in the other zone. A DR drill function tests the disaster recovery at any time. The Regions and Endpoints page lists the SDRS API endpoint in eu-de. (KB-QJ3S, V0 recheck due, contract, checked 2026-10-14)
 - POST /v1/{project_id}/protected-instances/{id}/resize changes flavours: production_flavorRef affects the production server, dr_flavorRef the DR server, flavorRef both, and when flavorRef is present the other two are ignored. The servers being changed must be SHUTOFF and the protection group available or protected. (KB-ROOO, V3 live, checked 2026-08-26)
 - GET /v1/{project_id}/active-domains lists the SDRS replication domains with their local and remote replication clusters, which is how the usable AZ pair is read. In eu-de the listing showed one domain, local cluster eu-de-02 and remote cluster eu-de-01. (KB-SWH2, V0 recheck due, live, checked 2026-10-14)
 - SDRS failover with dr_type migration moves the network identity. The old production server ends SHUTOFF with no addresses and the DR server comes up with the same private IP and the same EIP. Binding a new EIP returns VPC.0511 PortInUse, and reachability takes 40 to 60 seconds. (KB-UC5C, V3 live, checked 2026-08-26)

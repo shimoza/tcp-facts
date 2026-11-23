@@ -1,14 +1,14 @@
-<!-- TCP Facts, dataset of 2026-11-16. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-23. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a level (V4 kept live, V3 live, V2 contract, V1 docs, V0 recheck due; see README) and a check date.
    Name the level when it is V0 and the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-16. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-23. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-16: mrs
+# TCP Facts 2026-11-23: mrs
 
 - HetuEngine 2.1.0 on MRS 3.5.0-LTS (Trino 399 base) ships a full Iceberg connector in plugin/hetu-iceberg with iceberg-core, iceberg-api, iceberg-parquet, iceberg-orc and iceberg-hive-metastore 1.4.1, alongside Delta Lake and Hudi connectors and connectors for clickhouse, elasticsearch, hbase, mysql, oracle and postgresql. (KB-22JC, V0 recheck due, live, checked 2026-07-28)
 - POST /web/api/v2/clusters/1/services/{name}/commands/start (also stop and restart) with an empty JSON body returns HTTP 202 and a commandId. A second command issued while one is still running is refused with error code (08-4000031). (KB-2TO7, V3 live, checked 2026-07-28)
@@ -23,7 +23,7 @@
 - Impala on MRS reads Iceberg tables, prunes partitions and serves DESCRIBE HISTORY and version time travel. An INSERT into a table holding a timestamptz column returns an error, and Spark writes a TIMESTAMP column as timestamptz. (KB-4JTU, V3 live, checked 2026-07-28)
 - A five node MRS cluster created through POST /v2/{project_id}/clusters in eu-de took about 23 minutes from the create call to a usable cluster. (KB-4Q3W, V3 live, checked 2026-07-29)
 - The request schema of each MRS Manager API endpoint is readable on the Manager node in /opt/Bigdata/om-server/apache-tomcat-*/webapps/web/WEB-INF/validate/validate-rule-*.xml. Those files list, per endpoint and method, every parameter, whether it is required, and its validation regex. (KB-4QC4, V3 live, checked 2026-07-28)
-- MapReduce Service (MRS) is a managed big data platform for building and running big data clusters: core nodes process data and store it in HDFS, and task nodes process data and are added or removed by auto scaling rules. The documentation names the engines ClickHouse, Spark, Flink, Kafka and HBase and compatibility with the open-source components. The Regions and Endpoints page lists the MRS API endpoint in eu-de. (KB-4SRI, V2 contract, checked 2026-10-14)
+- MapReduce Service (MRS) is a managed big data platform for building and running big data clusters: core nodes process data and store it in HDFS, and task nodes process data and are added or removed by auto scaling rules. The documentation names the engines ClickHouse, Spark, Flink, Kafka and HBase and compatibility with the open-source components. The Regions and Endpoints page lists the MRS API endpoint in eu-de. (KB-4SRI, V0 recheck due, contract, checked 2026-10-14)
 - A Ranger obs policy on MRS that grants to a user returns Obs not support User grants, so grants are made to groups. (KB-4VAD, V3 live, checked 2026-07-30)
 - hetu-cli echoes its own java command line, including the --password value in clear text, so the password shows up in the process list and in any captured log. (KB-4VW3, V3 live, checked 2026-07-30)
 - GET /web/api/v2/permission/clusters/1/services/{service}/views/{view}/resources needs resource_type and resource_name beside path; path=root alone returns error 12-5000036. With path=root, resource_type=parentQueue and resource_name=root it returns the child queues with their Submit and Admin permissions. (KB-5DZX, V3 live, checked 2026-07-28)
@@ -115,6 +115,7 @@
 - Killing the default-coordinator and default-worker YARN applications on MRS leaves the HetuEngine compute instance in FAULT with zero nodes, and it stays there. While no instance exists HSBroker answers HTTP 500 on every endpoint, so hetu-cli has no discovery path; recovery goes through the HSConsole Start or Restart action, or a Manager service restart. (KB-W56N, V3 live, checked 2026-07-30)
 - On an MRS 3.5.0-LTS cluster with Ranger and without Guardian, GET /service returned exactly one service, of type obs and name obs, holding zero policies. (KB-W5DT, V3 live, checked 2026-07-30)
 - Without Guardian installed on an MRS cluster, creating any Ranger obs policy fails with Init obs client failed. (KB-WENQ, V3 live, checked 2026-07-30)
+- On 2026-11-19 the TCP price API held eu-nl records for MRS and for CSS, and the service description of 2026-10-09 lists both in its EU-NL columns, while the regions-and-endpoints documentation lists an endpoint for MRS and CSS in eu-de only. (KB-WQVX, V3 live, checked 2026-11-19)
 - Each MRS node group accepts only a subset of flavors. On MRS 3.5.0-LTS in eu-de master_node_default_group accepted m3.2xlarge.8.linux.mrs and c4.4xlarge.4.linux.mrs and rejected every 16 GiB and 32 GiB flavor tried; core_node_analysis_group accepted only c4.4xlarge.4.linux.mrs out of six. (KB-X5PJ, V3 live, checked 2026-07-29)
 - On MRS 3.5.0-LTS Spark with an Iceberg warehouse on OBS the five Iceberg maintenance procedures rewrite_data_files, rewrite_manifests, expire_snapshots, rewrite_position_delete_files and remove_orphan_files all run successfully. (KB-XBDB, V3 live, checked 2026-07-30)
 - MRS 3.5.0-LTS ships Spark 3.3.1 with the vendor-built Iceberg runtime iceberg-spark-runtime-3.3_2.12-1.4.1-h0.cbu.mrs.350.r11.jar on the default classpath, in the Spark client jars, the shared Spark directory and the JobGateway job jars, so Iceberg jobs run with no --jars argument. (KB-XIWQ, V0 recheck due, live, checked 2026-07-28)

@@ -1,24 +1,25 @@
-<!-- TCP Facts, dataset of 2026-11-16. Instructions for the assistant that reads this file:
+<!-- TCP Facts, dataset of 2026-11-23. Instructions for the assistant that reads this file:
 1. Answer only from the facts in this dataset. Put the id of every fact you use after it, like (KB-XXXX).
    If no fact covers the question, say "no checked fact covers this" and what would need to be checked. Never guess.
 2. Every fact has a level (V4 kept live, V3 live, V2 contract, V1 docs, V0 recheck due; see README) and a check date.
    Name the level when it is V0 and the check date when it is older than 90 days.
 3. The dataset holds no price list. Prices come live from the public price API. Give every price with its unit, currency
    and the date of its source, and say that the live price API is the source of truth before any quote.
-4. Best before 2026-12-16. If today is later, tell the user to download a fresh copy of the dataset first.
+4. Best before 2026-12-23. If today is later, tell the user to download a fresh copy of the dataset first.
 5. Technical questions only; no customer data in your prompts (see README).
 -->
-# TCP Facts 2026-11-16: dns
+# TCP Facts 2026-11-23: dns
 
 - A signed parent zone's denial of DS stays in resolver caches after a DS is published. Measured caps on the public resolvers: Google 1800 s, Quad9 about 3600 s, Cloudflare honours the parent SOA MINIMUM in full. (KB-34BU, V3 live, checked 2026-09-10)
 - Private DNS zones on TCP resolve the cloud-internal namespace. (KB-3DUD, V1 docs, checked 2026-07-17)
+- A private DNS zone is created with POST /v2/zones, zone_type private and router.router_id of a VPC with router_region eu-de, and is ACTIVE at once; an A record set in it is ACTIVE at once too. (KB-3QS6, V3 live, checked 2026-11-20)
 - GET /v2/zones/{zone_id}/dnssec on the eu-de DNS endpoint returns 200 with status DISABLE, or the key object with flag 257, key_tag, digest, digest_algorithm SHA256, digest_type 2, signature ECDSAP256SHA256, signature_type 13, ksk_public_key, ds_record, created_at, updated_at and status ENABLE. (KB-4KAY, V3 live, checked 2026-09-10)
 - In eu-de on 2026-09-25, GET /v2/zones/{zone_id}/nameservers returned ns1.open-telekom-cloud.com and ns2.open-telekom-cloud.com for all four public zones of a test project, and a domain hosted in the TCP DNS service is delegated to these two name servers at its registrar. An NS lookup of such a domain names the platform. (KB-5KZD, V3 live, checked 2026-09-25)
 - DNSSEC is absent from the DNS api-ref, and the opentelekomcloud Terraform provider 1.37.8 ships no DNSSEC resource. (KB-5SWB, V1 docs, checked 2026-09-10)
 - On a TCP public zone with DNSSEC enabled, the parent side returns no authenticated denial of DS for a delegated child zone, so validating resolvers cannot resolve names below such a delegation, wherever the child is hosted. Keep child names in the parent zone, or leave DNSSEC off while a delegation is needed. (KB-5T6U, V3 live, checked 2026-09-10)
 - Enabling DNSSEC works on a subdomain public zone on TCP, although the console banner says DNSSEC can be enabled only for top-level domains and the UMN says DNSSEC supports only primary domain names. (KB-6PPX, V3 live, checked 2026-09-10)
 - In eu-de the regional service endpoint for OMS has no DNS record, while the DRS endpoint in the same region resolves and its gateway answers HTTP 404 for an unknown path. (KB-7QD4, V0 recheck due, live, checked 2026-09-25)
-- Domain Name Service (DNS) is an authoritative DNS service in which the customer configures DNS zones and records for internal and external communication. It provides public zones that resolve domain names on the internet, private zones that resolve names to private IP addresses inside VPCs, and reverse resolution of IP addresses to domain names. The Regions and Endpoints page lists API endpoints for DNS in eu-de and eu-nl. (KB-ABGI, V2 contract, checked 2026-10-14)
+- Domain Name Service (DNS) is an authoritative DNS service in which the customer configures DNS zones and records for internal and external communication. It provides public zones that resolve domain names on the internet, private zones that resolve names to private IP addresses inside VPCs, and reverse resolution of IP addresses to domain names. The Regions and Endpoints page lists API endpoints for DNS in eu-de and eu-nl. (KB-ABGI, V0 recheck due, contract, checked 2026-10-14)
 - TCP DNS rejects DNSKEY as a record set type and refuses both AXFR and IXFR, so a second provider's ZSK cannot be published and a signing secondary cannot be fed. RFC 8901 multi-signer is not possible with TCP DNS as a participant. (KB-CWDY, V3 live, checked 2026-09-10)
 - CTS logs DNSSEC switching as the operations enableDnssecConfig and disableDnssecConfig with resource_type dnssec and trace_type ConsoleAction, while a scripted record-set create appears with trace_type ApiCall. (KB-DR5A, V3 live, checked 2026-09-10)
 - A DNS zone object carries no dnssec field, and a dnssec key in the zone-create body is accepted and ignored. (KB-H2BV, V3 live, checked 2026-09-10)
